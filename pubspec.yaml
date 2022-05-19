@@ -34,6 +34,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   freezed_annotation: ^2.0.3
   json_annotation: ^4.5.0
+  enum_to_string: ^2.0.1
 
   flutter:
     sdk: flutter
@@ -71,9 +72,11 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
+    - assets/images/Mr_Eye/
+    - assets/audio/
+    - assets/parameters/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

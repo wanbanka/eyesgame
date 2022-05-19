@@ -1,0 +1,11 @@
+{
+    "levels": [{
+        "name": "Level 1",
+        "background": {
+            "background_image": "back.jpg",
+            "floor_image": "floor.png"
+        },
+        "sprites": [],
+        "platforms": []
+    }]
+}
