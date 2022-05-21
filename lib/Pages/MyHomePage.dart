@@ -1,15 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'dart:convert' show json;
+import 'package:flutter/material.dart' hide Hero;
 
 import 'package:flame/game.dart' show GameWidget;
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../Blocs/LoaderBloc.dart';
+import '../States/Loader/LoadedResponse.dart';
+
+import '../Events/Loader/LoadedEvent.dart';
+import '../Events/Loader/LoadingError.dart';
+import '../Events/Loader/LoadingEvent.dart';
+
 import '../Components/Game/EyeGame.dart';
 import '../Components/Level/Level.dart';
-import '../Components/Sprites/Characters/Hero.dart' as Hero;
-
-import '../Models/CharFrame.dart';
+import '../Components/Sprites/Characters/Hero.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -22,31 +26,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    try {
+      context.read<LoaderBloc>().add(LoadingEvent());
+    } catch (e) {
+      context.read<LoaderBloc>().add(LoadingError("Erreur: $e"));
+    }
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: rootBundle.loadString("assets/parameters/hero.json"),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            Map<String, dynamic> jsonFound = json.decode(snapshot.data);
-
-            jsonFound["hero"]["states"] = Map<String, CharFrame>.from(
-                jsonFound["hero"]["states"].map((key, value) {
-              return MapEntry(key, CharFrame.fromJson(value));
-            }));
-
-            return GameWidget(
+      body:
+          BlocBuilder<LoaderBloc, LoadedResponse>(builder: (context, response) {
+        return response.name == "hero"
+            ? GameWidget(
                 game: EyeGame(
                     level: Level(sprites: [
-              Hero.Hero(spriteSheet: jsonFound["hero"]["states"])
-            ])));
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
+                Hero(spriteSheet: response.attributes["states"])
+              ])))
+            : CircularProgressIndicator();
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Increment',

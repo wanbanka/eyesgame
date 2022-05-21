@@ -1,7 +1,7 @@
 {
     "hero": {
         "states": {
-            "normal": {
+            "face": {
                 "src_image": "Mr_Eye/Mr_Eye_Face.png",
                 "nb_sprites": 6,
                 "step_time": 0.1

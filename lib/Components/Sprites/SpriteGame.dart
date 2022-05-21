@@ -15,7 +15,7 @@ import '../../Models/Enums/Status.dart';
 
 class SpriteGame extends SpriteAnimationGroupComponent {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
-      : super(current: Status.normal, animations: {}) {
+      : super(current: Status.face, animations: {}) {
     spriteSheet.forEach((key, charFrame) async {
       var status = ConvertEnumString.getEnumFromString(Status.values, key);
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'Pages/MyHomePage.dart';
+
+import 'Blocs/LoaderBloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +21,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => LoaderBloc())],
+          child: MyHomePage(title: 'Flutter Demo Home Page')),
     );
   }
 }
