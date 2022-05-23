@@ -7,13 +7,17 @@ import '../Sprites/SpriteGame.dart';
  */
 
 class Level extends World {
-  Level({required this.sprites}) : super();
+  Level({required this.hero, required this.ennemies}) : super();
 
-  List<SpriteGame> sprites;
+  SpriteGame hero;
+
+  List<SpriteGame> ennemies;
 
   @override
   Future<void>? onLoad() {
-    this.sprites.forEach((sprite) async {
+    List dataToAdd = [hero, ...ennemies];
+
+    dataToAdd.forEach((sprite) async {
       await add(sprite);
     });
   }

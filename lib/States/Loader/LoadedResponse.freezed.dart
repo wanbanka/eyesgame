@@ -20,8 +20,10 @@ LoadedResponse _$LoadedResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoadedResponse {
-  String get name => throw _privateConstructorUsedError;
-  Map<String, dynamic> get attributes => throw _privateConstructorUsedError;
+  ResponseType get type => throw _privateConstructorUsedError;
+  Map<DataType, Properties> get attributes =>
+      throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +36,10 @@ abstract class $LoadedResponseCopyWith<$Res> {
   factory $LoadedResponseCopyWith(
           LoadedResponse value, $Res Function(LoadedResponse) then) =
       _$LoadedResponseCopyWithImpl<$Res>;
-  $Res call({String name, Map<String, dynamic> attributes});
+  $Res call(
+      {ResponseType type,
+      Map<DataType, Properties> attributes,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -48,18 +53,23 @@ class _$LoadedResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? name = freezed,
+    Object? type = freezed,
     Object? attributes = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ResponseType,
       attributes: attributes == freezed
           ? _value.attributes
           : attributes // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as Map<DataType, Properties>,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -71,7 +81,10 @@ abstract class _$$_LoadedResponseCopyWith<$Res>
           _$_LoadedResponse value, $Res Function(_$_LoadedResponse) then) =
       __$$_LoadedResponseCopyWithImpl<$Res>;
   @override
-  $Res call({String name, Map<String, dynamic> attributes});
+  $Res call(
+      {ResponseType type,
+      Map<DataType, Properties> attributes,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -87,18 +100,23 @@ class __$$_LoadedResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? name = freezed,
+    Object? type = freezed,
     Object? attributes = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_$_LoadedResponse(
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ResponseType,
       attributes: attributes == freezed
           ? _value._attributes
           : attributes // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as Map<DataType, Properties>,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -108,7 +126,9 @@ class __$$_LoadedResponseCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$_LoadedResponse extends _LoadedResponse with DiagnosticableTreeMixin {
   _$_LoadedResponse(
-      {this.name = "default", final Map<String, dynamic> attributes = const {}})
+      {this.type = ResponseType.none,
+      final Map<DataType, Properties> attributes = const {},
+      this.errorMessage})
       : _attributes = attributes,
         super._();
 
@@ -117,18 +137,21 @@ class _$_LoadedResponse extends _LoadedResponse with DiagnosticableTreeMixin {
 
   @override
   @JsonKey()
-  final String name;
-  final Map<String, dynamic> _attributes;
+  final ResponseType type;
+  final Map<DataType, Properties> _attributes;
   @override
   @JsonKey()
-  Map<String, dynamic> get attributes {
+  Map<DataType, Properties> get attributes {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_attributes);
   }
 
   @override
+  final String? errorMessage;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LoadedResponse(name: $name, attributes: $attributes)';
+    return 'LoadedResponse(type: $type, attributes: $attributes, errorMessage: $errorMessage)';
   }
 
   @override
@@ -136,8 +159,9 @@ class _$_LoadedResponse extends _LoadedResponse with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'LoadedResponse'))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('attributes', attributes));
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('attributes', attributes))
+      ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
 
   @override
@@ -145,17 +169,20 @@ class _$_LoadedResponse extends _LoadedResponse with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoadedResponse &&
-            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.type, type) &&
             const DeepCollectionEquality()
-                .equals(other._attributes, _attributes));
+                .equals(other._attributes, _attributes) &&
+            const DeepCollectionEquality()
+                .equals(other.errorMessage, errorMessage));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(_attributes));
+      const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(_attributes),
+      const DeepCollectionEquality().hash(errorMessage));
 
   @JsonKey(ignore: true)
   @override
@@ -170,17 +197,21 @@ class _$_LoadedResponse extends _LoadedResponse with DiagnosticableTreeMixin {
 
 abstract class _LoadedResponse extends LoadedResponse {
   factory _LoadedResponse(
-      {final String name,
-      final Map<String, dynamic> attributes}) = _$_LoadedResponse;
+      {final ResponseType type,
+      final Map<DataType, Properties> attributes,
+      final String? errorMessage}) = _$_LoadedResponse;
   _LoadedResponse._() : super._();
 
   factory _LoadedResponse.fromJson(Map<String, dynamic> json) =
       _$_LoadedResponse.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  ResponseType get type => throw _privateConstructorUsedError;
   @override
-  Map<String, dynamic> get attributes => throw _privateConstructorUsedError;
+  Map<DataType, Properties> get attributes =>
+      throw _privateConstructorUsedError;
+  @override
+  String? get errorMessage => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedResponseCopyWith<_$_LoadedResponse> get copyWith =>

@@ -5,10 +5,12 @@ import 'package:flame/game.dart' show GameWidget;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Blocs/LoaderBloc.dart';
+
 import '../States/Loader/LoadedResponse.dart';
 
-import '../Events/Loader/LoadedEvent.dart';
-import '../Events/Loader/LoadingError.dart';
+import '../Models/Enums/ResponseType.dart';
+import '../Models/Enums/DataType.dart';
+
 import '../Events/Loader/LoadingEvent.dart';
 
 import '../Components/Game/EyeGame.dart';
@@ -27,11 +29,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
-    try {
-      context.read<LoaderBloc>().add(LoadingEvent());
-    } catch (e) {
-      context.read<LoaderBloc>().add(LoadingError("Erreur: $e"));
-    }
+    context.read<LoaderBloc>().add(LoadingEvent());
 
     super.initState();
   }
@@ -39,16 +37,32 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          BlocBuilder<LoaderBloc, LoadedResponse>(builder: (context, response) {
-        return response.name == "hero"
-            ? GameWidget(
-                game: EyeGame(
-                    level: Level(sprites: [
-                Hero(spriteSheet: response.attributes["states"])
-              ])))
-            : CircularProgressIndicator();
-      }),
+      body: BlocListener<LoaderBloc, LoadedResponse>(
+        listener: (context, response) {
+          if (response.type == ResponseType.error) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                response.errorMessage!,
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.red,
+              duration: Duration(milliseconds: 3000),
+            ));
+          }
+        },
+        child: BlocBuilder<LoaderBloc, LoadedResponse>(
+            builder: (context, response) {
+          return response.type == ResponseType.success
+              ? GameWidget(
+                  game: EyeGame(
+                      level: Level(
+                          hero: Hero(
+                              spriteSheet:
+                                  response.attributes[DataType.hero]!.states),
+                          ennemies: [])))
+              : Container();
+        }),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Increment',

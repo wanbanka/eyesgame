@@ -1,10 +1,9 @@
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'dart:convert' show json;
-import 'dart:async';
-
 import '../Models/CharFrame.dart';
+import '../Models/Enums/ResponseType.dart';
+import '../Models/Enums/DataType.dart';
+import '../Models/Properties.dart';
 
 import '../Events/Loader/LoadEvent.dart';
 import '../Events/Loader/LoadedEvent.dart';
@@ -13,51 +12,52 @@ import '../Events/Loader/LoadingEvent.dart';
 
 import '../States/Loader/LoadedResponse.dart';
 
+import '../Services/JSONDescriptionService.dart';
+
 /**
  * Bloc retrieving and emitting parameters of the different
  * game's parts (sprites, backgrounds...)
  */
 
 class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
+  Map<DataType, Properties> _heroAttributes = {};
+
+  JSONDescriptionService _jsonDescriptionService = JSONDescriptionService();
+
   LoaderBloc() : super(LoadedResponse()) {
-    on<LoadingEvent>(_loadHero);
+    on<LoadingEvent>((event, emit) async {
+      try {
+        dynamic hero = await _loadHero();
 
-    on<LoadedEvent>(_emitSuccess);
+        print(hero);
 
-    on<LoadingError>(_emitError);
+        _heroAttributes.addAll({DataType.hero: hero});
+
+        this.add(LoadedEvent());
+      } catch (e) {
+        this.add(LoadingError("Erreur: $e"));
+      }
+    });
+
+    on<LoadedEvent>((event, emit) {
+      emit(state.copyWith(
+          type: ResponseType.success, attributes: _heroAttributes));
+    });
+
+    on<LoadingError>((event, emit) {
+      emit(state.copyWith(
+          type: ResponseType.error, errorMessage: event.errorMessage));
+    });
   }
 
   /**
    * Define the hero's features
    */
 
-  Future<void> _loadHero(LoadEvent event, Emitter<LoadedResponse> emit) async {
+  Future<Properties> _loadHero() async {
     Map<String, dynamic> heroParameters =
-        json.decode(await rootBundle.loadString("assets/parameters/hero.json"));
+        await _jsonDescriptionService.loadParameters("hero");
 
-    heroParameters["hero"]["states"] = Map<String, CharFrame>.from(
-        heroParameters["hero"]["states"].map((key, value) {
-      return MapEntry(key, CharFrame.fromJson(value));
-    }));
-
-    emit(state.copyWith(name: "hero", attributes: heroParameters["hero"]));
-  }
-
-/**
- * Emit success message
- */
-
-  void _emitSuccess(LoadEvent event, Emitter<LoadedResponse> emit) {
-    emit(state
-        .copyWith(name: "success", attributes: {"message": "Elements loaded"}));
-  }
-
-  /**
-   * Emit error message
-   */
-
-  void _emitError(LoadingError event, Emitter<LoadedResponse> emit) {
-    emit(state
-        .copyWith(name: "error", attributes: {"message": event.errorMessage}));
+    return Properties.fromJson(heroParameters);
   }
 }
