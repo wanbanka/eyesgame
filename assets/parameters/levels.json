@@ -1,11 +1,11 @@
 {
     "levels": [{
         "name": "Level 1",
-        "background": {
-            "background_image": "back.jpg",
-            "floor_image": "floor.png"
+        "parallax": {
+            "background": "Levels/Level1/background.png",
+            "floor": "Levels/Level1/floor.png"
         },
-        "sprites": [],
+        "ennemies": [],
         "platforms": []
     }]
 }

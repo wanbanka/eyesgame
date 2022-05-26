@@ -17,8 +17,17 @@ class Properties with _$Properties {
   Properties._();
 
   @JsonSerializable(explicitToJson: true)
-  factory Properties({@Default({}) Map<String, CharFrame> states}) =
-      _Properties;
+  factory Properties(
+      {@Default({})
+          Map<String, CharFrame> states,
+      @Default("")
+          String name,
+      @Default("")
+      @JsonKey(name: "background_image")
+          String backgroundImage,
+      @Default("")
+      @JsonKey(name: "floor_image")
+          String floorImage}) = _Properties;
 
   factory Properties.fromJson(Map<String, dynamic> json) =>
       _$PropertiesFromJson(json);

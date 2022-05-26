@@ -16,6 +16,7 @@ import '../Events/Loader/LoadingEvent.dart';
 import '../Components/Game/EyeGame.dart';
 import '../Components/Level/Level.dart';
 import '../Components/Sprites/Characters/Hero.dart';
+import '../Components/Backgrounds/ParallaxBackground.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -56,17 +57,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ? GameWidget(
                   game: EyeGame(
                       level: Level(
+                          background: ParallaxBackground(
+                              backgroundImage: response
+                                  .attributes[DataType.background]!
+                                  .backgroundImage,
+                              floorImage: response
+                                  .attributes[DataType.background]!.floorImage),
                           hero: Hero(
                               spriteSheet:
                                   response.attributes[DataType.hero]!.states),
-                          ennemies: [])))
+                          ennemies: [])),
+                )
               : Container();
         }),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

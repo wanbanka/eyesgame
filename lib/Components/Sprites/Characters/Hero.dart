@@ -1,3 +1,5 @@
+import 'package:flame/components.dart';
+
 import 'Character.dart';
 
 import '../../../Models/Enums/Status.dart';
@@ -8,6 +10,6 @@ import '../../../Models/Enums/Status.dart';
 
 class Hero extends Character {
   Hero({required spriteSheet}) : super(spriteSheet: spriteSheet) {
-    this.current = Status.hurt;
+    this.current = Status.profile;
   }
 }

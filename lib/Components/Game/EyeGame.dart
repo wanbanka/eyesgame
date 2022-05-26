@@ -1,4 +1,5 @@
-import 'package:flame/game.dart' show FlameGame;
+import 'package:flame/components.dart';
+import 'package:flame/game.dart' show FlameGame, Vector2;
 
 import 'package:flame/experimental.dart' show CameraComponent;
 
@@ -15,7 +16,11 @@ class EyeGame extends FlameGame {
   Future<void>? onLoad() async {
     // TODO: implement onLoad
 
-    await add(CameraComponent(world: level)..add(level));
+    var cameraToAdd = CameraComponent(world: level);
+
+    await cameraToAdd.add(cameraToAdd.world);
+
+    await add(cameraToAdd);
 
     debugMode = true;
   }

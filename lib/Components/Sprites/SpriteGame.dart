@@ -1,6 +1,6 @@
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart'
-    show SpriteAnimationGroupComponent, Vector2;
+    show SpriteAnimationGroupComponent, Vector2, Anchor;
 import 'package:flame/sprite.dart';
 
 import 'dart:ui' show Image;
@@ -15,7 +15,7 @@ import '../../Models/Enums/Status.dart';
 
 class SpriteGame extends SpriteAnimationGroupComponent {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
-      : super(current: Status.face, animations: {}) {
+      : super(animations: {}, scale: Vector2.all(0.5)) {
     spriteSheet.forEach((key, charFrame) async {
       var status = ConvertEnumString.getEnumFromString(Status.values, key);
 
@@ -35,5 +35,15 @@ class SpriteGame extends SpriteAnimationGroupComponent {
                 textureSize: Vector2(this.size.x, this.size.y)))
       });
     });
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    // TODO: implement onGameResize
+    super.onGameResize(size);
+
+    this.position.x -= size.x / 2.1;
+
+    this.position.y += size.y / 5;
   }
 }

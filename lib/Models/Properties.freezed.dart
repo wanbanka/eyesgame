@@ -21,6 +21,11 @@ Properties _$PropertiesFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Properties {
   Map<String, CharFrame> get states => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: "background_image")
+  String get backgroundImage => throw _privateConstructorUsedError;
+  @JsonKey(name: "floor_image")
+  String get floorImage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +38,11 @@ abstract class $PropertiesCopyWith<$Res> {
   factory $PropertiesCopyWith(
           Properties value, $Res Function(Properties) then) =
       _$PropertiesCopyWithImpl<$Res>;
-  $Res call({Map<String, CharFrame> states});
+  $Res call(
+      {Map<String, CharFrame> states,
+      String name,
+      @JsonKey(name: "background_image") String backgroundImage,
+      @JsonKey(name: "floor_image") String floorImage});
 }
 
 /// @nodoc
@@ -47,12 +56,27 @@ class _$PropertiesCopyWithImpl<$Res> implements $PropertiesCopyWith<$Res> {
   @override
   $Res call({
     Object? states = freezed,
+    Object? name = freezed,
+    Object? backgroundImage = freezed,
+    Object? floorImage = freezed,
   }) {
     return _then(_value.copyWith(
       states: states == freezed
           ? _value.states
           : states // ignore: cast_nullable_to_non_nullable
               as Map<String, CharFrame>,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      backgroundImage: backgroundImage == freezed
+          ? _value.backgroundImage
+          : backgroundImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      floorImage: floorImage == freezed
+          ? _value.floorImage
+          : floorImage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -64,7 +88,11 @@ abstract class _$$_PropertiesCopyWith<$Res>
           _$_Properties value, $Res Function(_$_Properties) then) =
       __$$_PropertiesCopyWithImpl<$Res>;
   @override
-  $Res call({Map<String, CharFrame> states});
+  $Res call(
+      {Map<String, CharFrame> states,
+      String name,
+      @JsonKey(name: "background_image") String backgroundImage,
+      @JsonKey(name: "floor_image") String floorImage});
 }
 
 /// @nodoc
@@ -80,12 +108,27 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
   @override
   $Res call({
     Object? states = freezed,
+    Object? name = freezed,
+    Object? backgroundImage = freezed,
+    Object? floorImage = freezed,
   }) {
     return _then(_$_Properties(
       states: states == freezed
           ? _value._states
           : states // ignore: cast_nullable_to_non_nullable
               as Map<String, CharFrame>,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      backgroundImage: backgroundImage == freezed
+          ? _value.backgroundImage
+          : backgroundImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      floorImage: floorImage == freezed
+          ? _value.floorImage
+          : floorImage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -94,7 +137,11 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$_Properties extends _Properties with DiagnosticableTreeMixin {
-  _$_Properties({final Map<String, CharFrame> states = const {}})
+  _$_Properties(
+      {final Map<String, CharFrame> states = const {},
+      this.name = "",
+      @JsonKey(name: "background_image") this.backgroundImage = "",
+      @JsonKey(name: "floor_image") this.floorImage = ""})
       : _states = states,
         super._();
 
@@ -110,8 +157,18 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   }
 
   @override
+  @JsonKey()
+  final String name;
+  @override
+  @JsonKey(name: "background_image")
+  final String backgroundImage;
+  @override
+  @JsonKey(name: "floor_image")
+  final String floorImage;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Properties(states: $states)';
+    return 'Properties(states: $states, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage)';
   }
 
   @override
@@ -119,7 +176,10 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Properties'))
-      ..add(DiagnosticsProperty('states', states));
+      ..add(DiagnosticsProperty('states', states))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('backgroundImage', backgroundImage))
+      ..add(DiagnosticsProperty('floorImage', floorImage));
   }
 
   @override
@@ -127,13 +187,22 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Properties &&
-            const DeepCollectionEquality().equals(other._states, _states));
+            const DeepCollectionEquality().equals(other._states, _states) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.backgroundImage, backgroundImage) &&
+            const DeepCollectionEquality()
+                .equals(other.floorImage, floorImage));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_states));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_states),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(backgroundImage),
+      const DeepCollectionEquality().hash(floorImage));
 
   @JsonKey(ignore: true)
   @override
@@ -147,7 +216,11 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
 }
 
 abstract class _Properties extends Properties {
-  factory _Properties({final Map<String, CharFrame> states}) = _$_Properties;
+  factory _Properties(
+      {final Map<String, CharFrame> states,
+      final String name,
+      @JsonKey(name: "background_image") final String backgroundImage,
+      @JsonKey(name: "floor_image") final String floorImage}) = _$_Properties;
   _Properties._() : super._();
 
   factory _Properties.fromJson(Map<String, dynamic> json) =
@@ -155,6 +228,14 @@ abstract class _Properties extends Properties {
 
   @override
   Map<String, CharFrame> get states => throw _privateConstructorUsedError;
+  @override
+  String get name => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "background_image")
+  String get backgroundImage => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "floor_image")
+  String get floorImage => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_PropertiesCopyWith<_$_Properties> get copyWith =>

@@ -6,6 +6,8 @@ import 'Pages/MyHomePage.dart';
 import 'Blocs/LoaderBloc.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -21,9 +23,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => LoaderBloc())],
-          child: MyHomePage(title: 'Flutter Demo Home Page')),
+      initialRoute: "/level",
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case "/level":
+            return MaterialPageRoute(
+                builder: (_) => MultiBlocProvider(providers: [
+                      BlocProvider(
+                          create: (context) =>
+                              LoaderBloc(selectLevel: "Level 1"))
+                    ], child: MyHomePage(title: 'Flutter Demo Home Page')));
+            break;
+          default:
+        }
+      },
     );
   }
 }
