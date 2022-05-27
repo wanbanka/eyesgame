@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:flame/game.dart' show FlameGame, Vector2;
+import 'package:flame/game.dart' show FlameGame, Vector2, HasDraggables;
 
 import 'package:flame/experimental.dart' show CameraComponent;
 
@@ -7,7 +7,7 @@ import 'package:flame/experimental.dart' show CameraComponent;
  * Initialization of a level
  */
 
-class EyeGame extends FlameGame {
+class EyeGame extends FlameGame with HasDraggables {
   EyeGame({required this.level}) : super();
 
   dynamic level;

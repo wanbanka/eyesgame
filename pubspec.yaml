@@ -76,6 +76,7 @@ flutter:
     - assets/images/
     - assets/images/Mr_Eye/
     - assets/images/Levels/Level1/
+    - assets/images/Controls/
     - assets/audio/
     - assets/parameters/
 
