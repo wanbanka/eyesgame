@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return response.type == ResponseType.success
               ? GameWidget(
                   game: EyeGame(
+                      controls: response.attributes[DataType.controls]!.sprites,
                       level: Level(
                           background: ParallaxBackground(
                               backgroundImage: response
@@ -65,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   .attributes[DataType.background]!.floorImage),
                           hero: Hero(
                               spriteSheet:
-                                  response.attributes[DataType.hero]!.states),
+                                  response.attributes[DataType.hero]!.sprites),
                           ennemies: [])),
                 )
               : Container();

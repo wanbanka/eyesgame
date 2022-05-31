@@ -8,7 +8,7 @@ part of 'Properties.dart';
 
 _$_Properties _$$_PropertiesFromJson(Map<String, dynamic> json) =>
     _$_Properties(
-      states: (json['states'] as Map<String, dynamic>?)?.map(
+      sprites: (json['sprites'] as Map<String, dynamic>?)?.map(
             (k, e) =>
                 MapEntry(k, CharFrame.fromJson(e as Map<String, dynamic>)),
           ) ??
@@ -20,7 +20,7 @@ _$_Properties _$$_PropertiesFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_PropertiesToJson(_$_Properties instance) =>
     <String, dynamic>{
-      'states': instance.states.map((k, e) => MapEntry(k, e.toJson())),
+      'sprites': instance.sprites.map((k, e) => MapEntry(k, e.toJson())),
       'name': instance.name,
       'background_image': instance.backgroundImage,
       'floor_image': instance.floorImage,

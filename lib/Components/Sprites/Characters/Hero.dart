@@ -12,4 +12,7 @@ class Hero extends Character {
   Hero({required spriteSheet}) : super(spriteSheet: spriteSheet) {
     this.current = Status.profile;
   }
+
+  @override
+  void move() {}
 }

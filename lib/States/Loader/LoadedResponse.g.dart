@@ -38,4 +38,5 @@ const _$DataTypeEnumMap = {
   DataType.enemy: 'enemy',
   DataType.boss: 'boss',
   DataType.platform: 'platform',
+  DataType.controls: 'controls',
 };

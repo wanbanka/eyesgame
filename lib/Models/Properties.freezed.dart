@@ -20,7 +20,7 @@ Properties _$PropertiesFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Properties {
-  Map<String, CharFrame> get states => throw _privateConstructorUsedError;
+  Map<String, CharFrame> get sprites => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: "background_image")
   String get backgroundImage => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $PropertiesCopyWith<$Res> {
           Properties value, $Res Function(Properties) then) =
       _$PropertiesCopyWithImpl<$Res>;
   $Res call(
-      {Map<String, CharFrame> states,
+      {Map<String, CharFrame> sprites,
       String name,
       @JsonKey(name: "background_image") String backgroundImage,
       @JsonKey(name: "floor_image") String floorImage});
@@ -55,15 +55,15 @@ class _$PropertiesCopyWithImpl<$Res> implements $PropertiesCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? states = freezed,
+    Object? sprites = freezed,
     Object? name = freezed,
     Object? backgroundImage = freezed,
     Object? floorImage = freezed,
   }) {
     return _then(_value.copyWith(
-      states: states == freezed
-          ? _value.states
-          : states // ignore: cast_nullable_to_non_nullable
+      sprites: sprites == freezed
+          ? _value.sprites
+          : sprites // ignore: cast_nullable_to_non_nullable
               as Map<String, CharFrame>,
       name: name == freezed
           ? _value.name
@@ -89,7 +89,7 @@ abstract class _$$_PropertiesCopyWith<$Res>
       __$$_PropertiesCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Map<String, CharFrame> states,
+      {Map<String, CharFrame> sprites,
       String name,
       @JsonKey(name: "background_image") String backgroundImage,
       @JsonKey(name: "floor_image") String floorImage});
@@ -107,15 +107,15 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? states = freezed,
+    Object? sprites = freezed,
     Object? name = freezed,
     Object? backgroundImage = freezed,
     Object? floorImage = freezed,
   }) {
     return _then(_$_Properties(
-      states: states == freezed
-          ? _value._states
-          : states // ignore: cast_nullable_to_non_nullable
+      sprites: sprites == freezed
+          ? _value._sprites
+          : sprites // ignore: cast_nullable_to_non_nullable
               as Map<String, CharFrame>,
       name: name == freezed
           ? _value.name
@@ -138,22 +138,22 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   _$_Properties(
-      {final Map<String, CharFrame> states = const {},
+      {final Map<String, CharFrame> sprites = const {},
       this.name = "",
       @JsonKey(name: "background_image") this.backgroundImage = "",
       @JsonKey(name: "floor_image") this.floorImage = ""})
-      : _states = states,
+      : _sprites = sprites,
         super._();
 
   factory _$_Properties.fromJson(Map<String, dynamic> json) =>
       _$$_PropertiesFromJson(json);
 
-  final Map<String, CharFrame> _states;
+  final Map<String, CharFrame> _sprites;
   @override
   @JsonKey()
-  Map<String, CharFrame> get states {
+  Map<String, CharFrame> get sprites {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_states);
+    return EqualUnmodifiableMapView(_sprites);
   }
 
   @override
@@ -168,7 +168,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Properties(states: $states, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage)';
+    return 'Properties(sprites: $sprites, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage)';
   }
 
   @override
@@ -176,7 +176,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Properties'))
-      ..add(DiagnosticsProperty('states', states))
+      ..add(DiagnosticsProperty('sprites', sprites))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('backgroundImage', backgroundImage))
       ..add(DiagnosticsProperty('floorImage', floorImage));
@@ -187,7 +187,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Properties &&
-            const DeepCollectionEquality().equals(other._states, _states) &&
+            const DeepCollectionEquality().equals(other._sprites, _sprites) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.backgroundImage, backgroundImage) &&
@@ -199,7 +199,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_states),
+      const DeepCollectionEquality().hash(_sprites),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(backgroundImage),
       const DeepCollectionEquality().hash(floorImage));
@@ -217,7 +217,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
 
 abstract class _Properties extends Properties {
   factory _Properties(
-      {final Map<String, CharFrame> states,
+      {final Map<String, CharFrame> sprites,
       final String name,
       @JsonKey(name: "background_image") final String backgroundImage,
       @JsonKey(name: "floor_image") final String floorImage}) = _$_Properties;
@@ -227,7 +227,7 @@ abstract class _Properties extends Properties {
       _$_Properties.fromJson;
 
   @override
-  Map<String, CharFrame> get states => throw _privateConstructorUsedError;
+  Map<String, CharFrame> get sprites => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override

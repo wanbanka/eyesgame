@@ -1,0 +1,11 @@
+{
+    "controls": {
+
+        "sprites": {
+            "right": {
+                "src_image": "Controls/Move.png",
+                "nb_sprites": 2
+            }
+        }
+    }
+}

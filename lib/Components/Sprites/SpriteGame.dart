@@ -13,7 +13,7 @@ import '../../Models/Enums/Status.dart';
  * Define all the properties of all animated sprites
  */
 
-class SpriteGame extends SpriteAnimationGroupComponent {
+abstract class SpriteGame extends SpriteAnimationGroupComponent {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
       : super(animations: {}, scale: Vector2.all(0.5)) {
     spriteSheet.forEach((key, charFrame) async {

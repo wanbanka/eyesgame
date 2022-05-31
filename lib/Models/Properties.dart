@@ -19,7 +19,7 @@ class Properties with _$Properties {
   @JsonSerializable(explicitToJson: true)
   factory Properties(
       {@Default({})
-          Map<String, CharFrame> states,
+          Map<String, CharFrame> sprites,
       @Default("")
           String name,
       @Default("")

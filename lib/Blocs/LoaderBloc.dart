@@ -28,15 +28,11 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
   LoaderBloc({required this.selectLevel}) : super(LoadedResponse()) {
     on<LoadingEvent>((event, emit) async {
       try {
-        dynamic hero = await _loadHero();
-
-        dynamic level = await _loadLevel();
-
-        print(hero);
-
-        print(level);
-
-        _attributes.addAll({DataType.hero: hero, DataType.background: level});
+        _attributes.addAll({
+          DataType.hero: await _loadHero(),
+          DataType.background: await _loadLevel(),
+          DataType.controls: await _loadControls()
+        });
 
         this.add(LoadedEvent());
       } catch (e) {
@@ -60,9 +56,20 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
 
   Future<Properties> _loadHero() async {
     Map<String, dynamic> heroParameters =
-        await _jsonDescriptionService.loadHero();
+        await _jsonDescriptionService.loadAttribute(DataType.hero);
 
     return Properties.fromJson(heroParameters);
+  }
+
+  /**
+   * Define the player's controls
+   */
+
+  Future<Properties> _loadControls() async {
+    Map<String, dynamic> parameters =
+        await _jsonDescriptionService.loadAttribute(DataType.controls);
+
+    return Properties.fromJson(parameters);
   }
 
 /**

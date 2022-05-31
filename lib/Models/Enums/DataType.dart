@@ -1,1 +1,1 @@
-enum DataType { hero, background, enemy, boss, platform }
+enum DataType { hero, background, enemy, boss, platform, controls }
