@@ -9,10 +9,21 @@ import '../../../Models/Enums/Status.dart';
  */
 
 class Hero extends Character {
-  Hero({required spriteSheet}) : super(spriteSheet: spriteSheet) {
+  Hero({required spriteSheet, required speed})
+      : super(spriteSheet: spriteSheet, speed: speed) {
     this.current = Status.profile;
   }
 
   @override
-  void move() {}
+  void move(double dt) {
+    if (this.current == Status.move) {
+      this.velocity
+        ..add(this.gravity.normalized() * this.speed.toDouble() * dt)
+        ..clampScalar(-10, 10);
+
+      this.position.add(this.velocity);
+    } else {
+      this.velocity = Vector2.zero();
+    }
+  }
 }

@@ -1,5 +1,6 @@
 {
     "hero": {
+        "speed": 3,
         "sprites": {
             "face": {
                 "src_image": "Mr_Eye/Mr_Eye_Face.png",
@@ -15,6 +16,11 @@
                 "src_image": "Mr_Eye/Mr_Eye_Hurt.png",
                 "nb_sprites": 4,
                 "step_time": 0.08
+            },
+            "move": {
+                "src_image": "Mr_Eye/Mr_Eye_Move.png",
+                "nb_sprites": 6,
+                "step_time": 0.1
             }
         }
     }

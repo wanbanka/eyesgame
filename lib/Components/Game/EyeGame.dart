@@ -14,6 +14,7 @@ import '../Controls/MoveButton.dart';
 import '../Level/Level.dart';
 
 import '../../Models/Enums/Controls.dart';
+import '../../Models/Enums/Status.dart';
 import '../../Models/CharFrame.dart';
 import '../../Models/ConvertEnumString.dart';
 
@@ -28,14 +29,11 @@ class EyeGame extends FlameGame with HasDraggables, HasTappables {
 
   Map<String, CharFrame> controls;
 
-  @override
-  Future<void>? onLoad() async {
-    // TODO: implement onLoad
+  /**
+   * Load player's controls in order to interact with the game
+   */
 
-    var cameraToAdd = CameraComponent(world: level);
-
-    await add(cameraToAdd..add(cameraToAdd.world));
-
+  Future<void> _loadControls() async {
     controls.forEach((key, value) async {
       var control = ConvertEnumString.getEnumFromString(Controls.values, key);
 
@@ -47,19 +45,61 @@ class EyeGame extends FlameGame with HasDraggables, HasTappables {
       switch (control) {
         case Controls.right:
           await add(MoveButton(
-              position: Vector2(195, 320),
+              position: Vector2(value.posX, value.posY),
               buttonPressed:
                   SpriteComponent(sprite: spriteSheet.getSpriteById(0)),
               buttonPressedDown:
                   SpriteComponent(sprite: spriteSheet.getSpriteById(1)),
               moveAction: () {
-                level.hero.x += 1;
+                level.hero.current = Status.move;
+                level.hero.gravity.x = 1;
+
+                if (level.hero.scale.x < 0) {
+                  level.hero.flipHorizontallyAroundCenter();
+                }
+              },
+              endAction: () {
+                level.hero.current = Status.profile;
               }));
 
           break;
+
+        case Controls.left:
+          await add(MoveButton(
+              scale: Vector2(-0.15, 0.15),
+              position: Vector2(value.posX, value.posY),
+              buttonPressed:
+                  SpriteComponent(sprite: spriteSheet.getSpriteById(0)),
+              buttonPressedDown:
+                  SpriteComponent(sprite: spriteSheet.getSpriteById(1)),
+              moveAction: () {
+                level.hero.current = Status.move;
+                level.hero.gravity.x = -1;
+
+                if (level.hero.scale.x >= 0) {
+                  level.hero.flipHorizontallyAroundCenter();
+                }
+              },
+              endAction: () {
+                level.hero.current = Status.profile;
+              }));
+
+          break;
+
         default:
       }
     });
+  }
+
+  @override
+  Future<void>? onLoad() async {
+    // TODO: implement onLoad
+
+    var cameraToAdd = CameraComponent(world: level);
+
+    await add(cameraToAdd..add(cameraToAdd.world));
+
+    await _loadControls();
 
     debugMode = true;
   }

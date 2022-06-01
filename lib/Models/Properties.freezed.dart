@@ -26,6 +26,7 @@ mixin _$Properties {
   String get backgroundImage => throw _privateConstructorUsedError;
   @JsonKey(name: "floor_image")
   String get floorImage => throw _privateConstructorUsedError;
+  int get speed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +43,8 @@ abstract class $PropertiesCopyWith<$Res> {
       {Map<String, CharFrame> sprites,
       String name,
       @JsonKey(name: "background_image") String backgroundImage,
-      @JsonKey(name: "floor_image") String floorImage});
+      @JsonKey(name: "floor_image") String floorImage,
+      int speed});
 }
 
 /// @nodoc
@@ -59,6 +61,7 @@ class _$PropertiesCopyWithImpl<$Res> implements $PropertiesCopyWith<$Res> {
     Object? name = freezed,
     Object? backgroundImage = freezed,
     Object? floorImage = freezed,
+    Object? speed = freezed,
   }) {
     return _then(_value.copyWith(
       sprites: sprites == freezed
@@ -77,6 +80,10 @@ class _$PropertiesCopyWithImpl<$Res> implements $PropertiesCopyWith<$Res> {
           ? _value.floorImage
           : floorImage // ignore: cast_nullable_to_non_nullable
               as String,
+      speed: speed == freezed
+          ? _value.speed
+          : speed // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -92,7 +99,8 @@ abstract class _$$_PropertiesCopyWith<$Res>
       {Map<String, CharFrame> sprites,
       String name,
       @JsonKey(name: "background_image") String backgroundImage,
-      @JsonKey(name: "floor_image") String floorImage});
+      @JsonKey(name: "floor_image") String floorImage,
+      int speed});
 }
 
 /// @nodoc
@@ -111,6 +119,7 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
     Object? name = freezed,
     Object? backgroundImage = freezed,
     Object? floorImage = freezed,
+    Object? speed = freezed,
   }) {
     return _then(_$_Properties(
       sprites: sprites == freezed
@@ -129,6 +138,10 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
           ? _value.floorImage
           : floorImage // ignore: cast_nullable_to_non_nullable
               as String,
+      speed: speed == freezed
+          ? _value.speed
+          : speed // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -141,7 +154,8 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
       {final Map<String, CharFrame> sprites = const {},
       this.name = "",
       @JsonKey(name: "background_image") this.backgroundImage = "",
-      @JsonKey(name: "floor_image") this.floorImage = ""})
+      @JsonKey(name: "floor_image") this.floorImage = "",
+      this.speed = 0})
       : _sprites = sprites,
         super._();
 
@@ -165,10 +179,13 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   @override
   @JsonKey(name: "floor_image")
   final String floorImage;
+  @override
+  @JsonKey()
+  final int speed;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Properties(sprites: $sprites, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage)';
+    return 'Properties(sprites: $sprites, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage, speed: $speed)';
   }
 
   @override
@@ -179,7 +196,8 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('sprites', sprites))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('backgroundImage', backgroundImage))
-      ..add(DiagnosticsProperty('floorImage', floorImage));
+      ..add(DiagnosticsProperty('floorImage', floorImage))
+      ..add(DiagnosticsProperty('speed', speed));
   }
 
   @override
@@ -192,7 +210,8 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.backgroundImage, backgroundImage) &&
             const DeepCollectionEquality()
-                .equals(other.floorImage, floorImage));
+                .equals(other.floorImage, floorImage) &&
+            const DeepCollectionEquality().equals(other.speed, speed));
   }
 
   @JsonKey(ignore: true)
@@ -202,7 +221,8 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(_sprites),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(backgroundImage),
-      const DeepCollectionEquality().hash(floorImage));
+      const DeepCollectionEquality().hash(floorImage),
+      const DeepCollectionEquality().hash(speed));
 
   @JsonKey(ignore: true)
   @override
@@ -220,7 +240,8 @@ abstract class _Properties extends Properties {
       {final Map<String, CharFrame> sprites,
       final String name,
       @JsonKey(name: "background_image") final String backgroundImage,
-      @JsonKey(name: "floor_image") final String floorImage}) = _$_Properties;
+      @JsonKey(name: "floor_image") final String floorImage,
+      final int speed}) = _$_Properties;
   _Properties._() : super._();
 
   factory _Properties.fromJson(Map<String, dynamic> json) =
@@ -236,6 +257,8 @@ abstract class _Properties extends Properties {
   @override
   @JsonKey(name: "floor_image")
   String get floorImage => throw _privateConstructorUsedError;
+  @override
+  int get speed => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_PropertiesCopyWith<_$_Properties> get copyWith =>

@@ -26,6 +26,10 @@ mixin _$CharFrame {
   int get nbSprites => throw _privateConstructorUsedError;
   @JsonKey(name: "step_time")
   double get stepTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "x")
+  double get posX => throw _privateConstructorUsedError;
+  @JsonKey(name: "y")
+  double get posY => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,7 +44,9 @@ abstract class $CharFrameCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "src_image") String srcImage,
       @JsonKey(name: "nb_sprites") int nbSprites,
-      @JsonKey(name: "step_time") double stepTime});
+      @JsonKey(name: "step_time") double stepTime,
+      @JsonKey(name: "x") double posX,
+      @JsonKey(name: "y") double posY});
 }
 
 /// @nodoc
@@ -56,6 +62,8 @@ class _$CharFrameCopyWithImpl<$Res> implements $CharFrameCopyWith<$Res> {
     Object? srcImage = freezed,
     Object? nbSprites = freezed,
     Object? stepTime = freezed,
+    Object? posX = freezed,
+    Object? posY = freezed,
   }) {
     return _then(_value.copyWith(
       srcImage: srcImage == freezed
@@ -70,6 +78,14 @@ class _$CharFrameCopyWithImpl<$Res> implements $CharFrameCopyWith<$Res> {
           ? _value.stepTime
           : stepTime // ignore: cast_nullable_to_non_nullable
               as double,
+      posX: posX == freezed
+          ? _value.posX
+          : posX // ignore: cast_nullable_to_non_nullable
+              as double,
+      posY: posY == freezed
+          ? _value.posY
+          : posY // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -83,7 +99,9 @@ abstract class _$$_CharFrameCopyWith<$Res> implements $CharFrameCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "src_image") String srcImage,
       @JsonKey(name: "nb_sprites") int nbSprites,
-      @JsonKey(name: "step_time") double stepTime});
+      @JsonKey(name: "step_time") double stepTime,
+      @JsonKey(name: "x") double posX,
+      @JsonKey(name: "y") double posY});
 }
 
 /// @nodoc
@@ -101,6 +119,8 @@ class __$$_CharFrameCopyWithImpl<$Res> extends _$CharFrameCopyWithImpl<$Res>
     Object? srcImage = freezed,
     Object? nbSprites = freezed,
     Object? stepTime = freezed,
+    Object? posX = freezed,
+    Object? posY = freezed,
   }) {
     return _then(_$_CharFrame(
       srcImage: srcImage == freezed
@@ -115,6 +135,14 @@ class __$$_CharFrameCopyWithImpl<$Res> extends _$CharFrameCopyWithImpl<$Res>
           ? _value.stepTime
           : stepTime // ignore: cast_nullable_to_non_nullable
               as double,
+      posX: posX == freezed
+          ? _value.posX
+          : posX // ignore: cast_nullable_to_non_nullable
+              as double,
+      posY: posY == freezed
+          ? _value.posY
+          : posY // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -126,7 +154,9 @@ class _$_CharFrame extends _CharFrame with DiagnosticableTreeMixin {
   _$_CharFrame(
       {@JsonKey(name: "src_image") required this.srcImage,
       @JsonKey(name: "nb_sprites") required this.nbSprites,
-      @JsonKey(name: "step_time") this.stepTime = 0.1})
+      @JsonKey(name: "step_time") this.stepTime = 0.1,
+      @JsonKey(name: "x") this.posX = 0.0,
+      @JsonKey(name: "y") this.posY = 0.0})
       : super._();
 
   factory _$_CharFrame.fromJson(Map<String, dynamic> json) =>
@@ -141,10 +171,16 @@ class _$_CharFrame extends _CharFrame with DiagnosticableTreeMixin {
   @override
   @JsonKey(name: "step_time")
   final double stepTime;
+  @override
+  @JsonKey(name: "x")
+  final double posX;
+  @override
+  @JsonKey(name: "y")
+  final double posY;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CharFrame(srcImage: $srcImage, nbSprites: $nbSprites, stepTime: $stepTime)';
+    return 'CharFrame(srcImage: $srcImage, nbSprites: $nbSprites, stepTime: $stepTime, posX: $posX, posY: $posY)';
   }
 
   @override
@@ -154,7 +190,9 @@ class _$_CharFrame extends _CharFrame with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'CharFrame'))
       ..add(DiagnosticsProperty('srcImage', srcImage))
       ..add(DiagnosticsProperty('nbSprites', nbSprites))
-      ..add(DiagnosticsProperty('stepTime', stepTime));
+      ..add(DiagnosticsProperty('stepTime', stepTime))
+      ..add(DiagnosticsProperty('posX', posX))
+      ..add(DiagnosticsProperty('posY', posY));
   }
 
   @override
@@ -164,7 +202,9 @@ class _$_CharFrame extends _CharFrame with DiagnosticableTreeMixin {
             other is _$_CharFrame &&
             const DeepCollectionEquality().equals(other.srcImage, srcImage) &&
             const DeepCollectionEquality().equals(other.nbSprites, nbSprites) &&
-            const DeepCollectionEquality().equals(other.stepTime, stepTime));
+            const DeepCollectionEquality().equals(other.stepTime, stepTime) &&
+            const DeepCollectionEquality().equals(other.posX, posX) &&
+            const DeepCollectionEquality().equals(other.posY, posY));
   }
 
   @JsonKey(ignore: true)
@@ -173,7 +213,9 @@ class _$_CharFrame extends _CharFrame with DiagnosticableTreeMixin {
       runtimeType,
       const DeepCollectionEquality().hash(srcImage),
       const DeepCollectionEquality().hash(nbSprites),
-      const DeepCollectionEquality().hash(stepTime));
+      const DeepCollectionEquality().hash(stepTime),
+      const DeepCollectionEquality().hash(posX),
+      const DeepCollectionEquality().hash(posY));
 
   @JsonKey(ignore: true)
   @override
@@ -190,7 +232,9 @@ abstract class _CharFrame extends CharFrame {
   factory _CharFrame(
       {@JsonKey(name: "src_image") required final String srcImage,
       @JsonKey(name: "nb_sprites") required final int nbSprites,
-      @JsonKey(name: "step_time") final double stepTime}) = _$_CharFrame;
+      @JsonKey(name: "step_time") final double stepTime,
+      @JsonKey(name: "x") final double posX,
+      @JsonKey(name: "y") final double posY}) = _$_CharFrame;
   _CharFrame._() : super._();
 
   factory _CharFrame.fromJson(Map<String, dynamic> json) =
@@ -205,6 +249,12 @@ abstract class _CharFrame extends CharFrame {
   @override
   @JsonKey(name: "step_time")
   double get stepTime => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "x")
+  double get posX => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "y")
+  double get posY => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_CharFrameCopyWith<_$_CharFrame> get copyWith =>

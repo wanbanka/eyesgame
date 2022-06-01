@@ -16,6 +16,7 @@ _$_Properties _$$_PropertiesFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String? ?? "",
       backgroundImage: json['background_image'] as String? ?? "",
       floorImage: json['floor_image'] as String? ?? "",
+      speed: json['speed'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$_PropertiesToJson(_$_Properties instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$_PropertiesToJson(_$_Properties instance) =>
       'name': instance.name,
       'background_image': instance.backgroundImage,
       'floor_image': instance.floorImage,
+      'speed': instance.speed,
     };

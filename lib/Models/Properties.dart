@@ -18,16 +18,11 @@ class Properties with _$Properties {
 
   @JsonSerializable(explicitToJson: true)
   factory Properties(
-      {@Default({})
-          Map<String, CharFrame> sprites,
-      @Default("")
-          String name,
-      @Default("")
-      @JsonKey(name: "background_image")
-          String backgroundImage,
-      @Default("")
-      @JsonKey(name: "floor_image")
-          String floorImage}) = _Properties;
+      {@Default({}) Map<String, CharFrame> sprites,
+      @Default("") String name,
+      @Default("") @JsonKey(name: "background_image") String backgroundImage,
+      @Default("") @JsonKey(name: "floor_image") String floorImage,
+      @Default(0) int speed}) = _Properties;
 
   factory Properties.fromJson(Map<String, dynamic> json) =>
       _$PropertiesFromJson(json);

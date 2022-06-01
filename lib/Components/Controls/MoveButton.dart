@@ -11,18 +11,25 @@ class MoveButton extends HudButtonComponent {
       {required this.buttonPressed,
       required this.buttonPressedDown,
       required this.moveAction,
-      position})
+      required this.endAction,
+      position,
+      scale})
       : super(
             position: position ?? Vector2.zero(),
             anchor: Anchor.center,
-            scale: Vector2.all(0.15),
+            scale: scale ?? Vector2.all(0.15),
             button: buttonPressed,
             buttonDown: buttonPressedDown,
             onPressed: () {
               moveAction();
+            },
+            onReleased: () {
+              endAction();
             });
 
   Function moveAction;
+
+  Function endAction;
 
   SpriteComponent buttonPressed;
 

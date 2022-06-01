@@ -65,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               floorImage: response
                                   .attributes[DataType.background]!.floorImage),
                           hero: Hero(
+                              speed: response.attributes[DataType.hero]!.speed,
                               spriteSheet:
                                   response.attributes[DataType.hero]!.sprites),
                           ennemies: [])),
