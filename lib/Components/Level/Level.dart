@@ -1,6 +1,6 @@
 import 'package:flame/experimental.dart' show World;
 
-import '../Sprites/SpriteGame.dart';
+import '../Sprites/Characters/Character.dart';
 
 import '../Backgrounds/ParallaxBackground.dart';
 
@@ -12,9 +12,9 @@ class Level extends World {
   Level({required this.background, required this.hero, required this.ennemies})
       : super();
 
-  SpriteGame hero;
+  Character hero;
 
-  List<SpriteGame> ennemies;
+  List<Character> ennemies;
 
   ParallaxBackground background;
 

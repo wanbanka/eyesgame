@@ -21,6 +21,11 @@
                 "src_image": "Mr_Eye/Mr_Eye_Move.png",
                 "nb_sprites": 6,
                 "step_time": 0.1
+            },
+            "roll": {
+                "src_image": "Mr_Eye/Mr_Eye_Roll.png",
+                "nb_sprites": 8,
+                "step_time": 0.015
             }
         }
     }

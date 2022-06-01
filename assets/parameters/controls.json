@@ -6,14 +6,21 @@
                 "src_image": "Controls/Move.png",
                 "nb_sprites": 2,
                 "x": 225,
-                "y": 320
+                "y": 310
             },
 
             "left": {
                 "src_image": "Controls/Move.png",
                 "nb_sprites": 2,
                 "x": 135,
-                "y": 320
+                "y": 310
+            },
+
+            "roll": {
+                "src_image": "Controls/Roll.png",
+                "nb_sprites": 2,
+                "x": 300,
+                "y": 310
             }
         }
     }

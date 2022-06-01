@@ -1,1 +1,1 @@
-enum Status { face, profile, attack, death, move, jump, hurt, teleport }
+enum Status { face, profile, attack, death, move, roll, jump, hurt, teleport }
