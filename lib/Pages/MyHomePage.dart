@@ -38,40 +38,45 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<LoaderBloc, LoadedResponse>(
-        listener: (context, response) {
-          if (response.type == ResponseType.error) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-                response.errorMessage!,
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.red,
-              duration: Duration(milliseconds: 3000),
-            ));
-          }
-        },
-        child: BlocBuilder<LoaderBloc, LoadedResponse>(
-            builder: (context, response) {
-          return response.type == ResponseType.success
-              ? GameWidget(
-                  game: EyeGame(
-                      controls: response.attributes[DataType.controls]!.sprites,
-                      level: Level(
-                          background: ParallaxBackground(
-                              backgroundImage: response
-                                  .attributes[DataType.background]!
-                                  .backgroundImage,
-                              floorImage: response
-                                  .attributes[DataType.background]!.floorImage),
-                          hero: Hero(
-                              speed: response.attributes[DataType.hero]!.speed,
-                              spriteSheet:
-                                  response.attributes[DataType.hero]!.sprites),
-                          ennemies: [])),
-                )
-              : Container();
-        }),
+      body: SizedBox(
+        child: BlocListener<LoaderBloc, LoadedResponse>(
+          listener: (context, response) {
+            if (response.type == ResponseType.error) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  response.errorMessage!,
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: Colors.red,
+                duration: Duration(milliseconds: 3000),
+              ));
+            }
+          },
+          child: BlocBuilder<LoaderBloc, LoadedResponse>(
+              builder: (context, response) {
+            return response.type == ResponseType.success
+                ? GameWidget(
+                    game: EyeGame(
+                        controls:
+                            response.attributes[DataType.controls]!.sprites,
+                        level: Level(
+                            background: ParallaxBackground(
+                                backgroundImage: response
+                                    .attributes[DataType.background]!
+                                    .backgroundImage,
+                                floorImage: response
+                                    .attributes[DataType.background]!
+                                    .floorImage),
+                            hero: Hero(
+                                speed:
+                                    response.attributes[DataType.hero]!.speed,
+                                spriteSheet: response
+                                    .attributes[DataType.hero]!.sprites),
+                            ennemies: [])),
+                  )
+                : Container();
+          }),
+        ),
       ),
     );
   }

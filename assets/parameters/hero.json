@@ -25,7 +25,7 @@
             "roll": {
                 "src_image": "Mr_Eye/Mr_Eye_Roll.png",
                 "nb_sprites": 8,
-                "step_time": 0.015
+                "step_time": 0.005
             }
         }
     }

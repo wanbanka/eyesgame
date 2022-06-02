@@ -2,6 +2,8 @@ import 'OnePressButton.dart';
 
 import '../Sprites/Characters/Character.dart';
 
+import '../../Models/Enums/Status.dart';
+
 import 'package:flame/components.dart' show Sprite, Vector2;
 
 /**
@@ -15,10 +17,10 @@ class RollButton extends OnePressButton {
       required this.hero,
       position})
       : super(
-            buttonPressed: buttonPressed,
-            buttonPressedDown: buttonPressedDown,
-            position: position ?? Vector2.zero(),
-            scale: Vector2.all(0.1));
+          buttonPressed: buttonPressed,
+          buttonPressedDown: buttonPressedDown,
+          position: position ?? Vector2.zero(),
+        );
 
   Sprite buttonPressed;
 
@@ -30,6 +32,12 @@ class RollButton extends OnePressButton {
   void goAction() {
     // TODO: implement goAction
 
-    print("Roll: $current");
+    if (hero.current != Status.roll) {
+      hero.current = Status.roll;
+      hero.speed *= 5;
+    } else if (hero.current != Status.move) {
+      hero.current = Status.profile;
+      hero.speed ~/= 5;
+    }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flame/game.dart'
     show FlameGame, Vector2, HasDraggables, HasTappables;
 
-import 'package:flame/experimental.dart' show CameraComponent;
+import 'package:flame/experimental.dart' show CameraComponent, Viewport;
 
 import 'package:flame/components.dart' show SpriteComponent, Component;
 

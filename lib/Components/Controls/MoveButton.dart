@@ -34,7 +34,9 @@ class MoveButton extends LongPressButton {
   void goAction() {
     // TODO: implement goAction
 
-    hero.current = Status.move;
+    if (hero.current != Status.roll) {
+      hero.current = Status.move;
+    }
 
     if (direction == Controls.right) {
       hero.gravity.x = 1;
@@ -53,6 +55,8 @@ class MoveButton extends LongPressButton {
 
   @override
   void endAction() {
-    hero.current = Status.profile;
+    if (hero.current != Status.roll) {
+      hero.current = Status.profile;
+    }
   }
 }

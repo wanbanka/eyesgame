@@ -14,11 +14,11 @@ abstract class OnePressButton extends SpriteButtonComponent {
       scale})
       : super(
             position: position ?? Vector2.zero(),
-            button: buttonPressed,
-            buttonDown: buttonPressedDown,
             scale: scale ?? Vector2.all(0.15),
             anchor: Anchor.center,
-            size: Vector2.all(buttonPressed.image.width.toDouble()));
+            button: buttonPressed,
+            buttonDown: buttonPressedDown,
+            size: Vector2.all(buttonPressed.image.width.toDouble() / 2));
 
   Sprite buttonPressed;
 

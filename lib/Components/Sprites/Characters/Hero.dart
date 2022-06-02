@@ -16,7 +16,7 @@ class Hero extends Character {
 
   @override
   void move(double dt) {
-    if (this.current == Status.move) {
+    if (this.current == Status.move || this.current == Status.roll) {
       this.velocity
         ..add(this.gravity.normalized() * this.speed.toDouble() * dt)
         ..clampScalar(-10, 10);
