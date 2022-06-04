@@ -39,13 +39,13 @@ class MoveButton extends LongPressButton {
     }
 
     if (direction == Controls.right) {
-      hero.gravity.x = 1;
+      hero.speed = hero.speed.abs();
 
       if (hero.scale.x < 0) {
         hero.flipHorizontallyAroundCenter();
       }
     } else if (direction == Controls.left) {
-      hero.gravity.x = -1;
+      hero.speed = -hero.speed.abs();
 
       if (hero.scale.x >= 0) {
         hero.flipHorizontallyAroundCenter();

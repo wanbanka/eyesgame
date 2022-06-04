@@ -11,6 +11,10 @@ abstract class Character extends SpriteGame {
 
   int speed;
 
+  int jumping = 0;
+
+  bool isOnGround = false;
+
   @override
   void update(double dt) {
     // TODO: implement update

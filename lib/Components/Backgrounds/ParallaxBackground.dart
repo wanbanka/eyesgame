@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' as Ma;
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:flame/parallax.dart';
+import 'package:flame/collisions.dart';
 
 import 'dart:ui' show Image;
 
@@ -10,7 +11,7 @@ import 'dart:ui' show Image;
  * Description of the level's background
  */
 
-class ParallaxBackground extends ParallaxComponent {
+class ParallaxBackground extends ParallaxComponent with CollisionCallbacks {
   ParallaxBackground({required this.backgroundImage, required this.floorImage})
       : super(anchor: Anchor.center);
 
@@ -32,5 +33,9 @@ class ParallaxBackground extends ParallaxComponent {
       ParallaxLayer(ParallaxImage(floor,
           alignment: Ma.Alignment(0.0, 0.75), fill: LayerFill.none))
     ]);
+
+    await add(RectangleHitbox(
+        size: Vector2(floor.width.toDouble(), floor.height.toDouble()),
+        position: Vector2(0, floor.height / 7)));
   }
 }

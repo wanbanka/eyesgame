@@ -21,6 +21,13 @@
                 "nb_sprites": 2,
                 "x": 500,
                 "y": 325
+            },
+
+            "jump": {
+                "src_image": "Controls/Jump.png",
+                "nb_sprites": 2,
+                "x": 575,
+                "y": 290
             }
         }
     }

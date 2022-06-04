@@ -1,5 +1,5 @@
 import 'package:flame/game.dart'
-    show FlameGame, Vector2, HasDraggables, HasTappables;
+    show FlameGame, Vector2, HasDraggables, HasTappables, HasCollisionDetection;
 
 import 'package:flame/experimental.dart' show CameraComponent, Viewport;
 
@@ -11,6 +11,7 @@ import 'package:flame/sprite.dart';
 
 import '../Controls/MoveButton.dart';
 import '../Controls/RollButton.dart';
+import '../Controls/JumpButton.dart';
 
 import '../Level/Level.dart';
 
@@ -22,7 +23,8 @@ import '../../Models/ConvertEnumString.dart';
  * Initialization of a level
  */
 
-class EyeGame extends FlameGame with HasDraggables, HasTappables {
+class EyeGame extends FlameGame
+    with HasDraggables, HasTappables, HasCollisionDetection {
   EyeGame({required this.level, required this.controls}) : super();
 
   Level level;
@@ -53,6 +55,12 @@ class EyeGame extends FlameGame with HasDraggables, HasTappables {
             direction: control as Controls));
       } else if (control == Controls.roll) {
         await add(RollButton(
+            position: Vector2(value.posX, value.posY),
+            buttonPressed: spriteSheet.getSpriteById(0),
+            buttonPressedDown: spriteSheet.getSpriteById(1),
+            hero: level.hero));
+      } else if (control == Controls.jump) {
+        await add(JumpButton(
             position: Vector2(value.posX, value.posY),
             buttonPressed: spriteSheet.getSpriteById(0),
             buttonPressedDown: spriteSheet.getSpriteById(1),
