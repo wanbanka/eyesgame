@@ -1,6 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
 
+import 'dart:math';
+
 import 'Character.dart';
 import '../../Backgrounds/ParallaxBackground.dart';
 
@@ -27,24 +29,26 @@ class Hero extends Character with CollisionCallbacks {
 
   @override
   void move(double dt) {
-    this.velocity.y += 10;
-
-    this.velocity.y = this.velocity.y.clamp(-this.jumping.toDouble(), 10);
+    if (!this.isOnGround) {
+      velocity.y += gravity.y;
+    }
 
     if (this.current == Status.move ||
         this.current == Status.roll ||
         this.current == Status.jump) {
-      this.velocity.x += this.gravity.x * this.speed;
+      this.velocity.x += (this.gravity.normalize() * this.speed);
 
-      this.velocity.x = this.velocity.x.clamp(-10, 10);
+      if (this.jumping > 0) {
+        this.velocity.y = -this.jumping.toDouble();
 
-      if (this.isOnGround) {
-        this.velocity.y -= this.jumping;
         this.isOnGround = false;
       }
     }
 
-    this.position.add(this.velocity * dt);
+    this.position.add(Vector2(
+        this.velocity.x * cos(radians(45)) * dt,
+        (-0.5 * this.gravity.y * (pow(dt, 2))) +
+            (this.velocity.y * sin(radians(45)) * dt)));
   }
 
   /**
@@ -63,19 +67,14 @@ class Hero extends Character with CollisionCallbacks {
 
         final collisionNormal = absoluteCenter - mid;
 
-        final separationDistance = (size.x / 2) - collisionNormal.length;
-
-        print(collisionNormal);
+        final separationDistance = (size.y / 2) - collisionNormal.length;
 
         if (separationDistance < 30) {
           this.isOnGround = true;
+          this.velocity.y = 0;
         }
-
-        this.position.y += collisionNormal.y;
       }
     }
-
-    print(this.position);
 
     super.onCollision(intersectionPoints, other);
   }

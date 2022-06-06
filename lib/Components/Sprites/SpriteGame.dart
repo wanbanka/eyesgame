@@ -43,7 +43,7 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent {
 
   set velocity(Vector2 value) => this._velocity = value;
 
-  Vector2 _gravity = Vector2(1, 1);
+  Vector2 _gravity = Vector2(1, 9.81);
 
   Vector2 get gravity => this._gravity;
 

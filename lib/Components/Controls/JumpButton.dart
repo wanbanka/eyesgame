@@ -33,9 +33,9 @@ class JumpButton extends OnePressButton {
       hero.current = Status.jump;
     }
 
-    hero.jumping = 50;
+    hero.jumping = 100;
 
-    Future.delayed(Duration(milliseconds: 2000), () {
+    Future.delayed(Duration(milliseconds: 500), () {
       hero.jumping = 0;
 
       if (hero.current != Status.roll) {
