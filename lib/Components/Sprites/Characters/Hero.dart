@@ -33,15 +33,17 @@ class Hero extends Character with CollisionCallbacks {
       velocity.y += gravity.y;
     }
 
-    if (this.current == Status.move ||
-        this.current == Status.roll ||
-        this.current == Status.jump) {
+    if ([Status.move, Status.roll, Status.jump].contains(this.current)) {
       this.velocity.x += (this.gravity.normalize() * this.speed);
 
       if (this.jumping > 0) {
         this.velocity.y = -this.jumping.toDouble();
 
         this.isOnGround = false;
+      }
+    } else {
+      if (this.velocity.y == 0) {
+        this.velocity.x = 0;
       }
     }
 
