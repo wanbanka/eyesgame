@@ -1,8 +1,14 @@
+import 'package:flame/components.dart' show Component;
 import 'package:flame/experimental.dart' show World;
+import 'package:flame_bloc/flame_bloc.dart';
+
+import '../../Blocs/MathBloc.dart';
 
 import '../Sprites/Characters/Character.dart';
 
 import '../Backgrounds/ParallaxBackground.dart';
+
+import '../../States/Loader/LoadedResponse.dart';
 
 /**
  * Description of a level
@@ -20,10 +26,10 @@ class Level extends World {
 
   @override
   Future<void>? onLoad() async {
-    List dataToAdd = [background, hero, ...ennemies];
+    List<Component> dataToAdd = [background, hero, ...ennemies];
 
-    dataToAdd.forEach((sprite) async {
-      await add(sprite);
-    });
+    await add(FlameMultiBlocProvider(providers: [
+      FlameBlocProvider<MathBloc, LoadedResponse>(create: () => MathBloc())
+    ], children: dataToAdd));
   }
 }

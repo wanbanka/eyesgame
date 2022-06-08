@@ -1,9 +1,12 @@
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart'
-    show SpriteAnimationGroupComponent, Vector2, Anchor;
+    show SpriteAnimationGroupComponent, Vector2, Anchor, PositionComponent;
 import 'package:flame/sprite.dart';
+import 'package:flame/collisions.dart';
 
 import 'dart:ui' show Image;
+
+import '../../Components/Backgrounds/ParallaxBackground.dart';
 
 import '../../Models/CharFrame.dart';
 import '../../Models/ConvertEnumString.dart';
@@ -13,7 +16,8 @@ import '../../Models/Enums/Status.dart';
  * Define all the properties of all animated sprites
  */
 
-abstract class SpriteGame extends SpriteAnimationGroupComponent {
+abstract class SpriteGame extends SpriteAnimationGroupComponent
+    with CollisionCallbacks {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
       : super(animations: {}, scale: Vector2.all(0.5)) {
     spriteSheet.forEach((key, charFrame) async {
@@ -49,13 +53,33 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent {
 
   set gravity(Vector2 value) => this._gravity = value;
 
+  bool isOnGround = false;
+
+  /**
+     * @source https://www.youtube.com/watch?v=mSPalRqZQS8
+     */
+
   @override
-  void onGameResize(Vector2 size) {
-    // TODO: implement onGameResize
-    super.onGameResize(size);
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    // TODO: implement onCollision
 
-    this.position.x -= size.x / 2.1;
+    if (other is ParallaxBackground) {
+      if (intersectionPoints.length == 2) {
+        final mid = (intersectionPoints.elementAt(0) +
+                intersectionPoints.elementAt(1)) /
+            2;
 
-    this.position.y += size.y / 5;
+        final collisionNormal = absoluteCenter - mid;
+
+        final separationDistance = (size.y / 2) - collisionNormal.length;
+
+        if (separationDistance < 30) {
+          this.isOnGround = true;
+          this.velocity.y = 0;
+        }
+      }
+    }
+
+    super.onCollision(intersectionPoints, other);
   }
 }

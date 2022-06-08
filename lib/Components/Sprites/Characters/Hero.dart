@@ -1,45 +1,47 @@
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
 
-import 'dart:math';
-
 import 'Character.dart';
-import '../../Backgrounds/ParallaxBackground.dart';
 
 import '../../../Models/Enums/Status.dart';
+import '../../../Models/Enums/ResponseType.dart';
+import '../../../Models/Enums/Coords.dart';
 
 /**
  * Define all characteristics of the hero
  */
 
-class Hero extends Character with CollisionCallbacks {
+class Hero extends Character {
   Hero({required spriteSheet, required speed})
       : super(spriteSheet: spriteSheet, speed: speed) {
     this.current = Status.profile;
+
+    add(CircleHitbox());
   }
 
   @override
-  Future<void>? onLoad() async {
-    // TODO: implement onLoad
+  void onGameResize(Vector2 size) {
+    // TODO: implement onGameResize
+    super.onGameResize(size);
 
-    await add(CircleHitbox());
-
-    return super.onLoad();
+    this.position.x -= this.size.x / 0.6;
   }
 
   @override
   void move(double dt) {
     if (!this.isOnGround) {
-      velocity.y += gravity.y;
+      this.velocity.y += this.gravity.y;
     }
 
     if ([Status.move, Status.roll, Status.jump].contains(this.current)) {
       this.velocity.x += (this.gravity.normalize() * this.speed);
 
       if (this.jumping > 0) {
-        this.velocity.y = -this.jumping.toDouble();
+        if (this.isOnGround) {
+          this.velocity.y = -this.jumping.toDouble();
 
-        this.isOnGround = false;
+          this.isOnGround = false;
+        }
       }
     } else {
       if (this.velocity.y == 0) {
@@ -47,37 +49,13 @@ class Hero extends Character with CollisionCallbacks {
       }
     }
 
-    this.position.add(Vector2(
-        this.velocity.x * cos(radians(45)) * dt,
-        (-0.5 * this.gravity.y * (pow(dt, 2))) +
-            (this.velocity.y * sin(radians(45)) * dt)));
-  }
+    this.bloc.computeTrajectory(gravity.y, velocity.x, velocity.y, dt);
 
-  /**
-     * @source https://www.youtube.com/watch?v=mSPalRqZQS8
-     */
+    var state = this.bloc.state;
 
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollision
-
-    if (other is ParallaxBackground) {
-      if (intersectionPoints.length == 2) {
-        final mid = (intersectionPoints.elementAt(0) +
-                intersectionPoints.elementAt(1)) /
-            2;
-
-        final collisionNormal = absoluteCenter - mid;
-
-        final separationDistance = (size.y / 2) - collisionNormal.length;
-
-        if (separationDistance < 30) {
-          this.isOnGround = true;
-          this.velocity.y = 0;
-        }
-      }
+    if (state.type == ResponseType.success) {
+      this.position.add(Vector2(
+          state.computedCoords[Coords.x]!, state.computedCoords[Coords.y]!));
     }
-
-    super.onCollision(intersectionPoints, other);
   }
 }

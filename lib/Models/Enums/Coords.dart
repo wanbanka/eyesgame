@@ -1,0 +1,1 @@
+enum Coords { x, y }

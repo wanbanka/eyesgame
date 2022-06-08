@@ -58,20 +58,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? GameWidget(
                     game: EyeGame(
                         controls:
-                            response.attributes[DataType.controls]!.sprites,
+                            response.gameElements[DataType.controls]!.sprites,
                         level: Level(
                             background: ParallaxBackground(
                                 backgroundImage: response
-                                    .attributes[DataType.background]!
+                                    .gameElements[DataType.background]!
                                     .backgroundImage,
                                 floorImage: response
-                                    .attributes[DataType.background]!
+                                    .gameElements[DataType.background]!
                                     .floorImage),
                             hero: Hero(
                                 speed:
-                                    response.attributes[DataType.hero]!.speed,
+                                    response.gameElements[DataType.hero]!.speed,
                                 spriteSheet: response
-                                    .attributes[DataType.hero]!.sprites),
+                                    .gameElements[DataType.hero]!.sprites),
                             ennemies: [])),
                   )
                 : Container();

@@ -19,7 +19,7 @@ import '../Services/JSONDescriptionService.dart';
  */
 
 class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
-  Map<DataType, Properties> _attributes = {};
+  Map<DataType, Properties> _gameElements = {};
 
   JSONDescriptionService _jsonDescriptionService = JSONDescriptionService();
 
@@ -28,7 +28,7 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
   LoaderBloc({required this.selectLevel}) : super(LoadedResponse()) {
     on<LoadingEvent>((event, emit) async {
       try {
-        _attributes.addAll({
+        _gameElements.addAll({
           DataType.hero: await _loadHero(),
           DataType.background: await _loadLevel(),
           DataType.controls: await _loadControls()
@@ -41,7 +41,8 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
     });
 
     on<LoadedEvent>((event, emit) {
-      emit(state.copyWith(type: ResponseType.success, attributes: _attributes));
+      emit(state.copyWith(
+          type: ResponseType.success, gameElements: _gameElements));
     });
 
     on<LoadingError>((event, emit) {
