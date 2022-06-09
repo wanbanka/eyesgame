@@ -71,12 +71,14 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
 
         final collisionNormal = absoluteCenter - mid;
 
-        final separationDistance = (size.y / 2) - collisionNormal.length;
+        double inner = Vector2(0, -1).dot(collisionNormal.normalized());
 
-        if (separationDistance < 30) {
+        if (inner > 0.9) {
           this.isOnGround = true;
           this.velocity.y = 0;
         }
+
+        position += collisionNormal.normalized().scaled(inner);
       }
     }
 

@@ -35,15 +35,15 @@ class MathBloc extends Bloc<ComputeEvent, LoadedResponse> {
    * Compute the trajectory of a character
    */
 
-  void computeTrajectory(
-      double gravity, double velocityX, double velocityY, double time) {
+  void computeTrajectory(double gravity, List<double> velocity, double time) {
     try {
-      double x = _mathService.computeTrajectory(gravity, velocityX, time);
+      List<double> newCoords =
+          _mathService.computeTrajectory(gravity, velocity, time);
 
-      double y = _mathService.computeTrajectory(gravity, velocityY, time,
-          isXAxis: false);
+      assert(newCoords.length == 2,
+          "You have to get the new coords (x and y) of the position");
 
-      this.add(ComputingEvent(x: x, y: y));
+      this.add(ComputingEvent(x: newCoords[0], y: newCoords[1]));
     } catch (e) {
       this.add(ComputingError("Erreur de calcul: $e"));
     }

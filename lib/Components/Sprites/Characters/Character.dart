@@ -32,4 +32,10 @@ abstract class Character extends SpriteGame
    */
 
   void move(double dt);
+
+/**
+ * Make a character jump
+ */
+
+  void jump();
 }

@@ -34,28 +34,39 @@ class Hero extends Character {
     }
 
     if ([Status.move, Status.roll, Status.jump].contains(this.current)) {
-      this.velocity.x += (this.gravity.normalize() * this.speed);
-
-      if (this.jumping > 0) {
-        if (this.isOnGround) {
-          this.velocity.y = -this.jumping.toDouble();
-
-          this.isOnGround = false;
-        }
+      if ([Status.move, Status.roll].contains(this.current)) {
+        this.velocity.x += (this.gravity.normalize() * this.speed);
+      } else {
+        this.jump();
       }
     } else {
       if (this.velocity.y == 0) {
-        this.velocity.x = 0;
+        this.velocity = Vector2.zero();
       }
     }
 
-    this.bloc.computeTrajectory(gravity.y, velocity.x, velocity.y, dt);
+    this.bloc.computeTrajectory(gravity.y, [velocity.x, velocity.y], dt);
 
-    var state = this.bloc.state;
+    if (this.bloc.state.type == ResponseType.success) {
+      this.position.add(Vector2.array([
+            this.bloc.state.computedCoords[Coords.x]!,
+            this.bloc.state.computedCoords[Coords.y]!
+          ]));
+    }
+  }
 
-    if (state.type == ResponseType.success) {
-      this.position.add(Vector2(
-          state.computedCoords[Coords.x]!, state.computedCoords[Coords.y]!));
+  @override
+  void jump() {
+    // TODO: implement jump
+
+    this.jumping = 180;
+
+    if (this.jumping > 0) {
+      if (this.isOnGround) {
+        this.velocity.y = -this.jumping.toDouble();
+
+        this.isOnGround = false;
+      }
     }
   }
 }
