@@ -55,6 +55,8 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
 
   bool isOnGround = false;
 
+  bool isOnWall = false;
+
   /**
      * @source https://www.youtube.com/watch?v=mSPalRqZQS8
      */
@@ -63,25 +65,61 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     // TODO: implement onCollision
 
-    if (other is ParallaxBackground) {
-      if (intersectionPoints.length == 2) {
-        final mid = (intersectionPoints.elementAt(0) +
-                intersectionPoints.elementAt(1)) /
-            2;
-
-        final collisionNormal = absoluteCenter - mid;
-
-        double inner = Vector2(0, -1).dot(collisionNormal.normalized());
-
-        if (inner > 0.9) {
-          this.isOnGround = true;
-          this.velocity.y = 0;
-        }
-
-        position += collisionNormal.normalized().scaled(inner);
+    if (intersectionPoints.length == 2) {
+      if (other is ParallaxBackground) {
+        _handleFloorCollision(intersectionPoints);
+      } else if (other is ScreenHitbox) {
+        _handleScreenCollision(intersectionPoints);
       }
     }
 
     super.onCollision(intersectionPoints, other);
+  }
+
+  /**
+   * Handle the collision with the screen's boundaries
+   */
+
+  void _handleScreenCollision(Set<Vector2> intersectionPoints) {
+    final mid =
+        (intersectionPoints.elementAt(0) + intersectionPoints.elementAt(1)) / 2;
+
+    final collisionNormal = absoluteCenter - mid;
+
+    final separationDistance = (size.x / 2) - collisionNormal.length;
+
+    double innerLeft = Vector2(1, 0).dot(collisionNormal.normalized());
+
+    double innerRight = Vector2(-1, 0).dot(collisionNormal.normalized());
+
+    print("Inners: $innerLeft, $innerRight");
+
+    if (innerLeft > 0.9 || innerRight > 0.9) {
+      this.isOnWall = true;
+      this.isOnGround = false;
+
+      this.scale.x *= -1;
+    }
+  }
+
+  /**
+   * Handle the collision with the floor and the platforms
+   */
+
+  void _handleFloorCollision(Set<Vector2> intersectionPoints) {
+    final mid =
+        (intersectionPoints.elementAt(0) + intersectionPoints.elementAt(1)) / 2;
+
+    final collisionNormal = absoluteCenter - mid;
+
+    double inner = Vector2(0, -1).dot(collisionNormal.normalized());
+
+    if (inner > 0.9) {
+      this.isOnGround = true;
+      this.isOnWall = false;
+      this.velocity = Vector2.zero();
+    }
+
+    position += collisionNormal.normalized().scaled(inner);
   }
 }

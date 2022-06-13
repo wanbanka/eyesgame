@@ -1,13 +1,15 @@
 import 'package:flame/game.dart'
     show FlameGame, Vector2, HasDraggables, HasTappables, HasCollisionDetection;
 
-import 'package:flame/experimental.dart' show CameraComponent, Viewport;
+import 'package:flame/experimental.dart' show CameraComponent;
 
-import 'package:flame/components.dart' show SpriteComponent, Component;
+import 'package:flame/components.dart' show SpriteComponent;
 
 import 'package:flame/flame.dart';
 
 import 'package:flame/sprite.dart';
+
+import 'package:flame/input.dart';
 
 import '../Controls/MoveButton.dart';
 import '../Controls/RollButton.dart';
@@ -80,5 +82,13 @@ class EyeGame extends FlameGame
     await _loadControls();
 
     debugMode = true;
+  }
+
+  @override
+  void onTapUp(int pointerId, TapUpInfo info) {
+    // TODO: implement onTapUp
+    super.onTapUp(pointerId, info);
+
+    print("Information: ${info.eventPosition.game}");
   }
 }

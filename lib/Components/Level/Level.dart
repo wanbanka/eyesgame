@@ -1,5 +1,7 @@
-import 'package:flame/components.dart' show Component;
+import 'package:flame/components.dart'
+    show Component, ScreenHitbox, Vector2, Anchor;
 import 'package:flame/experimental.dart' show World;
+
 import 'package:flame_bloc/flame_bloc.dart';
 
 import '../../Blocs/MathBloc.dart';
@@ -31,5 +33,7 @@ class Level extends World {
     await add(FlameMultiBlocProvider(providers: [
       FlameBlocProvider<MathBloc, LoadedResponse>(create: () => MathBloc())
     ], children: dataToAdd));
+
+    await add(ScreenHitbox()..anchor = Anchor.center);
   }
 }
