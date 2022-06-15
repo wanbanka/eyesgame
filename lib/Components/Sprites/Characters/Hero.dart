@@ -48,7 +48,7 @@ class Hero extends Character {
     }
 
     this.bloc.computeTrajectory(gravity.y, [velocity.x, velocity.y], dt,
-        isOnWall: this.isOnWall);
+        isOnWall: this.isOnWall, touchedWalls: this.touchedWalls);
 
     if (this.bloc.state.type == ResponseType.success) {
       this.position.add(Vector2.array([

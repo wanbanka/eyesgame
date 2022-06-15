@@ -1,6 +1,6 @@
 import 'package:flame/input.dart' show HudButtonComponent;
 
-import 'package:flame/components.dart' show SpriteComponent, Vector2, Anchor;
+import 'package:flame/components.dart';
 
 /**
  * Represent the globalization of long-press buttons

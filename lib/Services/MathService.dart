@@ -11,7 +11,7 @@ class MathService {
 
   List<double> computeTrajectory(
       double gravity, List<double> velocity, double time,
-      {bool isOnWall = false}) {
+      {bool isOnWall = false, int touchedWalls = 0}) {
     double landAngle = _computeAngle(gravity, velocity[0], time);
 
     const restitutionCoeff = 0.75;
@@ -22,7 +22,7 @@ class MathService {
     double newX = !isVelocityZero ? velocity[0] * cos(1 - landAngle) * time : 0;
 
     if (isOnWall) {
-      newX *= -restitutionCoeff;
+      newX *= -restitutionCoeff * pow(0.5, touchedWalls - 1);
     }
 
     double newY = (-0.5 * gravity * (pow(time, 2))) +

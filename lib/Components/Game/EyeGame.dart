@@ -1,5 +1,5 @@
 import 'package:flame/game.dart'
-    show FlameGame, Vector2, HasDraggables, HasTappables, HasCollisionDetection;
+    show FlameGame, Vector2, HasTappables, HasCollisionDetection;
 
 import 'package:flame/experimental.dart' show CameraComponent;
 
@@ -25,8 +25,7 @@ import '../../Models/ConvertEnumString.dart';
  * Initialization of a level
  */
 
-class EyeGame extends FlameGame
-    with HasDraggables, HasTappables, HasCollisionDetection {
+class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
   EyeGame({required this.level, required this.controls}) : super();
 
   Level level;

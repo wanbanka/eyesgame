@@ -57,6 +57,8 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
 
   bool isOnWall = false;
 
+  int touchedWalls = 0;
+
   /**
      * @source https://www.youtube.com/watch?v=mSPalRqZQS8
      */
@@ -96,10 +98,12 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
 
     if (innerLeft > 0.9 || innerRight > 0.9) {
       this.isOnWall = true;
+      this.touchedWalls += 1;
       this.isOnGround = false;
-
-      this.scale.x *= -1;
     }
+
+    position -= collisionNormal.normalized().scaled(
+        innerLeft > 0.9 ? -innerLeft : (innerRight > 0.9 ? -innerRight : 0));
   }
 
   /**
@@ -117,6 +121,7 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
     if (inner > 0.9) {
       this.isOnGround = true;
       this.isOnWall = false;
+      this.touchedWalls = 0;
       this.velocity = Vector2.zero();
     }
 
