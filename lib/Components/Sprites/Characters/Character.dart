@@ -38,4 +38,10 @@ abstract class Character extends SpriteGame
  */
 
   void jump();
+
+/**
+ * Make a character shoot a laser
+ */
+
+  void shoot();
 }

@@ -19,7 +19,7 @@ import '../../Models/Enums/Status.dart';
 abstract class SpriteGame extends SpriteAnimationGroupComponent
     with CollisionCallbacks {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
-      : super(animations: {}, scale: Vector2.all(0.5)) {
+      : super(animations: {}, scale: Vector2.all(0.5), anchor: Anchor.center) {
     spriteSheet.forEach((key, charFrame) async {
       var status = ConvertEnumString.getEnumFromString(Status.values, key);
 

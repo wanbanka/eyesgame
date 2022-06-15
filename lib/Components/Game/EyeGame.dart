@@ -3,7 +3,8 @@ import 'package:flame/game.dart'
 
 import 'package:flame/experimental.dart' show CameraComponent;
 
-import 'package:flame/components.dart' show SpriteComponent;
+import 'package:flame/components.dart'
+    show SpriteComponent, PositionComponent, PositionType;
 
 import 'package:flame/flame.dart';
 
@@ -84,10 +85,18 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
   }
 
   @override
-  void onTapUp(int pointerId, TapUpInfo info) {
+  void onTapDown(int pointerId, TapDownInfo info) {
     // TODO: implement onTapUp
-    super.onTapUp(pointerId, info);
+    super.onTapDown(pointerId, info);
 
-    print("Information: ${info.eventPosition.game}");
+    var controls = <PositionComponent>[
+      ...this.children.query<SpriteButtonComponent>(),
+      ...this.children.query<HudButtonComponent>()
+    ].map<bool>((PositionComponent control) =>
+        control.containsPoint(info.eventPosition.game));
+
+    if (!controls.contains(true)) {
+      level.hero.shoot();
+    }
   }
 }

@@ -7,6 +7,8 @@ import '../../../Models/Enums/Status.dart';
 import '../../../Models/Enums/ResponseType.dart';
 import '../../../Models/Enums/Coords.dart';
 
+import '../Lasers/RedLaser.dart';
+
 /**
  * Define all characteristics of the hero
  */
@@ -69,5 +71,12 @@ class Hero extends Character {
         this.isOnGround = false;
       }
     }
+  }
+
+  @override
+  void shoot() {
+    // TODO: implement shoot
+
+    add(RedLaser(startPosition: Vector2(this.size.x, this.size.y / 2)));
   }
 }
