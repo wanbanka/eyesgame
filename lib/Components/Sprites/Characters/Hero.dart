@@ -76,7 +76,5 @@ class Hero extends Character {
   @override
   void shoot() {
     // TODO: implement shoot
-
-    add(RedLaser(startPosition: Vector2(this.size.x, this.size.y / 2)));
   }
 }

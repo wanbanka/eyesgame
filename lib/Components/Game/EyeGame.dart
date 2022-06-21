@@ -22,6 +22,8 @@ import '../../Models/Enums/Controls.dart';
 import '../../Models/CharFrame.dart';
 import '../../Models/ConvertEnumString.dart';
 
+import '../Sprites/Lasers/RedLaser.dart';
+
 /**
  * Initialization of a level
  */
@@ -95,8 +97,30 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
     ].map<bool>((PositionComponent control) =>
         control.containsPoint(info.eventPosition.game));
 
+    Vector2 realHeroPos =
+        Vector2(level.hero.position.x + 380, level.hero.position.y + 175);
+
+    print(
+        "Position hero: $realHeroPos \n Position Tap: ${info.eventPosition.game}");
+
+    bool shootRight =
+        (realHeroPos.x - level.hero.size.x / 2) <= info.eventPosition.game.x;
+
     if (!controls.contains(true)) {
-      level.hero.shoot();
+      level.hero.scale.x =
+          shootRight ? level.hero.scale.x.abs() : -level.hero.scale.x.abs();
+
+      realHeroPos.x =
+          shootRight ? realHeroPos.x : realHeroPos.x - level.hero.size.x * 1.5;
+
+      print("RealHero pos: $realHeroPos");
+
+      RedLaser heroLaser = RedLaser(startPosition: realHeroPos);
+
+      heroLaser.velocity.x =
+          shootRight ? heroLaser.velocity.x : -heroLaser.velocity.x;
+
+      add(heroLaser);
     }
   }
 }

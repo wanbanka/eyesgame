@@ -1,4 +1,5 @@
-import 'package:flame/components.dart' show RectangleComponent, Vector2, Anchor;
+import 'package:flame/components.dart'
+    show RectangleComponent, Vector2, Anchor, PositionType;
 
 import 'dart:ui';
 
@@ -24,4 +25,6 @@ abstract class Laser extends RectangleComponent {
   Color color;
 
   int damage;
+
+  Vector2 velocity = Vector2(20, 0);
 }
