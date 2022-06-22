@@ -27,4 +27,12 @@ abstract class Laser extends RectangleComponent {
   int damage;
 
   Vector2 velocity = Vector2(20, 0);
+
+  @override
+  void update(double dt) {
+    // TODO: implement update
+    super.update(dt);
+
+    this.position.add(this.velocity);
+  }
 }

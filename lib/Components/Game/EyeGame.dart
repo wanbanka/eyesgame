@@ -35,6 +35,12 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
 
   Map<String, CharFrame> controls;
 
+  bool _shootRight = false;
+
+  void set shootRight(bool isRight) {
+    _shootRight = isRight;
+  }
+
   /**
    * Load player's controls in order to interact with the game
    */
@@ -100,25 +106,23 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
     Vector2 realHeroPos =
         Vector2(level.hero.position.x + 380, level.hero.position.y + 175);
 
-    print(
-        "Position hero: $realHeroPos \n Position Tap: ${info.eventPosition.game}");
-
-    bool shootRight =
+    _shootRight =
         (realHeroPos.x - level.hero.size.x / 2) <= info.eventPosition.game.x;
 
     if (!controls.contains(true)) {
-      level.hero.scale.x =
-          shootRight ? level.hero.scale.x.abs() : -level.hero.scale.x.abs();
-
-      realHeroPos.x =
-          shootRight ? realHeroPos.x : realHeroPos.x - level.hero.size.x * 1.5;
-
-      print("RealHero pos: $realHeroPos");
+      level.hero.scale.x = level.hero.scale.x.abs();
 
       RedLaser heroLaser = RedLaser(startPosition: realHeroPos);
 
-      heroLaser.velocity.x =
-          shootRight ? heroLaser.velocity.x : -heroLaser.velocity.x;
+      if (!_shootRight) {
+        level.hero.scale.x *= -1;
+
+        realHeroPos.x = level.hero.position.x + (300 - level.hero.size.x);
+
+        heroLaser = RedLaser(startPosition: realHeroPos);
+
+        heroLaser.velocity *= -1;
+      }
 
       add(heroLaser);
     }

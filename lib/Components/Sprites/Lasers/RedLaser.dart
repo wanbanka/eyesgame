@@ -15,12 +15,4 @@ class RedLaser extends Laser {
             damage: 20,
             sizeLaser: Vector2(150, 5),
             startPosition: startPosition);
-
-  @override
-  void update(double dt) {
-    // TODO: implement update
-    super.update(dt);
-
-    this.position.add(this.velocity);
-  }
 }
