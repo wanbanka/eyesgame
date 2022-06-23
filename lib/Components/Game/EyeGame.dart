@@ -4,7 +4,7 @@ import 'package:flame/game.dart'
 import 'package:flame/experimental.dart' show CameraComponent;
 
 import 'package:flame/components.dart'
-    show SpriteComponent, PositionComponent, PositionType;
+    show SpriteComponent, PositionComponent, Anchor, PositionType;
 
 import 'package:flame/flame.dart';
 
@@ -103,28 +103,22 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
     ].map<bool>((PositionComponent control) =>
         control.containsPoint(info.eventPosition.game));
 
-    Vector2 realHeroPos =
-        Vector2(level.hero.position.x + 380, level.hero.position.y + 175);
-
-    _shootRight =
-        (realHeroPos.x - level.hero.size.x / 2) <= info.eventPosition.game.x;
+    _shootRight = level.hero.position.x + 380 <= info.eventPosition.game.x;
 
     if (!controls.contains(true)) {
       level.hero.scale.x = level.hero.scale.x.abs();
 
-      RedLaser heroLaser = RedLaser(startPosition: realHeroPos);
+      RedLaser heroLaser = RedLaser(startPosition: level.hero.position);
 
       if (!_shootRight) {
         level.hero.scale.x *= -1;
 
-        realHeroPos.x = level.hero.position.x + (300 - level.hero.size.x);
-
-        heroLaser = RedLaser(startPosition: realHeroPos);
+        heroLaser.position.x -= level.hero.size.x * 1.5;
 
         heroLaser.velocity *= -1;
       }
 
-      add(heroLaser);
+      level.add(heroLaser);
     }
   }
 }

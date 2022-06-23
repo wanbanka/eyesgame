@@ -1,6 +1,6 @@
 import 'package:flame/components.dart'
     show Component, ScreenHitbox, Vector2, Anchor;
-import 'package:flame/experimental.dart' show World;
+import 'package:flame/experimental.dart' show World, HasTappableComponents;
 
 import 'package:flame_bloc/flame_bloc.dart';
 

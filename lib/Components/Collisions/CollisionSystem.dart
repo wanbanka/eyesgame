@@ -23,14 +23,11 @@ mixin CollisionSystem on PositionComponent {
    */
 
   void handleScreenCollision(Set<Vector2> intersectionPoints) {
-    final mid =
-        (intersectionPoints.elementAt(0) + intersectionPoints.elementAt(1)) / 2;
+    final collisionNormal = _getNormalCollision(intersectionPoints);
 
-    final collisionNormal = absoluteCenter - mid;
+    double innerLeft = Vector2(1, 0).dot(collisionNormal);
 
-    double innerLeft = Vector2(1, 0).dot(collisionNormal.normalized());
-
-    double innerRight = Vector2(-1, 0).dot(collisionNormal.normalized());
+    double innerRight = Vector2(-1, 0).dot(collisionNormal);
 
     print("Inners: $innerLeft, $innerRight");
 
@@ -40,7 +37,7 @@ mixin CollisionSystem on PositionComponent {
       this.isOnGround = false;
     }
 
-    position -= collisionNormal.normalized().scaled(
+    position -= collisionNormal.scaled(
         innerLeft > 0.9 ? -innerLeft : (innerRight > 0.9 ? -innerRight : 0));
   }
 
@@ -49,12 +46,9 @@ mixin CollisionSystem on PositionComponent {
    */
 
   void handleFloorCollision(Set<Vector2> intersectionPoints) {
-    final mid =
-        (intersectionPoints.elementAt(0) + intersectionPoints.elementAt(1)) / 2;
+    final collisionNormal = _getNormalCollision(intersectionPoints);
 
-    final collisionNormal = absoluteCenter - mid;
-
-    double inner = Vector2(0, -1).dot(collisionNormal.normalized());
+    double inner = Vector2(0, -1).dot(collisionNormal);
 
     if (inner > 0.9) {
       this.isOnGround = true;
@@ -63,6 +57,18 @@ mixin CollisionSystem on PositionComponent {
       this.velocity = Vector2.zero();
     }
 
-    position += collisionNormal.normalized().scaled(inner);
+    position += collisionNormal.scaled(inner);
+  }
+
+  /**
+   * Compute the collision's point between two components
+   */
+
+  Vector2 _getNormalCollision(Set<Vector2> intersectionPoints) {
+    return (absoluteCenter -
+            ((intersectionPoints.elementAt(0) +
+                    intersectionPoints.elementAt(1)) /
+                2))
+        .normalized();
   }
 }
