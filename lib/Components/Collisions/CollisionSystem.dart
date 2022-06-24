@@ -29,8 +29,6 @@ mixin CollisionSystem on PositionComponent {
 
     double innerRight = Vector2(-1, 0).dot(collisionNormal);
 
-    print("Inners: $innerLeft, $innerRight");
-
     if (innerLeft > 0.9 || innerRight > 0.9) {
       this.isOnWall = true;
       this.touchedWalls += 1;

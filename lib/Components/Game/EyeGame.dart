@@ -92,20 +92,41 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
     debugMode = true;
   }
 
+  /**
+   * Compute the real position of the hero
+   * (because the frame of reference for positionning isn't
+   * the game, but the level)
+   */
+
+  Vector2 _computeRealHeroPosition() {
+    return Vector2(level.hero.position.x + (380 - (level.hero.size.x / 2)),
+        level.hero.position.y);
+  }
+
+  /**
+   * Check if the player touches the controls
+   */
+
+  bool _isControls(Vector2 tapPosition) {
+    var controls = <PositionComponent>[
+      ...this.children.query<SpriteButtonComponent>(),
+      ...this.children.query<HudButtonComponent>()
+    ].map<bool>(
+        (PositionComponent control) => control.containsPoint(tapPosition));
+
+    return controls.contains(true);
+  }
+
   @override
   void onTapDown(int pointerId, TapDownInfo info) {
     // TODO: implement onTapUp
     super.onTapDown(pointerId, info);
 
-    var controls = <PositionComponent>[
-      ...this.children.query<SpriteButtonComponent>(),
-      ...this.children.query<HudButtonComponent>()
-    ].map<bool>((PositionComponent control) =>
-        control.containsPoint(info.eventPosition.game));
+    Vector2 realHeroPos = _computeRealHeroPosition();
 
-    _shootRight = level.hero.position.x + 380 <= info.eventPosition.game.x;
+    _shootRight = realHeroPos.x <= info.eventPosition.game.x;
 
-    if (!controls.contains(true)) {
+    if (!_isControls(info.eventPosition.game)) {
       level.hero.scale.x = level.hero.scale.x.abs();
 
       RedLaser heroLaser = RedLaser(startPosition: level.hero.position);
@@ -115,7 +136,7 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
 
         heroLaser.position.x -= level.hero.size.x * 1.5;
 
-        heroLaser.velocity *= -1;
+        heroLaser.velocity.x *= -1;
       }
 
       level.add(heroLaser);
