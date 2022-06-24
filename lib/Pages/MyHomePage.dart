@@ -62,11 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         level: Level(
                             background: ParallaxBackground(
                                 backgroundImage: response
-                                    .gameElements[DataType.background]!
+                                    .gameElements[DataType.level]!
                                     .backgroundImage,
                                 floorImage: response
-                                    .gameElements[DataType.background]!
-                                    .floorImage),
+                                    .gameElements[DataType.level]!.floorImage),
+                            platforms: response
+                                .gameElements[DataType.level]!.platforms,
                             hero: Hero(
                                 speed:
                                     response.gameElements[DataType.hero]!.speed,

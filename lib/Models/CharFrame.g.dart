@@ -12,6 +12,8 @@ _$_CharFrame _$$_CharFrameFromJson(Map<String, dynamic> json) => _$_CharFrame(
       stepTime: (json['step_time'] as num?)?.toDouble() ?? 0.1,
       posX: (json['x'] as num?)?.toDouble() ?? 0.0,
       posY: (json['y'] as num?)?.toDouble() ?? 0.0,
+      type: json['type'] as String? ?? "",
+      size: (json['size'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$$_CharFrameToJson(_$_CharFrame instance) =>
@@ -21,4 +23,6 @@ Map<String, dynamic> _$$_CharFrameToJson(_$_CharFrame instance) =>
       'step_time': instance.stepTime,
       'x': instance.posX,
       'y': instance.posY,
+      'type': instance.type,
+      'size': instance.size,
     };

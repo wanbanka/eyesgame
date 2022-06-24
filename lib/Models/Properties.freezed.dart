@@ -21,6 +21,7 @@ Properties _$PropertiesFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Properties {
   Map<String, CharFrame> get sprites => throw _privateConstructorUsedError;
+  List<CharFrame> get platforms => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: "background_image")
   String get backgroundImage => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $PropertiesCopyWith<$Res> {
       _$PropertiesCopyWithImpl<$Res>;
   $Res call(
       {Map<String, CharFrame> sprites,
+      List<CharFrame> platforms,
       String name,
       @JsonKey(name: "background_image") String backgroundImage,
       @JsonKey(name: "floor_image") String floorImage,
@@ -58,6 +60,7 @@ class _$PropertiesCopyWithImpl<$Res> implements $PropertiesCopyWith<$Res> {
   @override
   $Res call({
     Object? sprites = freezed,
+    Object? platforms = freezed,
     Object? name = freezed,
     Object? backgroundImage = freezed,
     Object? floorImage = freezed,
@@ -68,6 +71,10 @@ class _$PropertiesCopyWithImpl<$Res> implements $PropertiesCopyWith<$Res> {
           ? _value.sprites
           : sprites // ignore: cast_nullable_to_non_nullable
               as Map<String, CharFrame>,
+      platforms: platforms == freezed
+          ? _value.platforms
+          : platforms // ignore: cast_nullable_to_non_nullable
+              as List<CharFrame>,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -97,6 +104,7 @@ abstract class _$$_PropertiesCopyWith<$Res>
   @override
   $Res call(
       {Map<String, CharFrame> sprites,
+      List<CharFrame> platforms,
       String name,
       @JsonKey(name: "background_image") String backgroundImage,
       @JsonKey(name: "floor_image") String floorImage,
@@ -116,6 +124,7 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
   @override
   $Res call({
     Object? sprites = freezed,
+    Object? platforms = freezed,
     Object? name = freezed,
     Object? backgroundImage = freezed,
     Object? floorImage = freezed,
@@ -126,6 +135,10 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
           ? _value._sprites
           : sprites // ignore: cast_nullable_to_non_nullable
               as Map<String, CharFrame>,
+      platforms: platforms == freezed
+          ? _value._platforms
+          : platforms // ignore: cast_nullable_to_non_nullable
+              as List<CharFrame>,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -152,11 +165,13 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
 class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   _$_Properties(
       {final Map<String, CharFrame> sprites = const {},
+      final List<CharFrame> platforms = const [],
       this.name = "",
       @JsonKey(name: "background_image") this.backgroundImage = "",
       @JsonKey(name: "floor_image") this.floorImage = "",
       this.speed = 0})
       : _sprites = sprites,
+        _platforms = platforms,
         super._();
 
   factory _$_Properties.fromJson(Map<String, dynamic> json) =>
@@ -168,6 +183,14 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   Map<String, CharFrame> get sprites {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_sprites);
+  }
+
+  final List<CharFrame> _platforms;
+  @override
+  @JsonKey()
+  List<CharFrame> get platforms {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_platforms);
   }
 
   @override
@@ -185,7 +208,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Properties(sprites: $sprites, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage, speed: $speed)';
+    return 'Properties(sprites: $sprites, platforms: $platforms, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage, speed: $speed)';
   }
 
   @override
@@ -194,6 +217,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'Properties'))
       ..add(DiagnosticsProperty('sprites', sprites))
+      ..add(DiagnosticsProperty('platforms', platforms))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('backgroundImage', backgroundImage))
       ..add(DiagnosticsProperty('floorImage', floorImage))
@@ -206,6 +230,8 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _$_Properties &&
             const DeepCollectionEquality().equals(other._sprites, _sprites) &&
+            const DeepCollectionEquality()
+                .equals(other._platforms, _platforms) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.backgroundImage, backgroundImage) &&
@@ -219,6 +245,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_sprites),
+      const DeepCollectionEquality().hash(_platforms),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(backgroundImage),
       const DeepCollectionEquality().hash(floorImage),
@@ -238,6 +265,7 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
 abstract class _Properties extends Properties {
   factory _Properties(
       {final Map<String, CharFrame> sprites,
+      final List<CharFrame> platforms,
       final String name,
       @JsonKey(name: "background_image") final String backgroundImage,
       @JsonKey(name: "floor_image") final String floorImage,
@@ -249,6 +277,8 @@ abstract class _Properties extends Properties {
 
   @override
   Map<String, CharFrame> get sprites => throw _privateConstructorUsedError;
+  @override
+  List<CharFrame> get platforms => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override

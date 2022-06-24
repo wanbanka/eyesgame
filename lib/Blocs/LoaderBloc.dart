@@ -30,7 +30,7 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
       try {
         _gameElements.addAll({
           DataType.hero: await _loadHero(),
-          DataType.background: await _loadLevel(),
+          DataType.level: await _loadLevel(),
           DataType.controls: await _loadControls()
         });
 
@@ -84,7 +84,8 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
     return Properties.fromJson({
       "name": level["name"],
       "floor_image": level["parallax"]["floor"],
-      "background_image": level["parallax"]["background"]
+      "background_image": level["parallax"]["background"],
+      "platforms": level["platforms"]
     });
   }
 }

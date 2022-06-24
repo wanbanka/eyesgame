@@ -19,6 +19,7 @@ class Properties with _$Properties {
   @JsonSerializable(explicitToJson: true)
   factory Properties(
       {@Default({}) Map<String, CharFrame> sprites,
+      @Default([]) List<CharFrame> platforms,
       @Default("") String name,
       @Default("") @JsonKey(name: "background_image") String backgroundImage,
       @Default("") @JsonKey(name: "floor_image") String floorImage,

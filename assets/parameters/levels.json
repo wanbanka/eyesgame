@@ -6,6 +6,24 @@
             "floor": "Levels/Level1/floor.png"
         },
         "ennemies": [],
-        "platforms": []
+        "platforms": [{
+                "src_image": "Platforms/Level1/Fixed_Platform.png",
+                "nb_sprites": 1,
+                "type": "fixed",
+                "x": -200,
+                "y": -50,
+                "size": 100
+            },
+
+            {
+                "src_image": "Platforms/Level1/Fixed_Platform.png",
+                "nb_sprites": 1,
+                "type": "fixed",
+                "x": 98,
+                "y": 0,
+                "size": 100
+            }
+
+        ]
     }]
 }

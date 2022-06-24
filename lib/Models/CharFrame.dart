@@ -20,7 +20,9 @@ class CharFrame with _$CharFrame {
       @JsonKey(name: "nb_sprites") required int nbSprites,
       @Default(0.1) @JsonKey(name: "step_time") double stepTime,
       @Default(0.0) @JsonKey(name: "x") double posX,
-      @Default(0.0) @JsonKey(name: "y") double posY}) = _CharFrame;
+      @Default(0.0) @JsonKey(name: "y") double posY,
+      @Default("") String type,
+      @Default(0) double size}) = _CharFrame;
 
   factory CharFrame.fromJson(Map<String, dynamic> json) =>
       _$CharFrameFromJson(json);

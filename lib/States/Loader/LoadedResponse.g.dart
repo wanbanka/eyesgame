@@ -41,7 +41,7 @@ const _$ResponseTypeEnumMap = {
 
 const _$DataTypeEnumMap = {
   DataType.hero: 'hero',
-  DataType.background: 'background',
+  DataType.level: 'level',
   DataType.enemy: 'enemy',
   DataType.boss: 'boss',
   DataType.platform: 'platform',

@@ -10,6 +10,11 @@ import '../Sprites/Characters/Character.dart';
 
 import '../Backgrounds/ParallaxBackground.dart';
 
+import '../Platforms/Platform.dart';
+import '../Platforms/FixedPlatform.dart';
+
+import '../../Models/CharFrame.dart';
+
 import '../../States/Loader/LoadedResponse.dart';
 
 /**
@@ -17,18 +22,37 @@ import '../../States/Loader/LoadedResponse.dart';
  */
 
 class Level extends World {
-  Level({required this.background, required this.hero, required this.ennemies})
-      : super();
+  Level(
+      {required this.background,
+      required this.hero,
+      required this.ennemies,
+      required List<CharFrame> platforms})
+      : super() {
+    platforms.forEach((platform) {
+      Platform? platformToAdd;
+
+      switch (platform.type) {
+        case "fixed":
+          platformToAdd = FixedPlatform(spritePlatform: platform);
+          break;
+        default:
+      }
+
+      this.platforms.add(platformToAdd!);
+    });
+  }
 
   Character hero;
 
   List<Character> ennemies;
 
+  List<Platform> platforms = [];
+
   ParallaxBackground background;
 
   @override
   Future<void>? onLoad() async {
-    List<Component> dataToAdd = [background, hero, ...ennemies];
+    List<Component> dataToAdd = [background, hero, ...ennemies, ...platforms];
 
     await add(FlameMultiBlocProvider(providers: [
       FlameBlocProvider<MathBloc, LoadedResponse>(create: () => MathBloc())
