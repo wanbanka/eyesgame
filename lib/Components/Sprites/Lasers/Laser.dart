@@ -9,6 +9,8 @@ import '../../Collisions/CollisionSystem.dart';
 
 import '../../Backgrounds/ParallaxBackground.dart';
 
+import '../../Platforms/Platform.dart';
+
 /**
  * Define all the features of a laser
  */
@@ -71,6 +73,8 @@ abstract class Laser extends RectangleComponent
         handleFloorCollision(intersectionPoints);
       } else if (other is ScreenHitbox) {
         handleScreenCollision(intersectionPoints);
+      } else if (other is Platform) {
+        removeFromParent();
       }
     }
 

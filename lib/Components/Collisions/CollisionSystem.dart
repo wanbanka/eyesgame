@@ -48,14 +48,18 @@ mixin CollisionSystem on PositionComponent {
 
     double inner = Vector2(0, -1).dot(collisionNormal);
 
-    if (inner > 0.9) {
-      this.isOnGround = true;
-      this.isOnWall = false;
-      this.touchedWalls = 0;
-      this.velocity = Vector2.zero();
-    }
+    print("Inner prod floor: $inner");
 
-    position += collisionNormal.scaled(inner);
+    if (inner > 0.79 || inner > -0.25) {
+      position += collisionNormal.scaled(inner);
+
+      if (inner > 0.79) {
+        this.isOnGround = true;
+        this.isOnWall = false;
+        this.touchedWalls = 0;
+        this.velocity = Vector2.zero();
+      }
+    }
   }
 
   /**

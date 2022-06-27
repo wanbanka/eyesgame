@@ -14,6 +14,8 @@ import '../Collisions/CollisionSystem.dart';
 
 import '../Backgrounds/ParallaxBackground.dart';
 
+import '../Platforms/Platform.dart';
+
 /**
  * Define all the properties of all animated sprites
  */
@@ -52,7 +54,7 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
     // TODO: implement onCollision
 
     if (intersectionPoints.length == 2) {
-      if (other is ParallaxBackground) {
+      if (other is ParallaxBackground || other is Platform) {
         handleFloorCollision(intersectionPoints);
       } else if (other is ScreenHitbox) {
         handleScreenCollision(intersectionPoints);
