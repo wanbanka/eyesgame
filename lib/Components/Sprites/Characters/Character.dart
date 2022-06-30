@@ -1,17 +1,21 @@
 import 'package:flame_bloc/flame_bloc.dart';
 
+import 'package:flame/components.dart';
+
 import '../SpriteGame.dart';
 
 import '../../../Blocs/MathBloc.dart';
 
 import '../../../States/Loader/LoadedResponse.dart';
 
+import '../../Game/EyeGame.dart';
+
 /**
  * Define all the characteristics of a character
  */
 
 abstract class Character extends SpriteGame
-    with FlameBlocReader<MathBloc, LoadedResponse> {
+    with FlameBlocReader<MathBloc, LoadedResponse>, HasGameRef<EyeGame> {
   Character({required spriteSheet, required this.speed})
       : super(spriteSheet: spriteSheet);
 
@@ -43,5 +47,22 @@ abstract class Character extends SpriteGame
  * Make a character shoot a laser
  */
 
-  void shoot();
+  void shoot({bool shootRight = true});
+
+/**
+ * Check if a character stays on a platform or not
+ * 
+ * @source https://www.youtube.com/watch?v=udrYX19XOQA
+ */
+
+  bool checkOnPlatform() {
+    var platforms = gameRef.level.platforms.map<bool>((platform) {
+      return ((this.position.y + this.height / 4).ceil() ==
+              platform.position.y &&
+          (this.position.x < platform.position.x + platform.width &&
+              platform.position.x <= this.position.x));
+    });
+
+    return platforms.contains(true);
+  }
 }

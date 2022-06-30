@@ -22,8 +22,6 @@ import '../../Models/Enums/Controls.dart';
 import '../../Models/CharFrame.dart';
 import '../../Models/ConvertEnumString.dart';
 
-import '../Sprites/Lasers/RedLaser.dart';
-
 /**
  * Initialization of a level
  */
@@ -127,19 +125,7 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
     _shootRight = realHeroPos.x <= info.eventPosition.game.x;
 
     if (!_isControls(info.eventPosition.game)) {
-      level.hero.scale.x = level.hero.scale.x.abs();
-
-      RedLaser heroLaser = RedLaser(startPosition: level.hero.position);
-
-      if (!_shootRight) {
-        level.hero.scale.x *= -1;
-
-        heroLaser.position.x -= level.hero.size.x * 1.5;
-
-        heroLaser.velocity.x *= -1;
-      }
-
-      level.add(heroLaser);
+      level.hero.shoot(shootRight: _shootRight);
     }
   }
 }

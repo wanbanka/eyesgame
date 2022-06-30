@@ -7,10 +7,6 @@ import 'dart:ui';
 
 import '../../Collisions/CollisionSystem.dart';
 
-import '../../Backgrounds/ParallaxBackground.dart';
-
-import '../../Platforms/Platform.dart';
-
 /**
  * Define all the features of a laser
  */
@@ -64,19 +60,19 @@ abstract class Laser extends RectangleComponent
   }
 
   @override
+  void handlePlatformCollision(Set<Vector2> intersectionPoints) {
+    // TODO: implement handlePlatformCollision
+    super.handlePlatformCollision(intersectionPoints);
+
+    removeFromParent();
+  }
+
+  @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     // TODO: implement onCollision
 
-    if (intersectionPoints.length == 2) {
-      if (other is ParallaxBackground) {
-        handleFloorCollision(intersectionPoints);
-      } else if (other is ScreenHitbox) {
-        handleScreenCollision(intersectionPoints);
-      } else if (other is Platform) {
-        removeFromParent();
-      }
-    }
+    computeCollision(intersectionPoints, other);
 
     super.onCollision(intersectionPoints, other);
   }

@@ -31,7 +31,9 @@ class Hero extends Character {
 
   @override
   void move(double dt) {
-    if (!this.isOnGround) {
+    this.isOnPlatform = this.checkOnPlatform();
+
+    if (!this.isOnGround && !this.isOnPlatform) {
       this.velocity.y += this.gravity.y;
     }
 
@@ -65,16 +67,30 @@ class Hero extends Character {
     // TODO: implement jump
 
     if (this.jumping > 0) {
-      if (this.isOnGround) {
+      if (this.isOnGround || this.isOnPlatform) {
         this.velocity.y = -this.jumping.toDouble();
 
         this.isOnGround = false;
+
+        this.isOnPlatform = false;
       }
     }
   }
 
   @override
-  void shoot() {
-    // TODO: implement shoot
+  void shoot({bool shootRight = true}) {
+    this.scale.x = this.scale.x.abs();
+
+    RedLaser heroLaser = RedLaser(startPosition: this.position);
+
+    if (!shootRight) {
+      this.scale.x *= -1;
+
+      heroLaser.position.x -= this.size.x * 1.5;
+
+      heroLaser.velocity.x *= -1;
+    }
+
+    gameRef.level.add(heroLaser);
   }
 }

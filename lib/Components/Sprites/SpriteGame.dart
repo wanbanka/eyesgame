@@ -12,10 +12,6 @@ import '../../Models/Enums/Status.dart';
 
 import '../Collisions/CollisionSystem.dart';
 
-import '../Backgrounds/ParallaxBackground.dart';
-
-import '../Platforms/Platform.dart';
-
 /**
  * Define all the properties of all animated sprites
  */
@@ -53,20 +49,8 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     // TODO: implement onCollision
 
-    if (intersectionPoints.length == 2) {
-      if (other is ParallaxBackground || other is Platform) {
-        handleFloorCollision(intersectionPoints);
-      } else if (other is ScreenHitbox) {
-        handleScreenCollision(intersectionPoints);
-      }
-    }
+    computeCollision(intersectionPoints, other);
 
     super.onCollision(intersectionPoints, other);
   }
-
-  Vector2 _gravity = Vector2(1, 9.81);
-
-  Vector2 get gravity => this._gravity;
-
-  set gravity(Vector2 value) => this._gravity = value;
 }
