@@ -1,7 +1,7 @@
 import 'dart:math';
 
 /**
- * Service handling computing moves (trajectory, character's position...)
+ * Service handling moves' computing (trajectory, character's position...)
  */
 
 class MathService {
@@ -11,22 +11,24 @@ class MathService {
 
   List<double> computeTrajectory(
       double gravity, List<double> velocity, double time,
-      {bool isOnWall = false, int touchedWalls = 0}) {
+      {bool isOnWall = false, bool isOnCeiling = false}) {
     double landAngle = _computeAngle(gravity, velocity[0], time);
 
-    const restitutionCoeff = 0.75;
+    const restitutionCoeff = 0.075;
 
     bool isVelocityZero =
         velocity.reduce((value, element) => value + element) == 0;
 
     double newX = !isVelocityZero ? velocity[0] * cos(1 - landAngle) * time : 0;
 
-    if (isOnWall) {
-      newX *= -restitutionCoeff * pow(0.5, touchedWalls - 1);
-    }
-
     double newY = (-0.5 * gravity * (pow(time, 2))) +
         (!isVelocityZero ? velocity[1] * sin(1 - landAngle) * time : 0);
+
+    if (isOnWall) {
+      newX *= -restitutionCoeff;
+    } else if (isOnCeiling) {
+      newY += 1;
+    }
 
     return [newX, newY];
   }

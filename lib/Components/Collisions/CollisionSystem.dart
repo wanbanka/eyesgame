@@ -20,7 +20,7 @@ mixin CollisionSystem on PositionComponent {
 
   bool isOnPlatform = false;
 
-  int touchedWalls = 0;
+  bool isOnCeiling = false;
 
   Vector2 _velocity = Vector2.zero();
 
@@ -45,16 +45,39 @@ mixin CollisionSystem on PositionComponent {
 
     double innerRight = _getInnerProduct(collisionNormal, Force.right);
 
+    double innerTop = _getInnerProduct(collisionNormal, Force.up);
+
     if (innerLeft > 0.9 || innerRight > 0.9) {
-      this.isOnWall = true;
-      this.touchedWalls += 1;
       this.isOnGround = false;
 
       this.isOnPlatform = false;
+
+      this.isOnCeiling = false;
+
+      this.isOnWall = true;
     }
 
-    position -= collisionNormal.scaled(
-        innerLeft > 0.9 ? -innerLeft : (innerRight > 0.9 ? -innerRight : 0));
+    if (innerTop > 0.9) {
+      this.isOnGround = false;
+
+      this.isOnPlatform = false;
+      this.isOnCeiling = true;
+      this.isOnWall = false;
+    }
+
+    double scaleCollision = 0.0;
+
+    print("Inner top: $innerTop");
+
+    if (innerLeft > 0.9) {
+      scaleCollision = -innerLeft;
+    } else if (innerRight > 0.9) {
+      scaleCollision = -innerRight;
+    } else if (innerTop > 0.9) {
+      scaleCollision = -innerTop;
+    }
+
+    position -= collisionNormal.scaled(scaleCollision);
   }
 
 /**
@@ -70,8 +93,8 @@ mixin CollisionSystem on PositionComponent {
       this.isOnGround = true;
       this.isOnWall = false;
       this.isOnPlatform = false;
+      this.isOnCeiling = false;
 
-      this.touchedWalls = 0;
       this.velocity = Vector2.zero();
     }
 
@@ -92,12 +115,13 @@ mixin CollisionSystem on PositionComponent {
     if (inner > 0.79 || inner > -0.25) {
       position += collisionNormal.scaled(inner);
 
-      if (inner > 0.79) {
-        this.isOnGround = false;
-        this.isOnWall = false;
-        this.isOnPlatform = true;
+      this.isOnGround = false;
+      this.isOnWall = false;
 
-        this.touchedWalls = 0;
+      this.isOnCeiling = false;
+
+      if (inner > 0.79) {
+        this.isOnPlatform = true;
 
         this.velocity = Vector2.zero();
       } else {

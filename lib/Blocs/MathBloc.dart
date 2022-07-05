@@ -36,11 +36,11 @@ class MathBloc extends Bloc<ComputeEvent, LoadedResponse> {
    */
 
   void computeTrajectory(double gravity, List<double> velocity, double time,
-      {bool isOnWall = false, int touchedWalls = 0}) {
+      {bool isOnWall = false, bool isOnCeiling = false, int touchedWalls = 0}) {
     try {
       List<double> newCoords = _mathService.computeTrajectory(
           gravity, velocity, time,
-          isOnWall: isOnWall, touchedWalls: touchedWalls);
+          isOnWall: isOnWall, isOnCeiling: isOnCeiling);
 
       assert(newCoords.length == 2,
           "You have to get the new coords (x and y) of the position");
