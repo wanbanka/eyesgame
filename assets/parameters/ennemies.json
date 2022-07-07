@@ -1,0 +1,96 @@
+{
+    "ennemies": [{
+            "name": "Ojos Tri",
+            "speed": 4,
+            "sprites": {
+                "face": {
+                    "src_image": "OjosTri/OjosTri_Face.png",
+                    "nb_sprites": 6,
+                    "step_time": 0.1
+                },
+                "profile": {
+                    "src_image": "OjosTri/OjosTri_Profile.png",
+                    "nb_sprites": 6,
+                    "step_time": 0.1
+                },
+                "hurt": {
+                    "src_image": "OjosTri/OjosTri_Hurt.png",
+                    "nb_sprites": 4,
+                    "step_time": 0.08
+                },
+                "move": {
+                    "src_image": "OjosTri/OjosTri_Move.png",
+                    "nb_sprites": 8,
+                    "step_time": 0.05
+                },
+                "jump": {
+                    "src_image": "OjosTri/OjosTri_Jump.png",
+                    "nb_sprites": 1
+                }
+            }
+        },
+
+        {
+            "name": "Rainbow Eye",
+            "speed": 2,
+            "sprites": {
+                "face": {
+                    "src_image": "RainbowEye/RainbowEye_Face.png",
+                    "nb_sprites": 6,
+                    "step_time": 0.1
+                },
+                "profile": {
+                    "src_image": "RainbowEye/RainbowEye_Profile.png",
+                    "nb_sprites": 6,
+                    "step_time": 0.1
+                },
+                "hurt": {
+                    "src_image": "RainbowEye/RainbowEye_Hurt.png",
+                    "nb_sprites": 4,
+                    "step_time": 0.08
+                },
+                "move": {
+                    "src_image": "RainbowEye/RainbowEye_Move.png",
+                    "nb_sprites": 5,
+                    "step_time": 0.1
+                },
+                "jump": {
+                    "src_image": "RainbowEye/RainbowEye_Jump.png",
+                    "nb_sprites": 1
+                }
+            }
+        },
+
+        {
+            "name": "8Eye",
+            "speed": 3,
+            "sprites": {
+                "face": {
+                    "src_image": "8Eye/8Eye_Face.png",
+                    "nb_sprites": 6,
+                    "step_time": 0.1
+                },
+                "profile": {
+                    "src_image": "8Eye/8Eye_Profile.png",
+                    "nb_sprites": 6,
+                    "step_time": 0.1
+                },
+                "hurt": {
+                    "src_image": "8Eye/8Eye_Hurt.png",
+                    "nb_sprites": 4,
+                    "step_time": 0.08
+                },
+                "move": {
+                    "src_image": "8Eye/8Eye_Move.png",
+                    "nb_sprites": 4,
+                    "step_time": 0.1
+                },
+                "jump": {
+                    "src_image": "8Eye/8Eye_Jump.png",
+                    "nb_sprites": 1
+                }
+            }
+        }
+
+    ]
+}

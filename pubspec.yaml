@@ -78,6 +78,9 @@ flutter:
     - assets/images/Levels/Level1/
     - assets/images/Controls/
     - assets/images/Platforms/Level1/
+    - assets/images/Ennemies/OjosTri/
+    - assets/images/Ennemies/RainbowEye/
+    - assets/images/Ennemies/8Eye/
     - assets/audio/
     - assets/parameters/
 

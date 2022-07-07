@@ -5,7 +5,9 @@
             "background": "Levels/Level1/background.png",
             "floor": "Levels/Level1/floor.png"
         },
-        "ennemies": [],
+        "ennemies": [{
+
+        }],
         "platforms": [{
                 "src_image": "Platforms/Level1/Fixed_Platform.png",
                 "nb_sprites": 1,
