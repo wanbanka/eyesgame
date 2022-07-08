@@ -1,4 +1,5 @@
 import '../Models/Enums/DataType.dart';
+import '../Models/Enums/Filter.dart';
 
 import 'dart:convert' show json;
 import 'package:flutter/services.dart' show rootBundle;
@@ -12,7 +13,8 @@ class JSONDescriptionService {
  * Load some features from asset
  */
 
-  Future<Map<String, dynamic>> loadAttribute(DataType type) async {
+  Future<dynamic> loadAttribute(DataType type,
+      {Filter filter = Filter.name, String filterSearch = ""}) async {
     String attribute = "";
 
     switch (type) {
@@ -23,10 +25,28 @@ class JSONDescriptionService {
       case DataType.controls:
         attribute = "controls";
         break;
+
+      case DataType.enemy:
+        attribute = "enemies";
+        break;
     }
 
     Map<String, dynamic> parameters = json.decode(
         await rootBundle.loadString("assets/parameters/$attribute.json"));
+
+    if (parameters[attribute] is List &&
+        (filterSearch.isNotEmpty && filter.name.isNotEmpty)) {
+      var foundItem = parameters[attribute].firstWhere((element) {
+        if (element[filter.name] == null) {
+          throw ArgumentError(
+              "The type of filter is wrong or doesn't exist in the asset's structure.");
+        }
+
+        return element[filter.name] == filterSearch;
+      });
+
+      return foundItem;
+    }
 
     return parameters[attribute];
   }

@@ -11,8 +11,7 @@ _$_LoadedResponse _$$_LoadedResponseFromJson(Map<String, dynamic> json) =>
       type: $enumDecodeNullable(_$ResponseTypeEnumMap, json['type']) ??
           ResponseType.none,
       gameElements: (json['gameElements'] as Map<String, dynamic>?)?.map(
-            (k, e) => MapEntry($enumDecode(_$DataTypeEnumMap, k),
-                Properties.fromJson(e as Map<String, dynamic>)),
+            (k, e) => MapEntry($enumDecode(_$DataTypeEnumMap, k), e),
           ) ??
           const {},
       computedCoords: (json['computedCoords'] as Map<String, dynamic>?)?.map(
@@ -27,7 +26,7 @@ Map<String, dynamic> _$$_LoadedResponseToJson(_$_LoadedResponse instance) =>
     <String, dynamic>{
       'type': _$ResponseTypeEnumMap[instance.type],
       'gameElements': instance.gameElements
-          .map((k, e) => MapEntry(_$DataTypeEnumMap[k], e.toJson())),
+          .map((k, e) => MapEntry(_$DataTypeEnumMap[k], e)),
       'computedCoords': instance.computedCoords
           .map((k, e) => MapEntry(_$CoordsEnumMap[k], e)),
       'errorMessage': instance.errorMessage,

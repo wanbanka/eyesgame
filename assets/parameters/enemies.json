@@ -1,5 +1,5 @@
 {
-    "ennemies": [{
+    "enemies": [{
             "name": "Ojos Tri",
             "speed": 4,
             "sprites": {

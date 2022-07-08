@@ -23,7 +23,7 @@ class LoadedResponse with _$LoadedResponse {
       {@Default(ResponseType.none)
           ResponseType type,
       @Default({})
-          Map<DataType, Properties> gameElements,
+          Map<DataType, dynamic> gameElements,
       @Assert("computedCoords.length == 2")
       @Default({})
           Map<Coords, double> computedCoords,

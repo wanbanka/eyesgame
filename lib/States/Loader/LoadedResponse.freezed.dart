@@ -21,8 +21,7 @@ LoadedResponse _$LoadedResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LoadedResponse {
   ResponseType get type => throw _privateConstructorUsedError;
-  Map<DataType, Properties> get gameElements =>
-      throw _privateConstructorUsedError;
+  Map<DataType, dynamic> get gameElements => throw _privateConstructorUsedError;
   @Assert("computedCoords.length == 2")
   Map<Coords, double> get computedCoords => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
@@ -40,7 +39,7 @@ abstract class $LoadedResponseCopyWith<$Res> {
       _$LoadedResponseCopyWithImpl<$Res>;
   $Res call(
       {ResponseType type,
-      Map<DataType, Properties> gameElements,
+      Map<DataType, dynamic> gameElements,
       @Assert("computedCoords.length == 2") Map<Coords, double> computedCoords,
       String? errorMessage});
 }
@@ -69,7 +68,7 @@ class _$LoadedResponseCopyWithImpl<$Res>
       gameElements: gameElements == freezed
           ? _value.gameElements
           : gameElements // ignore: cast_nullable_to_non_nullable
-              as Map<DataType, Properties>,
+              as Map<DataType, dynamic>,
       computedCoords: computedCoords == freezed
           ? _value.computedCoords
           : computedCoords // ignore: cast_nullable_to_non_nullable
@@ -91,7 +90,7 @@ abstract class _$$_LoadedResponseCopyWith<$Res>
   @override
   $Res call(
       {ResponseType type,
-      Map<DataType, Properties> gameElements,
+      Map<DataType, dynamic> gameElements,
       @Assert("computedCoords.length == 2") Map<Coords, double> computedCoords,
       String? errorMessage});
 }
@@ -122,7 +121,7 @@ class __$$_LoadedResponseCopyWithImpl<$Res>
       gameElements: gameElements == freezed
           ? _value._gameElements
           : gameElements // ignore: cast_nullable_to_non_nullable
-              as Map<DataType, Properties>,
+              as Map<DataType, dynamic>,
       computedCoords: computedCoords == freezed
           ? _value._computedCoords
           : computedCoords // ignore: cast_nullable_to_non_nullable
@@ -141,7 +140,7 @@ class __$$_LoadedResponseCopyWithImpl<$Res>
 class _$_LoadedResponse extends _LoadedResponse with DiagnosticableTreeMixin {
   _$_LoadedResponse(
       {this.type = ResponseType.none,
-      final Map<DataType, Properties> gameElements = const {},
+      final Map<DataType, dynamic> gameElements = const {},
       @Assert("computedCoords.length == 2")
           final Map<Coords, double> computedCoords = const {},
       this.errorMessage})
@@ -155,10 +154,10 @@ class _$_LoadedResponse extends _LoadedResponse with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final ResponseType type;
-  final Map<DataType, Properties> _gameElements;
+  final Map<DataType, dynamic> _gameElements;
   @override
   @JsonKey()
-  Map<DataType, Properties> get gameElements {
+  Map<DataType, dynamic> get gameElements {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_gameElements);
   }
@@ -228,7 +227,7 @@ class _$_LoadedResponse extends _LoadedResponse with DiagnosticableTreeMixin {
 abstract class _LoadedResponse extends LoadedResponse {
   factory _LoadedResponse(
       {final ResponseType type,
-      final Map<DataType, Properties> gameElements,
+      final Map<DataType, dynamic> gameElements,
       @Assert("computedCoords.length == 2")
           final Map<Coords, double> computedCoords,
       final String? errorMessage}) = _$_LoadedResponse;
@@ -240,8 +239,7 @@ abstract class _LoadedResponse extends LoadedResponse {
   @override
   ResponseType get type => throw _privateConstructorUsedError;
   @override
-  Map<DataType, Properties> get gameElements =>
-      throw _privateConstructorUsedError;
+  Map<DataType, dynamic> get gameElements => throw _privateConstructorUsedError;
   @override
   @Assert("computedCoords.length == 2")
   Map<Coords, double> get computedCoords => throw _privateConstructorUsedError;

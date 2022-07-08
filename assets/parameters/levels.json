@@ -5,9 +5,19 @@
             "background": "Levels/Level1/background.png",
             "floor": "Levels/Level1/floor.png"
         },
-        "ennemies": [{
+        "enemies": [{
+                "name": "Ojos Tri",
+                "x": -250,
+                "y": -70
+            },
 
-        }],
+            {
+                "name": "Ojos Tri",
+                "x": 30,
+                "y": -65
+            }
+
+        ],
         "platforms": [{
                 "src_image": "Platforms/Level1/Fixed_Platform.png",
                 "nb_sprites": 1,

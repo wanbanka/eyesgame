@@ -27,4 +27,18 @@ class Properties with _$Properties {
 
   factory Properties.fromJson(Map<String, dynamic> json) =>
       _$PropertiesFromJson(json);
+
+  /**
+       * Add positionning of the object
+       */
+
+  Properties addCoords(double posX, double posY) {
+    Map<String, CharFrame> newSprites = {};
+
+    sprites.forEach((key, value) {
+      newSprites.addAll({key: value.copyWith(posX: posX, posY: posY)});
+    });
+
+    return this.copyWith(sprites: newSprites);
+  }
 }
