@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart' hide Hero;
 
+import 'package:flame/components.dart' show Vector2;
+
 import 'package:flame/game.dart' show GameWidget;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +18,7 @@ import '../Events/Loader/LoadingEvent.dart';
 import '../Components/Game/EyeGame.dart';
 import '../Components/Level/Level.dart';
 import '../Components/Sprites/Characters/Hero.dart';
+import '../Components/Sprites/Characters/Enemy.dart';
 import '../Components/Backgrounds/ParallaxBackground.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -73,7 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                     response.gameElements[DataType.hero]!.speed,
                                 spriteSheet: response
                                     .gameElements[DataType.hero]!.sprites),
-                            ennemies: [])),
+                            ennemies: response.gameElements[DataType.enemy]!
+                                .map<Enemy>((property) {
+                              return Enemy(
+                                  spriteSheet: property.sprites,
+                                  speed: property.speed,
+                                  startPosition: Vector2(
+                                      property.sprites["face"].posX,
+                                      property.sprites["face"].posY));
+                            }).toList())),
                   )
                 : Container();
           }),
