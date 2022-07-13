@@ -21,7 +21,7 @@ abstract class Platform extends SpriteComponent {
       this.size = Vector2(spritePlatform.size, value.height.toDouble());
     });
 
-    add(RectangleHitbox());
+    add(RectangleHitbox()..collisionType = CollisionType.active);
   }
 
   CharFrame spritePlatform;

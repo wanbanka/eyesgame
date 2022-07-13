@@ -37,6 +37,6 @@ class ParallaxBackground extends ParallaxComponent with CollisionCallbacks {
     await add(RectangleHitbox(
         size: Vector2(floor.width.toDouble(), floor.height.toDouble()),
         position: Vector2(0, floor.height / 7))
-      ..collisionType = CollisionType.passive);
+      ..collisionType = CollisionType.active);
   }
 }

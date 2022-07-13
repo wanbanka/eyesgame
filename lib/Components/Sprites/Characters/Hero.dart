@@ -12,7 +12,7 @@ import '../Lasers/RedLaser.dart';
 class Hero extends Character {
   Hero({required spriteSheet, required speed})
       : super(spriteSheet: spriteSheet, speed: speed) {
-    add(CircleHitbox());
+    add(CircleHitbox()..collisionType = CollisionType.active);
   }
 
   @override

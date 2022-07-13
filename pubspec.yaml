@@ -31,6 +31,7 @@ dependencies:
   flame: ^1.1.1
   flame_audio: ^1.0.1
   flame_bloc: ^1.5.0
+  flame_forge2d: ^0.12.1
   flutter_bloc: ^8.0.1
   freezed_annotation: ^2.0.3
   json_annotation: ^4.5.0

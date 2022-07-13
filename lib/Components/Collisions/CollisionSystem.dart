@@ -1,3 +1,4 @@
+import 'package:eyesgame/Components/Sprites/Characters/Hero.dart';
 import 'package:flame/components.dart' show Vector2, PositionComponent;
 
 import 'package:flame/collisions.dart' show ScreenHitbox;
@@ -67,8 +68,6 @@ mixin CollisionSystem on PositionComponent {
 
     double scaleCollision = 0.0;
 
-    print("Inner top: $innerTop");
-
     if (innerLeft > 0.9) {
       scaleCollision = -innerLeft;
     } else if (innerRight > 0.9) {
@@ -89,7 +88,9 @@ mixin CollisionSystem on PositionComponent {
 
     double inner = _getInnerProduct(collisionNormal, Force.down);
 
-    if (inner > 0.9) {
+    print("Inner prod floor: $inner");
+
+    if (inner.abs() > 0.9) {
       this.isOnGround = true;
       this.isOnWall = false;
       this.isOnPlatform = false;
@@ -109,8 +110,6 @@ mixin CollisionSystem on PositionComponent {
     final collisionNormal = _getNormalCollision(intersectionPoints);
 
     double inner = _getInnerProduct(collisionNormal, Force.down);
-
-    print("Inner prod platform: $inner");
 
     if (inner > 0.79 || inner > -0.25) {
       position += collisionNormal.scaled(inner);

@@ -44,7 +44,7 @@ class Level extends World {
 
   Character hero;
 
-  List<Character> ennemies;
+  List<Character> ennemies = [];
 
   List<Platform> platforms = [];
 
@@ -52,6 +52,8 @@ class Level extends World {
 
   @override
   Future<void>? onLoad() async {
+    print("List of enemies: $ennemies");
+
     List<Component> dataToAdd = [background, hero, ...ennemies, ...platforms];
 
     await add(FlameMultiBlocProvider(providers: [

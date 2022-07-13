@@ -1,6 +1,6 @@
 import 'package:flame/components.dart' show Vector2;
 
-import 'package:flame/collisions.dart' show RectangleHitbox;
+import 'package:flame/collisions.dart' show RectangleHitbox, CollisionType;
 
 import "Character.dart";
 
@@ -13,7 +13,7 @@ class Enemy extends Character {
       : super(spriteSheet: spriteSheet, speed: speed) {
     this.position = startPosition;
 
-    add(RectangleHitbox());
+    add(RectangleHitbox()..collisionType = CollisionType.passive);
   }
 
   @override

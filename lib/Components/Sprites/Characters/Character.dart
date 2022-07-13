@@ -1,3 +1,4 @@
+import 'package:eyesgame/Components/Sprites/Characters/Enemy.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 
 import 'package:flame/components.dart' show Vector2;
@@ -44,6 +45,8 @@ abstract class Character extends SpriteGame
 
     if (!this.isOnGround && !this.isOnPlatform) {
       this.velocity.y += this.gravity.y;
+
+      this.velocity.y = this.velocity.y.clamp(-800, 800);
     }
 
     if ([Status.move, Status.roll, Status.jump].contains(this.current)) {

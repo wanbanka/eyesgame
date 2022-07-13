@@ -12,6 +12,8 @@ import 'package:flame/sprite.dart';
 
 import 'package:flame/input.dart';
 
+import 'package:flame_forge2d/flame_forge2d.dart' show Forge2DGame;
+
 import '../Controls/MoveButton.dart';
 import '../Controls/RollButton.dart';
 import '../Controls/JumpButton.dart';
@@ -26,7 +28,7 @@ import '../../Models/ConvertEnumString.dart';
  * Initialization of a level
  */
 
-class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
+class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
   EyeGame({required this.level, required this.controls}) : super();
 
   Level level;
@@ -80,6 +82,8 @@ class EyeGame extends FlameGame with HasTappables, HasCollisionDetection {
   @override
   Future<void>? onLoad() async {
     // TODO: implement onLoad
+
+    camera.zoom = 1.0;
 
     var cameraToAdd = CameraComponent(world: level);
 
