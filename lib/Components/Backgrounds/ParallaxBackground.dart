@@ -1,3 +1,4 @@
+import 'package:eyesgame/Components/Game/EyeGame.dart';
 import 'package:flutter/material.dart' as Ma;
 
 import 'package:flame/flame.dart';
@@ -7,17 +8,28 @@ import 'package:flame/collisions.dart';
 
 import 'dart:ui' show Image;
 
+import '../Collisions/Bodies/ContactBody.dart';
+
 /**
  * Description of the level's background
  */
 
-class ParallaxBackground extends ParallaxComponent with CollisionCallbacks {
+class ParallaxBackground extends ParallaxComponent {
   ParallaxBackground({required this.backgroundImage, required this.floorImage})
-      : super(anchor: Anchor.center);
+      : super(anchor: Anchor.center) {
+    _contactBody =
+        ContactBody(object: this, isMoving: false, hitbox: RectangleHitbox());
+  }
 
   String backgroundImage;
 
   String floorImage;
+
+  ContactBody? _contactBody;
+
+  ContactBody? get contactBody => this._contactBody;
+
+  set contactBody(ContactBody? value) => this._contactBody = value;
 
   @override
   Future<void>? onLoad() async {
@@ -34,9 +46,8 @@ class ParallaxBackground extends ParallaxComponent with CollisionCallbacks {
           alignment: Ma.Alignment(0.0, 0.75), fill: LayerFill.none))
     ]);
 
-    await add(RectangleHitbox(
-        size: Vector2(floor.width.toDouble(), floor.height.toDouble()),
-        position: Vector2(0, floor.height / 7))
-      ..collisionType = CollisionType.active);
+    this.contactBody!.hitbox
+      ..size = Vector2(floor.width.toDouble(), floor.height.toDouble())
+      ..position = Vector2(0, floor.height / 7);
   }
 }

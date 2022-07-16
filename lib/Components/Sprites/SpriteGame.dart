@@ -7,7 +7,8 @@ import 'package:flame/components.dart'
         PositionComponent,
         HasGameRef;
 import 'package:flame/sprite.dart';
-import 'package:flame/collisions.dart';
+
+import 'package:flame_forge2d/forge2d_game.dart';
 
 import 'dart:ui' show Image;
 
@@ -15,16 +16,17 @@ import '../../Models/CharFrame.dart';
 import '../../Models/ConvertEnumString.dart';
 import '../../Models/Enums/Status.dart';
 
-import '../Collisions/CollisionSystem.dart';
+import '../Collisions/Systems/CollisionSystem.dart';
+import '../Collisions/Bodies/ContactBody.dart';
 
-import "../Game/EyeGame.dart";
+import '../Game/EyeGame.dart';
 
 /**
  * Define all the properties of all animated sprites
  */
 
 abstract class SpriteGame extends SpriteAnimationGroupComponent
-    with CollisionSystem, CollisionCallbacks, HasGameRef<EyeGame> {
+    with CollisionSystem, HasGameRef<Forge2DGame> {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
       : super(animations: {}, scale: Vector2.all(0.5), anchor: Anchor.center) {
     spriteSheet.forEach((key, charFrame) async {
@@ -48,6 +50,12 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
     });
   }
 
+  ContactBody? _contactBody;
+
+  ContactBody? get contactBody => this._contactBody;
+
+  set contactBody(ContactBody? value) => this._contactBody = value;
+
   /**
  * Check if a character stays on a platform or not
  * 
@@ -55,7 +63,7 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
  */
 
   bool checkOnPlatform() {
-    var platforms = gameRef.level.platforms.map<bool>((platform) {
+    var platforms = (gameRef as EyeGame).level.platforms.map<bool>((platform) {
       return ((this.position.y + this.height / 4).ceil() ==
               platform.position.y &&
           (this.position.x < platform.position.x + platform.width &&
@@ -63,18 +71,5 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
     });
 
     return platforms.contains(true);
-  }
-
-  /**
-     * @source https://www.youtube.com/watch?v=mSPalRqZQS8
-     */
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollision
-
-    computeCollision(intersectionPoints, other);
-
-    super.onCollision(intersectionPoints, other);
   }
 }

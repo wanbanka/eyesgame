@@ -6,6 +6,8 @@ import 'package:flame/collisions.dart';
 
 import '../../Models/CharFrame.dart';
 
+import '../Collisions/Bodies/ContactBody.dart';
+
 /**
  * Defines all features of platforms
  */
@@ -21,8 +23,13 @@ abstract class Platform extends SpriteComponent {
       this.size = Vector2(spritePlatform.size, value.height.toDouble());
     });
 
-    add(RectangleHitbox()..collisionType = CollisionType.active);
+    _contactBody =
+        ContactBody(object: this, isMoving: false, hitbox: RectangleHitbox());
   }
 
   CharFrame spritePlatform;
+
+  ContactBody? _contactBody;
+
+  ContactBody? get contactBody => this._contactBody;
 }

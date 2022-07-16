@@ -1,6 +1,5 @@
-import 'package:flame/components.dart'
-    show Component, ScreenHitbox, Vector2, Anchor;
-import 'package:flame/experimental.dart' show World, HasTappableComponents;
+import 'package:flame/components.dart' show Component, ScreenHitbox, Anchor;
+import 'package:flame/experimental.dart' show World;
 
 import 'package:flame_bloc/flame_bloc.dart';
 
@@ -54,7 +53,12 @@ class Level extends World {
   Future<void>? onLoad() async {
     print("List of enemies: $ennemies");
 
-    List<Component> dataToAdd = [background, hero, ...ennemies, ...platforms];
+    List<Component> dataToAdd = [
+      background.contactBody!,
+      hero.contactBody!,
+      ...ennemies.map((enemy) => enemy.contactBody!),
+      ...platforms.map((platform) => platform.contactBody!)
+    ];
 
     await add(FlameMultiBlocProvider(providers: [
       FlameBlocProvider<MathBloc, LoadedResponse>(create: () => MathBloc())

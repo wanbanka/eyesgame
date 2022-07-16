@@ -6,6 +6,8 @@ import 'package:flame/components.dart' show Vector2;
 
 import 'package:flame/collisions.dart';
 
+import '../../Collisions/Bodies/ContactBody.dart';
+
 /**
  * Basic hero's laser
  */
@@ -19,6 +21,7 @@ class RedLaser extends Laser {
             startPosition: startPosition) {
     this.velocity = Vector2(20, 0);
 
-    add(RectangleHitbox()..collisionType = CollisionType.passive);
+    this.contactBody =
+        ContactBody(object: this, isMoving: true, hitbox: RectangleHitbox());
   }
 }

@@ -5,6 +5,10 @@ import 'Character.dart';
 
 import '../Lasers/RedLaser.dart';
 
+import '../../Game/EyeGame.dart';
+
+import '../../Collisions/Bodies/ContactBody.dart';
+
 /**
  * Define all characteristics of the hero
  */
@@ -12,7 +16,8 @@ import '../Lasers/RedLaser.dart';
 class Hero extends Character {
   Hero({required spriteSheet, required speed})
       : super(spriteSheet: spriteSheet, speed: speed) {
-    add(CircleHitbox()..collisionType = CollisionType.active);
+    this.contactBody =
+        ContactBody(object: this, isMoving: true, hitbox: CircleHitbox());
   }
 
   @override
@@ -37,6 +42,6 @@ class Hero extends Character {
       heroLaser.velocity.x *= -1;
     }
 
-    gameRef.level.add(heroLaser);
+    (gameRef as EyeGame).level.add(heroLaser);
   }
 }

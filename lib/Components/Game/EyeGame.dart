@@ -12,7 +12,7 @@ import 'package:flame/sprite.dart';
 
 import 'package:flame/input.dart';
 
-import 'package:flame_forge2d/flame_forge2d.dart' show Forge2DGame;
+import 'package:flame_forge2d/flame_forge2d.dart';
 
 import '../Controls/MoveButton.dart';
 import '../Controls/RollButton.dart';
@@ -29,7 +29,7 @@ import '../../Models/ConvertEnumString.dart';
  */
 
 class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
-  EyeGame({required this.level, required this.controls}) : super();
+  EyeGame({required this.level, required this.controls}) : super(zoom: 1.0);
 
   Level level;
 
@@ -82,8 +82,6 @@ class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
   @override
   Future<void>? onLoad() async {
     // TODO: implement onLoad
-
-    camera.zoom = 1.0;
 
     var cameraToAdd = CameraComponent(world: level);
 

@@ -1,18 +1,16 @@
-import 'package:flame/components.dart'
-    show RectangleComponent, Vector2, PositionComponent;
-
 import 'package:flame/collisions.dart';
+import 'package:flame/components.dart' show RectangleComponent, Vector2;
 
 import 'dart:ui';
 
-import '../../Collisions/CollisionSystem.dart';
+import '../../Collisions/Systems/CollisionSystem.dart';
+import '../../Collisions/Bodies/ContactBody.dart';
 
 /**
  * Define all the features of a laser
  */
 
-abstract class Laser extends RectangleComponent
-    with CollisionSystem, CollisionCallbacks {
+abstract class Laser extends RectangleComponent with CollisionSystem {
   Laser(
       {required this.sizeLaser,
       required this.startPosition,
@@ -30,6 +28,12 @@ abstract class Laser extends RectangleComponent
   Color color;
 
   int damage;
+
+  ContactBody? _contactBody;
+
+  ContactBody? get contactBody => this._contactBody;
+
+  set contactBody(ContactBody? value) => this._contactBody = value;
 
   @override
   void update(double dt) {
@@ -65,15 +69,5 @@ abstract class Laser extends RectangleComponent
     super.handlePlatformCollision(intersectionPoints);
 
     removeFromParent();
-  }
-
-  @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollision
-
-    computeCollision(intersectionPoints, other);
-
-    super.onCollision(intersectionPoints, other);
   }
 }

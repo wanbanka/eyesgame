@@ -1,13 +1,12 @@
-import 'package:eyesgame/Components/Sprites/Characters/Hero.dart';
 import 'package:flame/components.dart' show Vector2, PositionComponent;
 
 import 'package:flame/collisions.dart' show ScreenHitbox;
 
-import '../../Models/Enums/Force.dart';
+import '../../../Models/Enums/Force.dart';
 
-import '../Backgrounds/ParallaxBackground.dart';
+import '../../Backgrounds/ParallaxBackground.dart';
 
-import '../Platforms/Platform.dart';
+import '../../Platforms/Platform.dart';
 
 /**
  * System for collision detection and trajectory computing
