@@ -1,34 +1,32 @@
 {
     "controls": {
 
-        "sprites": {
-            "right": {
-                "src_image": "Controls/Move.png",
-                "nb_sprites": 2,
-                "x": 205,
-                "y": 325
-            },
+        "right": {
+            "src_image": "Controls/Move.png",
+            "nb_sprites": 2,
+            "x": 205,
+            "y": 325
+        },
 
-            "left": {
-                "src_image": "Controls/Move.png",
-                "nb_sprites": 2,
-                "x": 135,
-                "y": 325
-            },
+        "left": {
+            "src_image": "Controls/Move.png",
+            "nb_sprites": 2,
+            "x": 135,
+            "y": 325
+        },
 
-            "roll": {
-                "src_image": "Controls/Roll.png",
-                "nb_sprites": 2,
-                "x": 500,
-                "y": 325
-            },
+        "roll": {
+            "src_image": "Controls/Roll.png",
+            "nb_sprites": 2,
+            "x": 500,
+            "y": 325
+        },
 
-            "jump": {
-                "src_image": "Controls/Jump.png",
-                "nb_sprites": 2,
-                "x": 575,
-                "y": 290
-            }
+        "jump": {
+            "src_image": "Controls/Jump.png",
+            "nb_sprites": 2,
+            "x": 575,
+            "y": 290
         }
     }
 }

@@ -150,6 +150,8 @@ mixin CollisionSystem on PositionComponent {
         handlePlatformCollision(intersectionPoints);
       }
     }
+
+    print("IsOnPlatform ? : $isOnPlatform");
   }
 
   /**

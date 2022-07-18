@@ -1,3 +1,5 @@
+import 'package:flame/components.dart';
+
 import 'Platform.dart';
 
 import '../../Models/CharFrame.dart';
@@ -7,8 +9,10 @@ import '../../Models/CharFrame.dart';
  */
 
 class FixedPlatform extends Platform {
-  FixedPlatform({required this.spritePlatform})
-      : super(spritePlatform: spritePlatform);
+  FixedPlatform({required this.spritePlatform, position})
+      : super(spritePlatform: spritePlatform) {
+    this.position = position ?? Vector2.zero();
+  }
 
   CharFrame spritePlatform;
 }

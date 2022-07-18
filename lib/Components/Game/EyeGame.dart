@@ -3,8 +3,7 @@ import 'package:flame/game.dart'
 
 import 'package:flame/experimental.dart' show CameraComponent;
 
-import 'package:flame/components.dart'
-    show SpriteComponent, PositionComponent, Anchor, PositionType;
+import 'package:flame/components.dart' show SpriteComponent, PositionComponent;
 
 import 'package:flame/flame.dart';
 
@@ -21,7 +20,7 @@ import '../Controls/JumpButton.dart';
 import '../Level/Level.dart';
 
 import '../../Models/Enums/Controls.dart';
-import '../../Models/CharFrame.dart';
+import '../../Models/Properties.dart';
 import '../../Models/ConvertEnumString.dart';
 
 /**
@@ -33,7 +32,7 @@ class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
 
   Level level;
 
-  Map<String, CharFrame> controls;
+  List<Properties> controls;
 
   bool _shootRight = false;
 
@@ -46,32 +45,35 @@ class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
    */
 
   Future<void> _loadControls() async {
-    controls.forEach((key, value) async {
-      var control = ConvertEnumString.getEnumFromString(Controls.values, key);
+    controls.forEach((controlAdd) async {
+      var intermediateControl = controlAdd.control!;
+
+      var controlCheck = ConvertEnumString.getEnumFromString(
+          Controls.values, intermediateControl.type);
 
       var spriteSheet = SpriteSheet.fromColumnsAndRows(
-          image: await Flame.images.load(value.srcImage),
-          columns: value.nbSprites,
+          image: await Flame.images.load(intermediateControl.srcImage),
+          columns: intermediateControl.nbSprites,
           rows: 1);
 
-      if (control == Controls.left || control == Controls.right) {
+      if (controlCheck == Controls.left || controlCheck == Controls.right) {
         await add(MoveButton(
-            position: Vector2(value.posX, value.posY),
+            position: Vector2(controlAdd.posX, controlAdd.posY),
             buttonPressed:
                 SpriteComponent(sprite: spriteSheet.getSpriteById(0)),
             buttonPressedDown:
                 SpriteComponent(sprite: spriteSheet.getSpriteById(1)),
             hero: level.hero,
-            direction: control as Controls));
-      } else if (control == Controls.roll) {
+            direction: controlCheck as Controls));
+      } else if (controlCheck == Controls.roll) {
         await add(RollButton(
-            position: Vector2(value.posX, value.posY),
+            position: Vector2(controlAdd.posX, controlAdd.posY),
             buttonPressed: spriteSheet.getSpriteById(0),
             buttonPressedDown: spriteSheet.getSpriteById(1),
             hero: level.hero));
-      } else if (control == Controls.jump) {
+      } else if (controlCheck == Controls.jump) {
         await add(JumpButton(
-            position: Vector2(value.posX, value.posY),
+            position: Vector2(controlAdd.posX, controlAdd.posY),
             buttonPressed: spriteSheet.getSpriteById(0),
             buttonPressedDown: spriteSheet.getSpriteById(1),
             hero: level.hero));

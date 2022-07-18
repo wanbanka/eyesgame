@@ -21,13 +21,18 @@ Properties _$PropertiesFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Properties {
   Map<String, CharFrame> get sprites => throw _privateConstructorUsedError;
-  List<CharFrame> get platforms => throw _privateConstructorUsedError;
+  CharFrame? get platform => throw _privateConstructorUsedError;
+  CharFrame? get control => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: "background_image")
   String get backgroundImage => throw _privateConstructorUsedError;
   @JsonKey(name: "floor_image")
   String get floorImage => throw _privateConstructorUsedError;
   int get speed => throw _privateConstructorUsedError;
+  @JsonKey(name: "x")
+  double get posX => throw _privateConstructorUsedError;
+  @JsonKey(name: "y")
+  double get posY => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,11 +47,17 @@ abstract class $PropertiesCopyWith<$Res> {
       _$PropertiesCopyWithImpl<$Res>;
   $Res call(
       {Map<String, CharFrame> sprites,
-      List<CharFrame> platforms,
+      CharFrame? platform,
+      CharFrame? control,
       String name,
       @JsonKey(name: "background_image") String backgroundImage,
       @JsonKey(name: "floor_image") String floorImage,
-      int speed});
+      int speed,
+      @JsonKey(name: "x") double posX,
+      @JsonKey(name: "y") double posY});
+
+  $CharFrameCopyWith<$Res>? get platform;
+  $CharFrameCopyWith<$Res>? get control;
 }
 
 /// @nodoc
@@ -60,21 +71,28 @@ class _$PropertiesCopyWithImpl<$Res> implements $PropertiesCopyWith<$Res> {
   @override
   $Res call({
     Object? sprites = freezed,
-    Object? platforms = freezed,
+    Object? platform = freezed,
+    Object? control = freezed,
     Object? name = freezed,
     Object? backgroundImage = freezed,
     Object? floorImage = freezed,
     Object? speed = freezed,
+    Object? posX = freezed,
+    Object? posY = freezed,
   }) {
     return _then(_value.copyWith(
       sprites: sprites == freezed
           ? _value.sprites
           : sprites // ignore: cast_nullable_to_non_nullable
               as Map<String, CharFrame>,
-      platforms: platforms == freezed
-          ? _value.platforms
-          : platforms // ignore: cast_nullable_to_non_nullable
-              as List<CharFrame>,
+      platform: platform == freezed
+          ? _value.platform
+          : platform // ignore: cast_nullable_to_non_nullable
+              as CharFrame?,
+      control: control == freezed
+          ? _value.control
+          : control // ignore: cast_nullable_to_non_nullable
+              as CharFrame?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -91,7 +109,37 @@ class _$PropertiesCopyWithImpl<$Res> implements $PropertiesCopyWith<$Res> {
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
               as int,
+      posX: posX == freezed
+          ? _value.posX
+          : posX // ignore: cast_nullable_to_non_nullable
+              as double,
+      posY: posY == freezed
+          ? _value.posY
+          : posY // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
+  }
+
+  @override
+  $CharFrameCopyWith<$Res>? get platform {
+    if (_value.platform == null) {
+      return null;
+    }
+
+    return $CharFrameCopyWith<$Res>(_value.platform!, (value) {
+      return _then(_value.copyWith(platform: value));
+    });
+  }
+
+  @override
+  $CharFrameCopyWith<$Res>? get control {
+    if (_value.control == null) {
+      return null;
+    }
+
+    return $CharFrameCopyWith<$Res>(_value.control!, (value) {
+      return _then(_value.copyWith(control: value));
+    });
   }
 }
 
@@ -104,11 +152,19 @@ abstract class _$$_PropertiesCopyWith<$Res>
   @override
   $Res call(
       {Map<String, CharFrame> sprites,
-      List<CharFrame> platforms,
+      CharFrame? platform,
+      CharFrame? control,
       String name,
       @JsonKey(name: "background_image") String backgroundImage,
       @JsonKey(name: "floor_image") String floorImage,
-      int speed});
+      int speed,
+      @JsonKey(name: "x") double posX,
+      @JsonKey(name: "y") double posY});
+
+  @override
+  $CharFrameCopyWith<$Res>? get platform;
+  @override
+  $CharFrameCopyWith<$Res>? get control;
 }
 
 /// @nodoc
@@ -124,21 +180,28 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
   @override
   $Res call({
     Object? sprites = freezed,
-    Object? platforms = freezed,
+    Object? platform = freezed,
+    Object? control = freezed,
     Object? name = freezed,
     Object? backgroundImage = freezed,
     Object? floorImage = freezed,
     Object? speed = freezed,
+    Object? posX = freezed,
+    Object? posY = freezed,
   }) {
     return _then(_$_Properties(
       sprites: sprites == freezed
           ? _value._sprites
           : sprites // ignore: cast_nullable_to_non_nullable
               as Map<String, CharFrame>,
-      platforms: platforms == freezed
-          ? _value._platforms
-          : platforms // ignore: cast_nullable_to_non_nullable
-              as List<CharFrame>,
+      platform: platform == freezed
+          ? _value.platform
+          : platform // ignore: cast_nullable_to_non_nullable
+              as CharFrame?,
+      control: control == freezed
+          ? _value.control
+          : control // ignore: cast_nullable_to_non_nullable
+              as CharFrame?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -155,6 +218,14 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
               as int,
+      posX: posX == freezed
+          ? _value.posX
+          : posX // ignore: cast_nullable_to_non_nullable
+              as double,
+      posY: posY == freezed
+          ? _value.posY
+          : posY // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -165,13 +236,15 @@ class __$$_PropertiesCopyWithImpl<$Res> extends _$PropertiesCopyWithImpl<$Res>
 class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   _$_Properties(
       {final Map<String, CharFrame> sprites = const {},
-      final List<CharFrame> platforms = const [],
+      this.platform = null,
+      this.control = null,
       this.name = "",
       @JsonKey(name: "background_image") this.backgroundImage = "",
       @JsonKey(name: "floor_image") this.floorImage = "",
-      this.speed = 0})
+      this.speed = 0,
+      @JsonKey(name: "x") this.posX = 0.0,
+      @JsonKey(name: "y") this.posY = 0.0})
       : _sprites = sprites,
-        _platforms = platforms,
         super._();
 
   factory _$_Properties.fromJson(Map<String, dynamic> json) =>
@@ -185,14 +258,12 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
     return EqualUnmodifiableMapView(_sprites);
   }
 
-  final List<CharFrame> _platforms;
   @override
   @JsonKey()
-  List<CharFrame> get platforms {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_platforms);
-  }
-
+  final CharFrame? platform;
+  @override
+  @JsonKey()
+  final CharFrame? control;
   @override
   @JsonKey()
   final String name;
@@ -205,10 +276,16 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final int speed;
+  @override
+  @JsonKey(name: "x")
+  final double posX;
+  @override
+  @JsonKey(name: "y")
+  final double posY;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Properties(sprites: $sprites, platforms: $platforms, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage, speed: $speed)';
+    return 'Properties(sprites: $sprites, platform: $platform, control: $control, name: $name, backgroundImage: $backgroundImage, floorImage: $floorImage, speed: $speed, posX: $posX, posY: $posY)';
   }
 
   @override
@@ -217,11 +294,14 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'Properties'))
       ..add(DiagnosticsProperty('sprites', sprites))
-      ..add(DiagnosticsProperty('platforms', platforms))
+      ..add(DiagnosticsProperty('platform', platform))
+      ..add(DiagnosticsProperty('control', control))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('backgroundImage', backgroundImage))
       ..add(DiagnosticsProperty('floorImage', floorImage))
-      ..add(DiagnosticsProperty('speed', speed));
+      ..add(DiagnosticsProperty('speed', speed))
+      ..add(DiagnosticsProperty('posX', posX))
+      ..add(DiagnosticsProperty('posY', posY));
   }
 
   @override
@@ -230,14 +310,16 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _$_Properties &&
             const DeepCollectionEquality().equals(other._sprites, _sprites) &&
-            const DeepCollectionEquality()
-                .equals(other._platforms, _platforms) &&
+            const DeepCollectionEquality().equals(other.platform, platform) &&
+            const DeepCollectionEquality().equals(other.control, control) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.backgroundImage, backgroundImage) &&
             const DeepCollectionEquality()
                 .equals(other.floorImage, floorImage) &&
-            const DeepCollectionEquality().equals(other.speed, speed));
+            const DeepCollectionEquality().equals(other.speed, speed) &&
+            const DeepCollectionEquality().equals(other.posX, posX) &&
+            const DeepCollectionEquality().equals(other.posY, posY));
   }
 
   @JsonKey(ignore: true)
@@ -245,11 +327,14 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_sprites),
-      const DeepCollectionEquality().hash(_platforms),
+      const DeepCollectionEquality().hash(platform),
+      const DeepCollectionEquality().hash(control),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(backgroundImage),
       const DeepCollectionEquality().hash(floorImage),
-      const DeepCollectionEquality().hash(speed));
+      const DeepCollectionEquality().hash(speed),
+      const DeepCollectionEquality().hash(posX),
+      const DeepCollectionEquality().hash(posY));
 
   @JsonKey(ignore: true)
   @override
@@ -265,11 +350,14 @@ class _$_Properties extends _Properties with DiagnosticableTreeMixin {
 abstract class _Properties extends Properties {
   factory _Properties(
       {final Map<String, CharFrame> sprites,
-      final List<CharFrame> platforms,
+      final CharFrame? platform,
+      final CharFrame? control,
       final String name,
       @JsonKey(name: "background_image") final String backgroundImage,
       @JsonKey(name: "floor_image") final String floorImage,
-      final int speed}) = _$_Properties;
+      final int speed,
+      @JsonKey(name: "x") final double posX,
+      @JsonKey(name: "y") final double posY}) = _$_Properties;
   _Properties._() : super._();
 
   factory _Properties.fromJson(Map<String, dynamic> json) =
@@ -278,7 +366,9 @@ abstract class _Properties extends Properties {
   @override
   Map<String, CharFrame> get sprites => throw _privateConstructorUsedError;
   @override
-  List<CharFrame> get platforms => throw _privateConstructorUsedError;
+  CharFrame? get platform => throw _privateConstructorUsedError;
+  @override
+  CharFrame? get control => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override
@@ -289,6 +379,12 @@ abstract class _Properties extends Properties {
   String get floorImage => throw _privateConstructorUsedError;
   @override
   int get speed => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "x")
+  double get posX => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "y")
+  double get posY => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_PropertiesCopyWith<_$_Properties> get copyWith =>

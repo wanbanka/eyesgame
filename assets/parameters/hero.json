@@ -1,6 +1,8 @@
 {
     "hero": {
         "speed": 3,
+        "x": -300,
+        "y": 0,
         "sprites": {
             "face": {
                 "src_image": "Mr_Eye/Mr_Eye_Face.png",

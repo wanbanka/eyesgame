@@ -5,6 +5,7 @@ import '../Models/Enums/DataType.dart';
 import '../Models/Enums/Filter.dart';
 
 import '../Models/Properties.dart';
+import '../Models/CharFrame.dart';
 
 import '../Events/Loader/LoadEvent.dart';
 import '../Events/Loader/LoadedEvent.dart';
@@ -21,7 +22,7 @@ import '../Services/JSONDescriptionService.dart';
  */
 
 class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
-  Map<DataType, dynamic> _gameElements = {};
+  Map<DataType, List<Properties>> _gameElements = {};
 
   JSONDescriptionService _jsonDescriptionService = JSONDescriptionService();
 
@@ -31,14 +32,17 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
     on<LoadingEvent>((event, emit) async {
       try {
         _gameElements.addAll({
-          DataType.hero: await _loadHero(),
-          DataType.level: await _loadLevel(),
+          DataType.hero: [await _loadHero()],
+          DataType.level: [await _loadLevel()],
           DataType.controls: await _loadControls(),
-          DataType.enemy: await _loadEnemies()
+          DataType.enemy: await _loadEnemies(),
+          DataType.platform: await _loadPlatforms()
         });
 
         this.add(LoadedEvent());
-      } catch (e) {
+      } on Exception catch (e) {
+        print("Erreur: ${e}");
+
         this.add(LoadingError("Erreur: $e"));
       }
     });
@@ -69,11 +73,27 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
    * Define the player's controls
    */
 
-  Future<Properties> _loadControls() async {
-    Map<String, dynamic> parameters =
+  Future<List<Properties>> _loadControls() async {
+    Map<String, dynamic> controls =
         await _jsonDescriptionService.loadAttribute(DataType.controls);
 
-    return Properties.fromJson(parameters);
+    List<Properties> propControls = [];
+
+    controls.forEach((key, value) {
+      print("Control: $value");
+
+      propControls.add(Properties.fromJson({
+        "control": {
+          "src_image": value["src_image"],
+          "nb_sprites": value["nb_sprites"],
+          "type": key
+        },
+        "x": value["x"],
+        "y": value["y"]
+      }));
+    });
+
+    return propControls;
   }
 
 /**
@@ -88,8 +108,37 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
       "name": level["name"],
       "floor_image": level["parallax"]["floor"],
       "background_image": level["parallax"]["background"],
-      "platforms": level["platforms"]
     });
+  }
+
+  /**
+   * Load the level's platforms
+   */
+
+  Future<List<Properties>> _loadPlatforms() async {
+    Map<String, dynamic> level =
+        await _jsonDescriptionService.loadLevel(this.selectLevel);
+
+    List<dynamic> levelPlatforms = level["platforms"];
+
+    List<Properties> propPlatforms = [];
+
+    levelPlatforms.forEach((platform) {
+      propPlatforms.add(Properties.fromJson({
+        "platform": {
+          "src_image": platform["src_image"],
+          "nb_sprites": platform["nb_sprites"],
+          "type": platform["type"],
+          "size": platform["size"]
+        },
+        "x": platform["x"],
+        "y": platform["y"]
+      }));
+    });
+
+    print("PropPlatforms: $propPlatforms");
+
+    return propPlatforms;
   }
 
   /**
@@ -110,20 +159,15 @@ class LoaderBloc extends Bloc<LoadEvent, LoadedResponse> {
           orElse: () => Properties());
 
       if (existing.name.isNotEmpty) {
-        var newProps =
-            existing.addCoords(enemy["x"].toDouble(), enemy["y"].toDouble());
-
-        propEnemies.add(newProps);
+        propEnemies.add(existing.copyWith(
+            posX: enemy["x"].toDouble(), posY: enemy["y"].toDouble()));
       } else {
         Map<String, dynamic> foundEnemy =
             await _jsonDescriptionService.loadAttribute(DataType.enemy,
                 filter: Filter.name, filterSearch: enemy["name"]);
 
-        foundEnemy['sprites'].forEach((key, sprite) {
-          sprite.addAll({"x": enemy["x"], "y": enemy["y"]});
-        });
-
-        propEnemies.add(Properties.fromJson(foundEnemy));
+        propEnemies.add(Properties.fromJson(foundEnemy).copyWith(
+            posX: enemy["x"].toDouble(), posY: enemy["y"].toDouble()));
       }
     });
 

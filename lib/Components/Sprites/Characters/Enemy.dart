@@ -4,6 +4,8 @@ import 'package:flame/collisions.dart' show RectangleHitbox, CollisionType;
 
 import "Character.dart";
 
+import "../../Collisions/Bodies/ContactBody.dart";
+
 /**
  * Defines all features of an enemy
  */
@@ -13,7 +15,8 @@ class Enemy extends Character {
       : super(spriteSheet: spriteSheet, speed: speed) {
     this.position = startPosition;
 
-    add(RectangleHitbox()..collisionType = CollisionType.passive);
+    this.contactBody =
+        ContactBody(object: this, isMoving: true, hitbox: RectangleHitbox());
   }
 
   @override

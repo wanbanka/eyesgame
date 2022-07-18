@@ -57,36 +57,36 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           child: BlocBuilder<LoaderBloc, LoadedResponse>(
               builder: (context, response) {
-            return response.type == ResponseType.success
-                ? GameWidget(
-                    game: EyeGame(
-                        controls:
-                            response.gameElements[DataType.controls]!.sprites,
-                        level: Level(
-                            background: ParallaxBackground(
-                                backgroundImage: response
-                                    .gameElements[DataType.level]!
-                                    .backgroundImage,
-                                floorImage: response
-                                    .gameElements[DataType.level]!.floorImage),
-                            platforms: response
-                                .gameElements[DataType.level]!.platforms,
-                            hero: Hero(
-                                speed:
-                                    response.gameElements[DataType.hero]!.speed,
-                                spriteSheet: response
-                                    .gameElements[DataType.hero]!.sprites),
-                            ennemies: response.gameElements[DataType.enemy]!
-                                .map<Enemy>((property) {
-                              return Enemy(
-                                  spriteSheet: property.sprites,
-                                  speed: property.speed,
-                                  startPosition: Vector2(
-                                      property.sprites["face"].posX,
-                                      property.sprites["face"].posY));
-                            }).toList())),
-                  )
-                : Container();
+            if (response.type == ResponseType.success) {
+              var controls = response.gameElements[DataType.controls]!,
+                  hero = response.gameElements[DataType.hero]!.first,
+                  level = response.gameElements[DataType.level]!.first,
+                  enemies = response.gameElements[DataType.enemy]!
+                      .map<Enemy>((property) {
+                    return Enemy(
+                        spriteSheet: property.sprites,
+                        speed: property.speed,
+                        startPosition: Vector2(property.posX, property.posY));
+                  }).toList(),
+                  platforms = response.gameElements[DataType.platform]!;
+
+              return GameWidget(
+                game: EyeGame(
+                    controls: controls,
+                    level: Level(
+                        background: ParallaxBackground(
+                            backgroundImage: level.backgroundImage,
+                            floorImage: level.floorImage),
+                        platforms: platforms,
+                        hero: Hero(
+                            speed: hero.speed,
+                            spriteSheet: hero.sprites,
+                            position: Vector2(hero.posX, hero.posY)),
+                        ennemies: enemies)),
+              );
+            } else {
+              return Container();
+            }
           }),
         ),
       ),

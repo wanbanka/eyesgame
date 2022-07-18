@@ -13,10 +13,7 @@ import '../Collisions/Bodies/ContactBody.dart';
  */
 
 abstract class Platform extends SpriteComponent {
-  Platform({required this.spritePlatform})
-      : super(
-          position: Vector2(spritePlatform.posX, spritePlatform.posY),
-        ) {
+  Platform({required this.spritePlatform}) : super() {
     Flame.images.load(spritePlatform.srcImage).then((value) {
       this.sprite = Sprite(value);
 

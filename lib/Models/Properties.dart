@@ -17,28 +17,18 @@ class Properties with _$Properties {
   Properties._();
 
   @JsonSerializable(explicitToJson: true)
-  factory Properties(
-      {@Default({}) Map<String, CharFrame> sprites,
-      @Default([]) List<CharFrame> platforms,
-      @Default("") String name,
-      @Default("") @JsonKey(name: "background_image") String backgroundImage,
-      @Default("") @JsonKey(name: "floor_image") String floorImage,
-      @Default(0) int speed}) = _Properties;
+  factory Properties({
+    @Default({}) Map<String, CharFrame> sprites,
+    @Default(null) CharFrame? platform,
+    @Default(null) CharFrame? control,
+    @Default("") String name,
+    @Default("") @JsonKey(name: "background_image") String backgroundImage,
+    @Default("") @JsonKey(name: "floor_image") String floorImage,
+    @Default(0) int speed,
+    @Default(0.0) @JsonKey(name: "x") double posX,
+    @Default(0.0) @JsonKey(name: "y") double posY,
+  }) = _Properties;
 
   factory Properties.fromJson(Map<String, dynamic> json) =>
       _$PropertiesFromJson(json);
-
-  /**
-       * Add positionning of the object
-       */
-
-  Properties addCoords(double posX, double posY) {
-    Map<String, CharFrame> newSprites = {};
-
-    sprites.forEach((key, value) {
-      newSprites.addAll({key: value.copyWith(posX: posX, posY: posY)});
-    });
-
-    return this.copyWith(sprites: newSprites);
-  }
 }

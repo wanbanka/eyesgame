@@ -1,4 +1,5 @@
-import 'package:flame/components.dart' show Component, ScreenHitbox, Anchor;
+import 'package:flame/components.dart'
+    show Component, ScreenHitbox, Anchor, Vector2;
 import 'package:flame/experimental.dart' show World;
 
 import 'package:flame_bloc/flame_bloc.dart';
@@ -12,7 +13,7 @@ import '../Backgrounds/ParallaxBackground.dart';
 import '../Platforms/Platform.dart';
 import '../Platforms/FixedPlatform.dart';
 
-import '../../Models/CharFrame.dart';
+import '../../Models/Properties.dart';
 
 import '../../States/Loader/LoadedResponse.dart';
 
@@ -25,14 +26,16 @@ class Level extends World {
       {required this.background,
       required this.hero,
       required this.ennemies,
-      required List<CharFrame> platforms})
+      required List<Properties> platforms})
       : super() {
-    platforms.forEach((platform) {
+    platforms.forEach((platformSelected) {
       Platform? platformToAdd;
 
-      switch (platform.type) {
+      switch (platformSelected.platform!.type) {
         case "fixed":
-          platformToAdd = FixedPlatform(spritePlatform: platform);
+          platformToAdd = FixedPlatform(
+              spritePlatform: platformSelected.platform!,
+              position: Vector2(platformSelected.posX, platformSelected.posY));
           break;
         default:
       }
@@ -56,8 +59,8 @@ class Level extends World {
     List<Component> dataToAdd = [
       background.contactBody!,
       hero.contactBody!,
-      ...ennemies.map((enemy) => enemy.contactBody!),
-      ...platforms.map((platform) => platform.contactBody!)
+      ...(ennemies.map((enemy) => enemy.contactBody!).toList()),
+      ...(platforms.map((platform) => platform.contactBody!).toList())
     ];
 
     await add(FlameMultiBlocProvider(providers: [

@@ -15,14 +15,13 @@ class CharFrame with _$CharFrame {
   CharFrame._();
 
   @JsonSerializable(explicitToJson: true)
-  factory CharFrame(
-      {@JsonKey(name: "src_image") required String srcImage,
-      @JsonKey(name: "nb_sprites") required int nbSprites,
-      @Default(0.1) @JsonKey(name: "step_time") double stepTime,
-      @Default(0.0) @JsonKey(name: "x") double posX,
-      @Default(0.0) @JsonKey(name: "y") double posY,
-      @Default("") String type,
-      @Default(0) double size}) = _CharFrame;
+  factory CharFrame({
+    @JsonKey(name: "src_image") required String srcImage,
+    @JsonKey(name: "nb_sprites") required int nbSprites,
+    @Default(0.1) @JsonKey(name: "step_time") double stepTime,
+    @Default("") String type,
+    @Default(0) double size,
+  }) = _CharFrame;
 
   factory CharFrame.fromJson(Map<String, dynamic> json) =>
       _$CharFrameFromJson(json);

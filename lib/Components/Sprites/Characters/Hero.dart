@@ -1,5 +1,6 @@
-import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
+
+import 'package:flame/components.dart';
 
 import 'Character.dart';
 
@@ -14,18 +15,12 @@ import '../../Collisions/Bodies/ContactBody.dart';
  */
 
 class Hero extends Character {
-  Hero({required spriteSheet, required speed})
+  Hero({required spriteSheet, required speed, position})
       : super(spriteSheet: spriteSheet, speed: speed) {
     this.contactBody =
         ContactBody(object: this, isMoving: true, hitbox: CircleHitbox());
-  }
 
-  @override
-  void onGameResize(Vector2 size) {
-    // TODO: implement onGameResize
-    super.onGameResize(size);
-
-    this.position.x -= this.size.x / 0.7;
+    this.position = position ?? Vector2.zero();
   }
 
   @override
