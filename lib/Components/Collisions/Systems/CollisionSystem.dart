@@ -135,7 +135,12 @@ mixin CollisionSystem on PositionComponent {
 
   void computeCollision(
       Set<Vector2> intersectionPoints, PositionComponent other) {
+    print(
+        "Intersection points: $intersectionPoints et component: ${other.runtimeType}");
+
     if (intersectionPoints.length == 2) {
+      print("Normal collision: ${_getNormalCollision(intersectionPoints)}");
+
       switch (other.runtimeType) {
         case ParallaxBackground:
           handleFloorCollision(intersectionPoints);

@@ -29,7 +29,7 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
 
     await add(this.object);
 
-    this.setColor(Colors.transparent);
+    //this.setColor(Colors.transparent);
 
     return super.onLoad();
   }
@@ -51,7 +51,7 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
       ..userData = this
       ..type = isMoving ? BodyType.dynamic : BodyType.static
       ..bullet = isMoving)
-      ..createFixture(FixtureDef(_getFixtureShape()));
+      ..createFixture(FixtureDef(_getFixtureShape())..isSensor = false);
   }
 
   @override
@@ -75,27 +75,36 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
  */
 
   Shape _getFixtureShape() {
-    dynamic chooseBaseline =
-        (hitbox.position + hitbox.size != Vector2.zero()) ? hitbox : object;
-
     Shape fixtureShape = PolygonShape();
+
+    dynamic chooseBaseline =
+        hitbox.position != Vector2.zero() ? hitbox : object;
 
     switch (hitbox.runtimeType) {
       case RectangleHitbox:
         fixtureShape = PolygonShape()
           ..set([
             chooseBaseline.position,
-            Vector2(chooseBaseline.position.x + chooseBaseline.width,
+            Vector2(chooseBaseline.position.x + chooseBaseline.scaledSize.x,
                 chooseBaseline.position.y),
-            Vector2(chooseBaseline.position.x + chooseBaseline.width,
-                chooseBaseline.position.y + chooseBaseline.height),
+            Vector2(chooseBaseline.position.x + chooseBaseline.scaledSize.x,
+                chooseBaseline.position.y + chooseBaseline.scaledSize.y),
             Vector2(chooseBaseline.position.x,
-                chooseBaseline.position.y + chooseBaseline.height)
+                chooseBaseline.position.y + chooseBaseline.scaledSize.y)
           ]);
         break;
 
       case CircleHitbox:
-        fixtureShape = CircleShape()..radius = chooseBaseline.width / 2;
+        print("ChooseBaseline: ${chooseBaseline.scaledSize}");
+
+        fixtureShape = PolygonShape()
+          ..set([
+            object.position,
+            Vector2(object.position.x + object.scaledSize.x, object.position.y),
+            Vector2(object.position.x + object.scaledSize.x,
+                object.position.y + object.scaledSize.y),
+            Vector2(object.position.x, object.position.y + object.scaledSize.y)
+          ]);
         break;
 
       default:

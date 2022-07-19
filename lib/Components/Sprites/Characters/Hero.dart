@@ -17,10 +17,12 @@ import '../../Collisions/Bodies/ContactBody.dart';
 class Hero extends Character {
   Hero({required spriteSheet, required speed, position})
       : super(spriteSheet: spriteSheet, speed: speed) {
-    this.contactBody =
-        ContactBody(object: this, isMoving: true, hitbox: CircleHitbox());
-
     this.position = position ?? Vector2.zero();
+
+    this.contactBody = ContactBody(
+        object: this,
+        isMoving: true,
+        hitbox: CircleHitbox(position: this.position));
   }
 
   @override
@@ -37,6 +39,6 @@ class Hero extends Character {
       heroLaser.velocity.x *= -1;
     }
 
-    (gameRef as EyeGame).level.add(heroLaser);
+    (gameRef as EyeGame).level.add(heroLaser.contactBody!);
   }
 }

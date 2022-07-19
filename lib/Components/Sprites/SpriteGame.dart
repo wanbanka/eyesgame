@@ -28,7 +28,7 @@ import '../Game/EyeGame.dart';
 abstract class SpriteGame extends SpriteAnimationGroupComponent
     with CollisionSystem, HasGameRef<Forge2DGame> {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
-      : super(animations: {}, scale: Vector2.all(0.5), anchor: Anchor.center) {
+      : super(animations: {}, scale: Vector2.all(0.5)) {
     spriteSheet.forEach((key, charFrame) async {
       var status = ConvertEnumString.getEnumFromString(Status.values, key);
 

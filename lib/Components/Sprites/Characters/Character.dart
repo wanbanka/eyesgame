@@ -43,39 +43,16 @@ abstract class Character extends SpriteGame
   void move(double dt) {
     this.isOnPlatform = this.checkOnPlatform();
 
-    if (!this.isOnGround && !this.isOnPlatform) {
-      this.velocity.y += this.gravity.y;
-
-      this.velocity.y = this.velocity.y.clamp(-800, 800);
-    }
-
     if ([Status.move, Status.roll, Status.jump].contains(this.current)) {
       if ([Status.move, Status.roll].contains(this.current)) {
         this.velocity.x += (this.gravity.normalize() * this.speed);
 
         this.velocity.x = this.velocity.x.clamp(-800, 800);
+
+        this.contactBody!.body.applyForce(this.velocity);
       }
 
       this.jump();
-    } else {
-      if (this.velocity.y == 0) {
-        this.velocity = Vector2.zero();
-      }
-    }
-
-    this.bloc.computeTrajectory(
-          gravity.y,
-          [velocity.x, velocity.y],
-          dt,
-          isOnWall: this.isOnWall,
-          isOnCeiling: this.isOnCeiling,
-        );
-
-    if (this.bloc.state.type == ResponseType.success) {
-      this.position.add(Vector2.array([
-            this.bloc.state.computedCoords[Coords.x]!,
-            this.bloc.state.computedCoords[Coords.y]!
-          ]));
     }
   }
 
