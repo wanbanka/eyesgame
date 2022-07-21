@@ -29,7 +29,7 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
 
     await add(this.object);
 
-    //this.setColor(Colors.transparent);
+    this.setColor(Colors.transparent);
 
     return super.onLoad();
   }
@@ -77,8 +77,10 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
   Shape _getFixtureShape() {
     Shape fixtureShape = PolygonShape();
 
-    dynamic chooseBaseline =
-        hitbox.position != Vector2.zero() ? hitbox : object;
+    PositionComponent chooseBaseline = (hitbox.position != Vector2.zero() &&
+            hitbox.scaledSize != Vector2.zero())
+        ? hitbox
+        : object;
 
     switch (hitbox.runtimeType) {
       case RectangleHitbox:
@@ -95,16 +97,13 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
         break;
 
       case CircleHitbox:
-        print("ChooseBaseline: ${chooseBaseline.scaledSize}");
+        double addRadius = chooseBaseline.scaledSize.x / 2;
 
-        fixtureShape = PolygonShape()
-          ..set([
-            object.position,
-            Vector2(object.position.x + object.scaledSize.x, object.position.y),
-            Vector2(object.position.x + object.scaledSize.x,
-                object.position.y + object.scaledSize.y),
-            Vector2(object.position.x, object.position.y + object.scaledSize.y)
-          ]);
+        fixtureShape = CircleShape()
+          ..radius = addRadius
+          ..getVertex(0).x = chooseBaseline.position.x + addRadius
+          ..getVertex(0).y = chooseBaseline.position.y + addRadius;
+
         break;
 
       default:

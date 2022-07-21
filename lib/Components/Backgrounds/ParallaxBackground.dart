@@ -47,6 +47,6 @@ class ParallaxBackground extends ParallaxComponent {
 
     this.contactBody!.hitbox
       ..size = Vector2(floor.width.toDouble(), floor.height.toDouble())
-      ..position = Vector2(0, floor.height / 7);
+      ..position = Vector2(-400, floor.height / 15);
   }
 }

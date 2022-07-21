@@ -29,7 +29,10 @@ class Hero extends Character {
   void shoot({bool shootRight = true}) {
     this.scale.x = this.scale.x.abs();
 
-    RedLaser heroLaser = RedLaser(startPosition: this.position);
+    RedLaser heroLaser = RedLaser(
+        startPosition: Vector2(
+            this.contactBody!.body.position.x - (300 - this.size.x / 2),
+            this.contactBody!.body.position.y + (this.size.y / 4)));
 
     if (!shootRight) {
       this.scale.x *= -1;

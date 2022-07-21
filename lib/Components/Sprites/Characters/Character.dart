@@ -1,7 +1,4 @@
-import 'package:eyesgame/Components/Sprites/Characters/Enemy.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-
-import 'package:flame/components.dart' show Vector2;
 
 import '../SpriteGame.dart';
 
@@ -10,8 +7,6 @@ import '../../../Blocs/MathBloc.dart';
 import '../../../States/Loader/LoadedResponse.dart';
 
 import '../../../Models/Enums/Status.dart';
-import '../../../Models/Enums/ResponseType.dart';
-import '../../../Models/Enums/Coords.dart';
 
 /**
  * Define all the characteristics of a character
