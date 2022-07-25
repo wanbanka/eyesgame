@@ -36,11 +36,10 @@ abstract class Character extends SpriteGame
    */
 
   void move(double dt) {
-    this.isOnPlatform = this.checkOnPlatform();
-
     if ([Status.move, Status.roll, Status.jump].contains(this.current)) {
       if ([Status.move, Status.roll].contains(this.current)) {
-        this.velocity.x += (this.gravity.normalize() * this.speed);
+        this.velocity.x +=
+            (this.gameRef.world.gravity.normalize() * this.speed);
 
         this.velocity.x = this.velocity.x.clamp(-800, 800);
 
@@ -57,13 +56,7 @@ abstract class Character extends SpriteGame
 
   void jump() {
     if (this.jumping > 0) {
-      if (this.isOnGround || this.isOnPlatform) {
-        this.velocity.y = -this.jumping.toDouble();
-
-        this.isOnGround = false;
-
-        this.isOnPlatform = false;
-      }
+      this.velocity.y = -this.jumping.toDouble();
     }
   }
 

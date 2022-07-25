@@ -47,20 +47,12 @@ abstract class Laser extends RectangleComponent with CollisionSystem {
   void handleFloorCollision(Set<Vector2> intersectionPoints) {
     // TODO: implement handleFloorCollision
     super.handleFloorCollision(intersectionPoints);
-
-    if (this.isOnGround) {
-      removeFromParent();
-    }
   }
 
   @override
   void handleScreenCollision(Set<Vector2> intersectionPoints) {
     // TODO: implement handleScreenCollision
     super.handleScreenCollision(intersectionPoints);
-
-    if (this.isOnWall) {
-      removeFromParent();
-    }
   }
 
   @override

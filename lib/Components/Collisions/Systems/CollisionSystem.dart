@@ -14,25 +14,11 @@ import '../../Platforms/Platform.dart';
  */
 
 mixin CollisionSystem on PositionComponent {
-  bool isOnGround = false;
-
-  bool isOnWall = false;
-
-  bool isOnPlatform = false;
-
-  bool isOnCeiling = false;
-
   Vector2 _velocity = Vector2.zero();
 
   Vector2 get velocity => this._velocity;
 
   set velocity(Vector2 value) => this._velocity = value;
-
-  Vector2 _gravity = Vector2(1, 9.81);
-
-  Vector2 get gravity => this._gravity;
-
-  set gravity(Vector2 value) => this._gravity = value;
 
 /**
    * Handle the collision with the screen's boundaries
@@ -46,24 +32,6 @@ mixin CollisionSystem on PositionComponent {
     double innerRight = _getInnerProduct(collisionNormal, Force.right);
 
     double innerTop = _getInnerProduct(collisionNormal, Force.up);
-
-    if (innerLeft > 0.9 || innerRight > 0.9) {
-      this.isOnGround = false;
-
-      this.isOnPlatform = false;
-
-      this.isOnCeiling = false;
-
-      this.isOnWall = true;
-    }
-
-    if (innerTop > 0.9) {
-      this.isOnGround = false;
-
-      this.isOnPlatform = false;
-      this.isOnCeiling = true;
-      this.isOnWall = false;
-    }
 
     double scaleCollision = 0.0;
 
@@ -90,11 +58,6 @@ mixin CollisionSystem on PositionComponent {
     print("Inner prod floor: $inner");
 
     if (inner.abs() > 0.9) {
-      this.isOnGround = true;
-      this.isOnWall = false;
-      this.isOnPlatform = false;
-      this.isOnCeiling = false;
-
       this.velocity = Vector2.zero();
     }
 
@@ -113,18 +76,9 @@ mixin CollisionSystem on PositionComponent {
     if (inner > 0.79 || inner > -0.25) {
       position += collisionNormal.scaled(inner);
 
-      this.isOnGround = false;
-      this.isOnWall = false;
-
-      this.isOnCeiling = false;
-
       if (inner > 0.79) {
-        this.isOnPlatform = true;
-
         this.velocity = Vector2.zero();
-      } else {
-        this.isOnPlatform = false;
-      }
+      } else {}
     }
   }
 
@@ -141,22 +95,10 @@ mixin CollisionSystem on PositionComponent {
     if (intersectionPoints.length == 2) {
       print("Normal collision: ${_getNormalCollision(intersectionPoints)}");
 
-      switch (other.runtimeType) {
-        case ParallaxBackground:
-          handleFloorCollision(intersectionPoints);
-          break;
-
-        case ScreenHitbox:
-          handleScreenCollision(intersectionPoints);
-          break;
-      }
-
       if (other is Platform) {
         handlePlatformCollision(intersectionPoints);
       }
     }
-
-    print("IsOnPlatform ? : $isOnPlatform");
   }
 
   /**

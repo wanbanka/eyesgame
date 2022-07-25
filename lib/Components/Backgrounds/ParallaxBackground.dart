@@ -3,7 +3,6 @@ import 'package:flutter/material.dart' as Ma;
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:flame/parallax.dart';
-import 'package:flame/collisions.dart';
 
 import 'dart:ui' show Image;
 
@@ -17,7 +16,7 @@ class ParallaxBackground extends ParallaxComponent {
   ParallaxBackground({required this.backgroundImage, required this.floorImage})
       : super(anchor: Anchor.center) {
     _contactBody =
-        ContactBody(object: this, isMoving: false, hitbox: RectangleHitbox());
+        ContactBody(object: this, isMoving: false, hitbox: ScreenHitbox());
   }
 
   String backgroundImage;
@@ -44,9 +43,5 @@ class ParallaxBackground extends ParallaxComponent {
       ParallaxLayer(ParallaxImage(floor,
           alignment: Ma.Alignment(0.0, 0.75), fill: LayerFill.none))
     ]);
-
-    this.contactBody!.hitbox
-      ..size = Vector2(floor.width.toDouble(), floor.height.toDouble())
-      ..position = Vector2(-400, floor.height / 15);
   }
 }

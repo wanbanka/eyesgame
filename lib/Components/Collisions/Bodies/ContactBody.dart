@@ -4,8 +4,6 @@ import 'package:flame/components.dart';
 
 import 'package:flame/collisions.dart';
 
-import 'package:flutter/material.dart' show Colors;
-
 import '../Systems/CollisionSystem.dart';
 
 /**
@@ -19,9 +17,9 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
 
   PositionComponent object;
 
-  bool isMoving;
+  PositionComponent hitbox;
 
-  ShapeHitbox hitbox;
+  bool isMoving;
 
   @override
   Future<void> onLoad() async {
@@ -29,7 +27,7 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
 
     await add(this.object);
 
-    this.setColor(Colors.transparent);
+    //this.setColor(Colors.transparent);
 
     return super.onLoad();
   }
@@ -47,11 +45,16 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
   Body createBody() {
     // TODO: implement createBody
 
-    return world.createBody(BodyDef()
+    Body makingBody = world.createBody(BodyDef()
       ..userData = this
       ..type = isMoving ? BodyType.dynamic : BodyType.static
-      ..bullet = isMoving)
-      ..createFixture(FixtureDef(_getFixtureShape())..isSensor = false);
+      ..bullet = isMoving);
+
+    _getFixtureHitbox().forEach((hitbox) {
+      makingBody.createFixture(FixtureDef(hitbox)..isSensor = false);
+    });
+
+    return makingBody;
   }
 
   @override
@@ -74,8 +77,8 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
  * Make a hitbox for an object
  */
 
-  Shape _getFixtureShape() {
-    Shape fixtureShape = PolygonShape();
+  List<Shape> _getFixtureHitbox() {
+    List<Shape> fixtureShapes = [];
 
     PositionComponent chooseBaseline = (hitbox.position != Vector2.zero() &&
             hitbox.scaledSize != Vector2.zero())
@@ -84,7 +87,7 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
 
     switch (hitbox.runtimeType) {
       case RectangleHitbox:
-        fixtureShape = PolygonShape()
+        fixtureShapes.add(PolygonShape()
           ..set([
             chooseBaseline.position,
             Vector2(chooseBaseline.position.x + chooseBaseline.scaledSize.x,
@@ -93,22 +96,52 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
                 chooseBaseline.position.y + chooseBaseline.scaledSize.y),
             Vector2(chooseBaseline.position.x,
                 chooseBaseline.position.y + chooseBaseline.scaledSize.y)
-          ]);
+          ]));
         break;
 
       case CircleHitbox:
         double addRadius = chooseBaseline.scaledSize.x / 2;
 
-        fixtureShape = CircleShape()
+        fixtureShapes.add(CircleShape()
           ..radius = addRadius
           ..getVertex(0).x = chooseBaseline.position.x + addRadius
-          ..getVertex(0).y = chooseBaseline.position.y + addRadius;
+          ..getVertex(0).y = chooseBaseline.position.y + addRadius);
+
+        break;
+
+      case ScreenHitbox:
+        Vector2 newBaseline = chooseBaseline.position + Vector2(-363, -180);
+
+        fixtureShapes.addAll([
+          EdgeShape()
+            ..set(
+                newBaseline,
+                Vector2(newBaseline.x + chooseBaseline.scaledSize.x,
+                    newBaseline.y)),
+          EdgeShape()
+            ..set(
+                Vector2(
+                    newBaseline.x + chooseBaseline.scaledSize.x, newBaseline.y),
+                Vector2(newBaseline.x + chooseBaseline.scaledSize.x,
+                    newBaseline.y + (chooseBaseline.scaledSize.y - 40))),
+          EdgeShape()
+            ..set(
+                Vector2(newBaseline.x,
+                    newBaseline.y + (chooseBaseline.scaledSize.y - 40)),
+                Vector2(newBaseline.x + chooseBaseline.scaledSize.x,
+                    newBaseline.y + (chooseBaseline.scaledSize.y - 40))),
+          EdgeShape()
+            ..set(
+                newBaseline,
+                Vector2(newBaseline.x,
+                    newBaseline.y + (chooseBaseline.scaledSize.y - 40)))
+        ]);
 
         break;
 
       default:
     }
 
-    return fixtureShape;
+    return fixtureShapes;
   }
 }

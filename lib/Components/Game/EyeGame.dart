@@ -28,7 +28,8 @@ import '../../Models/ConvertEnumString.dart';
  */
 
 class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
-  EyeGame({required this.level, required this.controls}) : super(zoom: 1.0);
+  EyeGame({required this.level, required this.controls})
+      : super(zoom: 1.0, gravity: Vector2(0, 50));
 
   Level level;
 
