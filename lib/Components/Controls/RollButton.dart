@@ -38,6 +38,7 @@ class RollButton extends OnePressButton {
     } else if (hero.current != Status.move) {
       hero.current = Status.profile;
       hero.speed ~/= 5;
+      hero.stop();
     }
   }
 }

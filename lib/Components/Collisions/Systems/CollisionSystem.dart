@@ -1,19 +1,21 @@
 import 'package:flame/components.dart' show Vector2, PositionComponent;
 
-import 'package:flame/collisions.dart' show ScreenHitbox;
-
-import '../../../Models/Enums/Force.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 
 import '../../Backgrounds/ParallaxBackground.dart';
 
 import '../../Platforms/Platform.dart';
+
+import '../../../Models/Enums/Vertice.dart';
+
+import '../../Sprites/SpriteGame.dart';
 
 /**
  * System for collision detection and trajectory computing
  * (rebounds, parable...)
  */
 
-mixin CollisionSystem on PositionComponent {
+mixin CollisionSystem on SpriteGame {
   Vector2 _velocity = Vector2.zero();
 
   Vector2 get velocity => this._velocity;
@@ -24,62 +26,109 @@ mixin CollisionSystem on PositionComponent {
    * Handle the collision with the screen's boundaries
    */
 
-  void handleScreenCollision(Set<Vector2> intersectionPoints) {
-    final collisionNormal = _getNormalCollision(intersectionPoints);
+  void handleBackgroundCollision(ParallaxBackground background) {
+    bool isOnFloor, isOnLeft, isOnRight, isOnCeiling = false;
 
-    double innerLeft = _getInnerProduct(collisionNormal, Force.left);
+    Set<Vector2> chainVertices = {};
 
-    double innerRight = _getInnerProduct(collisionNormal, Force.right);
+    background.contactBody!.body.fixtures.forEach((element) {
+      EdgeShape edgeShape = element.shape as EdgeShape;
 
-    double innerTop = _getInnerProduct(collisionNormal, Force.up);
+      chainVertices.addAll({edgeShape.vertex1, edgeShape.vertex2});
+    });
 
-    double scaleCollision = 0.0;
+    ChainShape chainShape = ChainShape()..createChain(chainVertices.toList());
 
-    if (innerLeft > 0.9) {
-      scaleCollision = -innerLeft;
-    } else if (innerRight > 0.9) {
-      scaleCollision = -innerRight;
-    } else if (innerTop > 0.9) {
-      scaleCollision = -innerTop;
-    }
+    print(
+        "Position of ${this.runtimeType}: ${this.contactBody!.body.position}");
 
-    position -= collisionNormal.scaled(scaleCollision);
-  }
-
-/**
-   * Handle the collision with the floor
-   */
-
-  void handleFloorCollision(Set<Vector2> intersectionPoints) {
-    final collisionNormal = _getNormalCollision(intersectionPoints);
-
-    double inner = _getInnerProduct(collisionNormal, Force.down);
-
-    print("Inner prod floor: $inner");
-
-    if (inner.abs() > 0.9) {
-      this.velocity = Vector2.zero();
-    }
-
-    position += collisionNormal.scaled(inner);
+    print("Vertices: ${chainShape.vertices}");
   }
 
   /**
    * Handle the collision with the platforms
    */
 
-  void handlePlatformCollision(Set<Vector2> intersectionPoints) {
-    final collisionNormal = _getNormalCollision(intersectionPoints);
+  void handlePlatformCollision(Platform platform) {
+    platform.contactBody!.body.fixtures.forEach((element) {
+      Map<Vertice, Vector2> vertices = _getVertices(element.shape);
 
-    double inner = _getInnerProduct(collisionNormal, Force.down);
+      bool isOnPlatformWidth = vertices[Vertice.topLeft]!.x <=
+              this.contactBody!.body.position.x &&
+          this.contactBody!.body.position.x <= vertices[Vertice.topRight]!.x;
 
-    if (inner > 0.79 || inner > -0.25) {
-      position += collisionNormal.scaled(inner);
+      bool isOnPlatform = isOnPlatformWidth &&
+          this.contactBody!.body.position.y == vertices[Vertice.topRight]!.y;
 
-      if (inner > 0.79) {
-        this.velocity = Vector2.zero();
-      } else {}
+      bool isUnderPlatform = isOnPlatformWidth &&
+          this.contactBody!.body.position.y == vertices[Vertice.bottomLeft]!.y;
+    });
+
+    bool isOnPlatformWidth = (platform.x <= this.contactBody!.body.position.x &&
+        this.contactBody!.body.position.x <=
+            platform.x + platform.scaledSize.x);
+
+    bool isOnPlatform =
+        isOnPlatformWidth && this.contactBody!.body.position.y == platform.y;
+
+    bool isUnderPlatform = isOnPlatformWidth &&
+        this.contactBody!.body.position.y ==
+            (platform.y + platform.scaledSize.y);
+
+    if (isOnPlatform) {
+      this.velocity = Vector2.zero();
+
+      print("It's on");
     }
+
+    if (isUnderPlatform) {
+      print("It's under");
+    }
+  }
+
+  /**
+   * Get the list of a shape's vertices, in order to 
+   * know where are the collisions
+   */
+
+  Map<Vertice, Vector2> _getVertices(Shape shape) {
+    Map<Vertice, Vector2> vertices = {};
+
+    switch (shape.runtimeType) {
+      case PolygonShape:
+        PolygonShape polygonShape = shape as PolygonShape;
+
+        if (polygonShape.vertices.length == 4) {
+          vertices.addAll({
+            Vertice.topRight: polygonShape.vertices.first,
+            Vertice.bottomRight: polygonShape.vertices[1],
+            Vertice.bottomLeft: polygonShape.vertices[2],
+            Vertice.topLeft: polygonShape.vertices.last
+          });
+        }
+
+        break;
+
+      case ChainShape:
+        ChainShape chainShape = shape as ChainShape;
+
+        if (chainShape.vertices.length == 4) {
+          vertices.addAll({
+            Vertice.topLeft: chainShape.vertex(0),
+            Vertice.topRight: chainShape.vertex(1),
+            Vertice.bottomLeft: chainShape.vertex(2),
+            Vertice.bottomRight: chainShape.vertex(3)
+          });
+        }
+
+        break;
+
+      default:
+        throw Exception("Shape must be PolygonShape or ChainShape");
+        break;
+    }
+
+    return vertices;
   }
 
 /**
@@ -89,56 +138,12 @@ mixin CollisionSystem on PositionComponent {
 
   void computeCollision(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    print(
-        "Intersection points: $intersectionPoints et component: ${other.runtimeType}");
-
     if (intersectionPoints.length == 2) {
-      print("Normal collision: ${_getNormalCollision(intersectionPoints)}");
-
       if (other is Platform) {
-        handlePlatformCollision(intersectionPoints);
+        handlePlatformCollision(other as Platform);
+      } else if (other is ParallaxBackground) {
+        handleBackgroundCollision(other as ParallaxBackground);
       }
     }
-  }
-
-  /**
-   * Compute the collision's point between two components
-   */
-
-  Vector2 _getNormalCollision(Set<Vector2> intersectionPoints) {
-    return (absoluteCenter -
-            ((intersectionPoints.elementAt(0) +
-                    intersectionPoints.elementAt(1)) /
-                2))
-        .normalized();
-  }
-
-/**
- * Make an inner product between the collision and the applied
- * pressure by the collision's object
- */
-
-  double _getInnerProduct(Vector2 collision, Force forceDirection) {
-    Vector2 appliedPressure;
-
-    switch (forceDirection) {
-      case Force.left:
-        appliedPressure = Vector2(1, 0);
-        break;
-
-      case Force.right:
-        appliedPressure = Vector2(-1, 0);
-        break;
-
-      case Force.down:
-        appliedPressure = Vector2(0, -1);
-        break;
-
-      case Force.up:
-        appliedPressure = Vector2(0, 1);
-        break;
-    }
-
-    return appliedPressure.dot(collision);
   }
 }

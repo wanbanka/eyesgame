@@ -19,8 +19,6 @@ class RedLaser extends Laser {
             damage: 20,
             sizeLaser: Vector2(150, 5),
             startPosition: startPosition) {
-    this.velocity = Vector2(20, 0);
-
     this.contactBody =
         ContactBody(object: this, isMoving: true, hitbox: RectangleHitbox());
   }

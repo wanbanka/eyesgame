@@ -22,7 +22,7 @@ class Hero extends Character {
     this.contactBody = ContactBody(
         object: this,
         isMoving: true,
-        hitbox: CircleHitbox(position: this.position));
+        hitbox: RectangleHitbox(position: this.position));
   }
 
   @override
@@ -38,8 +38,6 @@ class Hero extends Character {
       this.scale.x *= -1;
 
       heroLaser.position.x -= this.size.x * 1.5;
-
-      heroLaser.velocity.x *= -1;
     }
 
     (gameRef as EyeGame).level.add(heroLaser.contactBody!);

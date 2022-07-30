@@ -58,5 +58,7 @@ class MoveButton extends LongPressButton {
     if (hero.current != Status.roll) {
       hero.current = Status.profile;
     }
+
+    hero.stop();
   }
 }

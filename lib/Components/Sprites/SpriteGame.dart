@@ -16,8 +16,8 @@ import '../../Models/CharFrame.dart';
 import '../../Models/ConvertEnumString.dart';
 import '../../Models/Enums/Status.dart';
 
-import '../Collisions/Systems/CollisionSystem.dart';
 import '../Collisions/Bodies/ContactBody.dart';
+import '../Collisions/Systems/CollisionSystem.dart';
 
 import '../Game/EyeGame.dart';
 
@@ -26,7 +26,7 @@ import '../Game/EyeGame.dart';
  */
 
 abstract class SpriteGame extends SpriteAnimationGroupComponent
-    with CollisionSystem, HasGameRef<Forge2DGame> {
+    with HasGameRef<Forge2DGame> {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
       : super(animations: {}, scale: Vector2.all(0.5)) {
     spriteSheet.forEach((key, charFrame) async {

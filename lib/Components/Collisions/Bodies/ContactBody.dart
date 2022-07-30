@@ -62,8 +62,6 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
     // TODO: implement beginContact
     super.beginContact(other, contact);
 
-    print("Points of collisions: ${contact.manifold.points.length}");
-
     Set<Vector2> intersectionPoints =
         contact.manifold.points.map<Vector2>((p) => p.localPoint).toSet();
 
