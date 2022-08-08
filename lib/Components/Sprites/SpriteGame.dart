@@ -16,8 +16,7 @@ import '../../Models/CharFrame.dart';
 import '../../Models/ConvertEnumString.dart';
 import '../../Models/Enums/Status.dart';
 
-import '../Collisions/Bodies/ContactBody.dart';
-import '../Collisions/Systems/CollisionSystem.dart';
+import '../Collisions/Connections/ContactConnect.dart';
 
 import '../Game/EyeGame.dart';
 
@@ -26,7 +25,7 @@ import '../Game/EyeGame.dart';
  */
 
 abstract class SpriteGame extends SpriteAnimationGroupComponent
-    with HasGameRef<Forge2DGame> {
+    with HasGameRef<Forge2DGame>, ContactConnect {
   SpriteGame({required Map<String, CharFrame> spriteSheet})
       : super(animations: {}, scale: Vector2.all(0.5)) {
     spriteSheet.forEach((key, charFrame) async {
@@ -49,12 +48,6 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
       });
     });
   }
-
-  ContactBody? _contactBody;
-
-  ContactBody? get contactBody => this._contactBody;
-
-  set contactBody(ContactBody? value) => this._contactBody = value;
 
   /**
  * Check if a character stays on a platform or not

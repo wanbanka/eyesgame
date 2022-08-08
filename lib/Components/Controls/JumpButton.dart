@@ -27,22 +27,24 @@ class JumpButton extends OnePressButton {
 
   @override
   void goAction() {
-    var previousState = hero.current;
-
-    if (hero.current != Status.roll) {
-      hero.current = Status.jump;
-    }
-
-    hero.jumping = 18;
-
-    Future.delayed(Duration(milliseconds: 500), () {
-      hero.jumping = 0;
-
-      hero.stop();
+    if (!hero.isAloft) {
+      var previousState = hero.current;
 
       if (hero.current != Status.roll) {
-        hero.current = previousState;
+        hero.current = Status.jump;
       }
-    });
+
+      hero.jumping = 18;
+
+      Future.delayed(Duration(milliseconds: 500), () {
+        hero.jumping = 0;
+
+        hero.stop();
+
+        if (hero.current != Status.roll) {
+          hero.current = previousState;
+        }
+      });
+    }
   }
 }

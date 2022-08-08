@@ -6,6 +6,8 @@ import 'package:flame/collisions.dart';
 
 import '../Systems/CollisionSystem.dart';
 
+import 'package:flutter/material.dart' show Colors;
+
 /**
  * Body wrapping a Flame's component in order to 
  * detect closer collisions
@@ -45,10 +47,17 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
   Body createBody() {
     // TODO: implement createBody
 
+    print("Type of object: ${object.runtimeType}");
+
+    print(
+        "Positions: Object: ${this.object.position} and Hitbox: ${this.hitbox.position}");
+
     Body makingBody = world.createBody(BodyDef()
       ..userData = this
       ..type = isMoving ? BodyType.dynamic : BodyType.static
       ..bullet = isMoving);
+
+    print("Position of body component: ${makingBody.position}");
 
     _getFixtureHitbox().forEach((hitbox) {
       makingBody.createFixture(FixtureDef(hitbox)..isSensor = false);
@@ -108,31 +117,43 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
         break;
 
       case ScreenHitbox:
-        Vector2 newBaseline = chooseBaseline.position + Vector2(-363, -180);
-
         fixtureShapes.addAll([
           EdgeShape()
             ..set(
-                newBaseline,
-                Vector2(newBaseline.x + chooseBaseline.scaledSize.x,
-                    newBaseline.y)),
+                chooseBaseline.position,
+                Vector2(chooseBaseline.position.x + chooseBaseline.scaledSize.x,
+                    chooseBaseline.position.y)
+                  ..round()),
+          EdgeShape()
+            ..set(
+                Vector2(chooseBaseline.position.x + chooseBaseline.scaledSize.x,
+                    chooseBaseline.position.y)
+                  ..round(),
+                Vector2(
+                    chooseBaseline.position.x + chooseBaseline.scaledSize.x,
+                    chooseBaseline.position.y +
+                        (chooseBaseline.scaledSize.y - 40))
+                  ..round()),
           EdgeShape()
             ..set(
                 Vector2(
-                    newBaseline.x + chooseBaseline.scaledSize.x, newBaseline.y),
-                Vector2(newBaseline.x + chooseBaseline.scaledSize.x,
-                    newBaseline.y + (chooseBaseline.scaledSize.y - 40))),
+                    chooseBaseline.position.x,
+                    chooseBaseline.position.y +
+                        (chooseBaseline.scaledSize.y - 40))
+                  ..round(),
+                Vector2(
+                    chooseBaseline.position.x + chooseBaseline.scaledSize.x,
+                    chooseBaseline.position.y +
+                        (chooseBaseline.scaledSize.y - 40))
+                  ..round()),
           EdgeShape()
             ..set(
-                Vector2(newBaseline.x,
-                    newBaseline.y + (chooseBaseline.scaledSize.y - 40)),
-                Vector2(newBaseline.x + chooseBaseline.scaledSize.x,
-                    newBaseline.y + (chooseBaseline.scaledSize.y - 40))),
-          EdgeShape()
-            ..set(
-                newBaseline,
-                Vector2(newBaseline.x,
-                    newBaseline.y + (chooseBaseline.scaledSize.y - 40)))
+                chooseBaseline.position,
+                Vector2(
+                    chooseBaseline.position.x,
+                    chooseBaseline.position.y +
+                        (chooseBaseline.scaledSize.y - 40))
+                  ..round())
         ]);
 
         break;

@@ -8,26 +8,26 @@ import 'dart:ui' show Image;
 
 import '../Collisions/Bodies/ContactBody.dart';
 
+import '../Collisions/Connections/ContactConnect.dart';
+
 /**
  * Description of the level's background
  */
 
-class ParallaxBackground extends ParallaxComponent {
+class ParallaxBackground extends ParallaxComponent with ContactConnect {
   ParallaxBackground({required this.backgroundImage, required this.floorImage})
-      : super(anchor: Anchor.center) {
-    _contactBody =
+      : super() {
+    this.contactBody =
         ContactBody(object: this, isMoving: false, hitbox: ScreenHitbox());
+
+    this.positionType = PositionType.game;
+
+    this.position += Vector2(-363, -180);
   }
 
   String backgroundImage;
 
   String floorImage;
-
-  ContactBody? _contactBody;
-
-  ContactBody? get contactBody => this._contactBody;
-
-  set contactBody(ContactBody? value) => this._contactBody = value;
 
   @override
   Future<void>? onLoad() async {

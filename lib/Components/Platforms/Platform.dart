@@ -7,12 +7,13 @@ import 'package:flame/collisions.dart';
 import '../../Models/CharFrame.dart';
 
 import '../Collisions/Bodies/ContactBody.dart';
+import '../Collisions/Connections/ContactConnect.dart';
 
 /**
  * Defines all features of platforms
  */
 
-abstract class Platform extends SpriteComponent {
+abstract class Platform extends SpriteComponent with ContactConnect {
   Platform({required this.spritePlatform}) : super() {
     Flame.images.load(spritePlatform.srcImage).then((value) {
       this.sprite = Sprite(value);
@@ -20,13 +21,9 @@ abstract class Platform extends SpriteComponent {
       this.size = Vector2(spritePlatform.size, value.height.toDouble());
     });
 
-    _contactBody =
+    this.contactBody =
         ContactBody(object: this, isMoving: false, hitbox: RectangleHitbox());
   }
 
   CharFrame spritePlatform;
-
-  ContactBody? _contactBody;
-
-  ContactBody? get contactBody => this._contactBody;
 }

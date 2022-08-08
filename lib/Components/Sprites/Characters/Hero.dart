@@ -30,9 +30,8 @@ class Hero extends Character {
     this.scale.x = this.scale.x.abs();
 
     RedLaser heroLaser = RedLaser(
-        startPosition: Vector2(
-            this.contactBody!.body.position.x - (300 - this.size.x / 2),
-            this.contactBody!.body.position.y + (this.size.y / 4)));
+        startPosition: Vector2(this.body.position.x - (300 - this.size.x / 2),
+            this.body.position.y + (this.size.y / 4)));
 
     if (!shootRight) {
       this.scale.x *= -1;
@@ -40,6 +39,6 @@ class Hero extends Character {
       heroLaser.position.x -= this.size.x * 1.5;
     }
 
-    (gameRef as EyeGame).level.add(heroLaser.contactBody!);
+    (gameRef as EyeGame).level.add(heroLaser.contactBody);
   }
 }

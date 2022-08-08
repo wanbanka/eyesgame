@@ -57,10 +57,10 @@ class Level extends World {
     print("List of enemies: $ennemies");
 
     List<Component> dataToAdd = [
-      background.contactBody!,
-      hero.contactBody!,
-      ...(ennemies.map((enemy) => enemy.contactBody!).toList()),
-      ...(platforms.map((platform) => platform.contactBody!).toList())
+      background.contactBody,
+      hero.contactBody,
+      ...(ennemies.map((enemy) => enemy.contactBody).toList()),
+      ...(platforms.map((platform) => platform.contactBody).toList())
     ];
 
     await add(FlameMultiBlocProvider(providers: [

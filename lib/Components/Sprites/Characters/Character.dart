@@ -52,7 +52,7 @@ abstract class Character extends SpriteGame
   void move(double dt) {
     this.velocity.y += this.gameRef.world.gravity.y;
 
-    this.velocity.y = this.velocity.y.clamp(-800, 800);
+    this.velocity.y = this.velocity.y.clamp(-80, 80);
 
     if ([Status.move, Status.roll, Status.jump].contains(this.current)) {
       if ([Status.move, Status.roll].contains(this.current)) {
@@ -61,7 +61,9 @@ abstract class Character extends SpriteGame
         this.velocity.x +=
             (this.gameRef.world.gravity.normalize() * this.speed);
 
-        this.velocity.x = this.velocity.x.clamp(-1200, 1200);
+        this.velocity.x = this.velocity.x.clamp(
+            -20 * this.speed.toDouble().abs(),
+            20 * this.speed.toDouble().abs());
       }
 
       this.jump();
@@ -69,8 +71,15 @@ abstract class Character extends SpriteGame
       this.velocity.x = 0;
     }
 
-    this.contactBody!.body.applyLinearImpulse(
-        this.velocity * (this.contactBody!.body.mass * 100));
+    this.run();
+  }
+
+  /**
+   * Make a character run
+   */
+
+  void run() {
+    this.body.applyLinearImpulse(this.velocity);
   }
 
 /**
@@ -80,6 +89,8 @@ abstract class Character extends SpriteGame
   void jump() {
     if (this.jumping > 0) {
       this.velocity.y = -this.jumping.toDouble();
+
+      this.isAloft = true;
 
       if (this.velocity.x != 0) {
         this.velocity.y *= 100;
@@ -92,7 +103,7 @@ abstract class Character extends SpriteGame
  */
 
   void stop() {
-    this.contactBody!.body.linearVelocity.scale(0);
+    this.body.linearVelocity.scale(0);
   }
 
 /**

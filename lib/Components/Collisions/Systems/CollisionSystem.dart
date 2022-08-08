@@ -8,41 +8,61 @@ import '../../Platforms/Platform.dart';
 
 import '../../../Models/Enums/Vertice.dart';
 
-import '../../Sprites/SpriteGame.dart';
+import '../Connections/ContactConnect.dart';
 
 /**
  * System for collision detection and trajectory computing
  * (rebounds, parable...)
  */
 
-mixin CollisionSystem on SpriteGame {
+mixin CollisionSystem on ContactConnect {
   Vector2 _velocity = Vector2.zero();
 
   Vector2 get velocity => this._velocity;
 
   set velocity(Vector2 value) => this._velocity = value;
 
+  bool _isAloft = false;
+
+  bool get isAloft => this._isAloft;
+
+  set isAloft(bool value) => this._isAloft = value;
+
 /**
    * Handle the collision with the screen's boundaries
    */
 
   void handleBackgroundCollision(ParallaxBackground background) {
-    bool isOnFloor, isOnLeft, isOnRight, isOnCeiling = false;
-
     Set<Vector2> chainVertices = {};
 
-    background.contactBody!.body.fixtures.forEach((element) {
+    Map<Vertice, Vector2> contactBodyVert =
+        _getVertices(_getShapeContactBody());
+
+    background.body.fixtures.forEach((element) {
       EdgeShape edgeShape = element.shape as EdgeShape;
 
       chainVertices.addAll({edgeShape.vertex1, edgeShape.vertex2});
     });
 
-    ChainShape chainShape = ChainShape()..createChain(chainVertices.toList());
+    Map<Vertice, Vector2> chainShapeVertices =
+        _getVertices(ChainShape()..createChain(chainVertices.toList()));
 
-    print(
-        "Position of ${this.runtimeType}: ${this.contactBody!.body.position}");
+    print("Vertices of background: $chainShapeVertices");
 
-    print("Vertices: ${chainShape.vertices}");
+    bool isOnCeiling = contactBodyVert[Vertice.topLeft]!.y ==
+        chainShapeVertices[Vertice.topLeft]!.y;
+
+    bool isOnFloor = contactBodyVert[Vertice.bottomLeft]!.y ==
+        chainShapeVertices[Vertice.bottomLeft]!.y;
+
+    if (isOnCeiling) {
+      this.velocity = Vector2(0, 10);
+      this.isAloft = true;
+    }
+
+    if (isOnFloor) {
+      this.isAloft = false;
+    }
   }
 
   /**
@@ -50,40 +70,59 @@ mixin CollisionSystem on SpriteGame {
    */
 
   void handlePlatformCollision(Platform platform) {
-    platform.contactBody!.body.fixtures.forEach((element) {
+    Map<Vertice, Vector2> contactBodyVert =
+        _getVertices(_getShapeContactBody());
+
+    platform.body.fixtures.forEach((element) {
       Map<Vertice, Vector2> vertices = _getVertices(element.shape);
 
-      bool isOnPlatformWidth = vertices[Vertice.topLeft]!.x <=
-              this.contactBody!.body.position.x &&
-          this.contactBody!.body.position.x <= vertices[Vertice.topRight]!.x;
+      print("Platform vertices: $vertices");
+
+      bool isOnPlatformWidth = (contactBodyVert[Vertice.bottomRight]!.x -
+                  vertices[Vertice.topLeft]!.x >
+              0) ||
+          (vertices[Vertice.topRight]!.x -
+                  contactBodyVert[Vertice.bottomLeft]!.x >
+              0);
 
       bool isOnPlatform = isOnPlatformWidth &&
-          this.contactBody!.body.position.y == vertices[Vertice.topRight]!.y;
+          contactBodyVert[Vertice.bottomRight]!.y ==
+              vertices[Vertice.topRight]!.y;
 
       bool isUnderPlatform = isOnPlatformWidth &&
-          this.contactBody!.body.position.y == vertices[Vertice.bottomLeft]!.y;
+          contactBodyVert[Vertice.topLeft]!.y ==
+              vertices[Vertice.bottomLeft]!.y;
+
+      print(
+          "Platform: ${vertices[Vertice.topRight]!.y} and Hero: ${contactBodyVert[Vertice.bottomRight]!.y}");
+
+      if (isOnPlatform || isUnderPlatform) {
+        this.velocity = Vector2.zero();
+
+        this.isAloft = isUnderPlatform;
+      }
     });
 
-    bool isOnPlatformWidth = (platform.x <= this.contactBody!.body.position.x &&
-        this.contactBody!.body.position.x <=
-            platform.x + platform.scaledSize.x);
+    print("Aloft ? : $isAloft");
+  }
 
-    bool isOnPlatform =
-        isOnPlatformWidth && this.contactBody!.body.position.y == platform.y;
+  /**
+   * Get the shape of the contact body
+   */
 
-    bool isUnderPlatform = isOnPlatformWidth &&
-        this.contactBody!.body.position.y ==
-            (platform.y + platform.scaledSize.y);
+  Shape _getShapeContactBody() {
+    Vector2 realPosition =
+        Vector2((this.body.position.x - 300), this.body.position.y)..round();
 
-    if (isOnPlatform) {
-      this.velocity = Vector2.zero();
-
-      print("It's on");
-    }
-
-    if (isUnderPlatform) {
-      print("It's under");
-    }
+    return PolygonShape()
+      ..set([
+        realPosition,
+        Vector2(realPosition.x, realPosition.y + this.scaledSize.y)..round(),
+        Vector2(realPosition.x + this.scaledSize.x,
+            realPosition.y + this.scaledSize.y)
+          ..round(),
+        Vector2(realPosition.x + this.scaledSize.x, realPosition.y)..round()
+      ]);
   }
 
   /**
@@ -116,8 +155,8 @@ mixin CollisionSystem on SpriteGame {
           vertices.addAll({
             Vertice.topLeft: chainShape.vertex(0),
             Vertice.topRight: chainShape.vertex(1),
-            Vertice.bottomLeft: chainShape.vertex(2),
-            Vertice.bottomRight: chainShape.vertex(3)
+            Vertice.bottomLeft: chainShape.vertex(3),
+            Vertice.bottomRight: chainShape.vertex(2)
           });
         }
 
