@@ -4,8 +4,6 @@ import 'package:flame/components.dart' show Vector2;
 
 import '../SpriteGame.dart';
 
-import '../../../Blocs/MathBloc.dart';
-
 import '../../../States/Loader/LoadedResponse.dart';
 
 import '../../../Models/Enums/Status.dart';
@@ -18,8 +16,7 @@ import '../../Collisions/Systems/CollisionSystem.dart';
  * Define all the characteristics of a character
  */
 
-abstract class Character extends SpriteGame
-    with CollisionSystem, FlameBlocReader<MathBloc, LoadedResponse> {
+abstract class Character extends SpriteGame with CollisionSystem {
   Character({required spriteSheet, required this.speed})
       : super(spriteSheet: spriteSheet) {
     this.current = Status.profile;
@@ -104,6 +101,19 @@ abstract class Character extends SpriteGame
 
   void stop() {
     this.body.linearVelocity.scale(0);
+    this.body.linearDamping = 10;
+  }
+
+/**
+ * Handle the animation of injury of the character
+ */
+
+  void hurting() {
+    this.current = Status.hurt;
+
+    Future.delayed(Duration(milliseconds: 2000), () {
+      this.current = Status.profile;
+    });
   }
 
 /**

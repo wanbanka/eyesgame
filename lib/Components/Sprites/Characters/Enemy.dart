@@ -1,6 +1,6 @@
 import 'package:flame/components.dart' show Vector2;
 
-import 'package:flame/collisions.dart' show RectangleHitbox, CollisionType;
+import 'package:flame/collisions.dart' show RectangleHitbox;
 
 import "Character.dart";
 

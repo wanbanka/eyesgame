@@ -29,7 +29,7 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
 
     await add(this.object);
 
-    //this.setColor(Colors.transparent);
+    this.setColor(Colors.transparent);
 
     return super.onLoad();
   }
@@ -39,6 +39,8 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
     // TODO: implement onRemove
 
     world.destroyBody(body);
+
+    this.removeAll(this.children);
 
     super.onRemove();
   }
@@ -60,7 +62,7 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
     print("Position of body component: ${makingBody.position}");
 
     _getFixtureHitbox().forEach((hitbox) {
-      makingBody.createFixture(FixtureDef(hitbox)..isSensor = false);
+      makingBody.createFixture(FixtureDef(hitbox));
     });
 
     return makingBody;
@@ -104,6 +106,7 @@ class ContactBody extends BodyComponent<Forge2DGame> with ContactCallbacks {
             Vector2(chooseBaseline.position.x,
                 chooseBaseline.position.y + chooseBaseline.scaledSize.y)
           ]));
+
         break;
 
       case CircleHitbox:

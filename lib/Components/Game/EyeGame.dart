@@ -96,17 +96,6 @@ class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
   }
 
   /**
-   * Compute the real position of the hero
-   * (because the frame of reference for positionning isn't
-   * the game, but the level)
-   */
-
-  Vector2 _computeRealHeroPosition() {
-    return Vector2(level.hero.position.x + (380 - (level.hero.size.x / 2)),
-        level.hero.position.y);
-  }
-
-  /**
    * Check if the player touches the controls
    */
 
@@ -125,9 +114,11 @@ class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
     // TODO: implement onTapUp
     super.onTapDown(pointerId, info);
 
-    Vector2 realHeroPos = _computeRealHeroPosition();
+    Vector2 realHeroPos = level.hero.body.position;
 
     _shootRight = realHeroPos.x <= info.eventPosition.game.x;
+
+    print("Is it on right ? : $_shootRight");
 
     if (!_isControls(info.eventPosition.game)) {
       level.hero.shoot(shootRight: _shootRight);

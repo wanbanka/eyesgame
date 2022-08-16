@@ -4,8 +4,6 @@ import 'package:flame/experimental.dart' show World;
 
 import 'package:flame_bloc/flame_bloc.dart';
 
-import '../../Blocs/MathBloc.dart';
-
 import '../Sprites/Characters/Character.dart';
 
 import '../Backgrounds/ParallaxBackground.dart';
@@ -63,9 +61,11 @@ class Level extends World {
       ...(platforms.map((platform) => platform.contactBody).toList())
     ];
 
-    await add(FlameMultiBlocProvider(providers: [
-      FlameBlocProvider<MathBloc, LoadedResponse>(create: () => MathBloc())
-    ], children: dataToAdd));
+    //await add(FlameMultiBlocProvider(providers: [], children: dataToAdd));
+
+    dataToAdd.forEach((element) async {
+      await add(element);
+    });
 
     await add(ScreenHitbox()..anchor = Anchor.center);
   }

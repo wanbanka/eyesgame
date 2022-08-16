@@ -1,11 +1,6 @@
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart'
-    show
-        SpriteAnimationGroupComponent,
-        Vector2,
-        Anchor,
-        PositionComponent,
-        HasGameRef;
+    show SpriteAnimationGroupComponent, Vector2, HasGameRef;
 import 'package:flame/sprite.dart';
 
 import 'package:flame_forge2d/forge2d_game.dart';
@@ -17,8 +12,6 @@ import '../../Models/ConvertEnumString.dart';
 import '../../Models/Enums/Status.dart';
 
 import '../Collisions/Connections/ContactConnect.dart';
-
-import '../Game/EyeGame.dart';
 
 /**
  * Define all the properties of all animated sprites
@@ -47,22 +40,5 @@ abstract class SpriteGame extends SpriteAnimationGroupComponent
                 textureSize: Vector2(this.size.x, this.size.y)))
       });
     });
-  }
-
-  /**
- * Check if a character stays on a platform or not
- * 
- * @source https://www.youtube.com/watch?v=udrYX19XOQA
- */
-
-  bool checkOnPlatform() {
-    var platforms = (gameRef as EyeGame).level.platforms.map<bool>((platform) {
-      return ((this.position.y + this.height / 4).ceil() ==
-              platform.position.y &&
-          (this.position.x < platform.position.x + platform.width &&
-              platform.position.x <= this.position.x));
-    });
-
-    return platforms.contains(true);
   }
 }

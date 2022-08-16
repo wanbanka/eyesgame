@@ -6,7 +6,13 @@ import '../../Backgrounds/ParallaxBackground.dart';
 
 import '../../Platforms/Platform.dart';
 
+import '../../Sprites/Characters/Enemy.dart';
+import '../../Sprites/Characters/Hero.dart';
+import '../../Sprites/Characters/Character.dart';
+import '../../Sprites/Lasers/Laser.dart';
+
 import '../../../Models/Enums/Vertice.dart';
+import '../../../Models/Enums/Status.dart';
 
 import '../Connections/ContactConnect.dart';
 
@@ -35,10 +41,11 @@ mixin CollisionSystem on ContactConnect {
   void handleBackgroundCollision(ParallaxBackground background) {
     Set<Vector2> chainVertices = {};
 
-    Map<Vertice, Vector2> contactBodyVert =
-        _getVertices(_getShapeContactBody());
+    Map<Vertice, Vector2> contactBodyVert = _getVertices(getRealShape());
 
-    background.body.fixtures.forEach((element) {
+    print("Type : $runtimeType and vertices: $contactBodyVert");
+
+    background.handleFixturesBody(fixtureCallback: (element) {
       EdgeShape edgeShape = element.shape as EdgeShape;
 
       chainVertices.addAll({edgeShape.vertex1, edgeShape.vertex2});
@@ -70,10 +77,11 @@ mixin CollisionSystem on ContactConnect {
    */
 
   void handlePlatformCollision(Platform platform) {
-    Map<Vertice, Vector2> contactBodyVert =
-        _getVertices(_getShapeContactBody());
+    Map<Vertice, Vector2> contactBodyVert = _getVertices(getRealShape());
 
-    platform.body.fixtures.forEach((element) {
+    print("Vertices of contactbody: $contactBodyVert");
+
+    platform.handleFixturesBody(fixtureCallback: (element) {
       Map<Vertice, Vector2> vertices = _getVertices(element.shape);
 
       print("Platform vertices: $vertices");
@@ -107,22 +115,43 @@ mixin CollisionSystem on ContactConnect {
   }
 
   /**
-   * Get the shape of the contact body
+   * Handle the collision with enemies
    */
 
-  Shape _getShapeContactBody() {
-    Vector2 realPosition =
-        Vector2((this.body.position.x - 300), this.body.position.y)..round();
+  void handleEnemyCollision(Enemy enemy) {
+    enemy.stop();
+  }
 
-    return PolygonShape()
-      ..set([
-        realPosition,
-        Vector2(realPosition.x, realPosition.y + this.scaledSize.y)..round(),
-        Vector2(realPosition.x + this.scaledSize.x,
-            realPosition.y + this.scaledSize.y)
-          ..round(),
-        Vector2(realPosition.x + this.scaledSize.x, realPosition.y)..round()
-      ]);
+  /**
+   * Handle the collision with the hero
+   */
+
+  void handleHeroCollision(Hero hero) {
+    hero.velocity = Vector2(-100, -50);
+
+    if (hero.current == Status.roll) {
+      if (this is Character) {
+        Character handleCharacter = this as Character;
+
+        handleCharacter.hurting();
+      }
+    } else {
+      hero.hurting();
+    }
+  }
+
+  /**
+   * Handle the collision with the laser
+   */
+
+  void handleLaserCollision(Laser laser) {
+    if (this is Character) {
+      Character handleCharacter = this as Character;
+
+      handleCharacter.velocity = Vector2(-50, 0);
+
+      handleCharacter.hurting();
+    }
   }
 
   /**
@@ -179,9 +208,15 @@ mixin CollisionSystem on ContactConnect {
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (intersectionPoints.length == 2) {
       if (other is Platform) {
-        handlePlatformCollision(other as Platform);
+        handlePlatformCollision(other);
       } else if (other is ParallaxBackground) {
-        handleBackgroundCollision(other as ParallaxBackground);
+        handleBackgroundCollision(other);
+      } else if (other is Enemy) {
+        handleEnemyCollision(other);
+      } else if (other is Hero) {
+        handleHeroCollision(other);
+      } else if (other is Laser) {
+        handleLaserCollision(other);
       }
     }
   }
