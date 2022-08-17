@@ -5,7 +5,6 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'Pages/MyHomePage.dart';
 
 import 'Blocs/LoaderBloc.dart';
-import 'Blocs/MathBloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
                       BlocProvider(
                           create: (context) =>
                               LoaderBloc(selectLevel: "Level 1")),
-                      BlocProvider(create: (context) => MathBloc())
                     ], child: MyHomePage(title: 'Flutter Demo Home Page')));
             break;
           default:

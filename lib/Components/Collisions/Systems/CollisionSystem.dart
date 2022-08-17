@@ -8,11 +8,8 @@ import '../../Platforms/Platform.dart';
 
 import '../../Sprites/Characters/Enemy.dart';
 import '../../Sprites/Characters/Hero.dart';
-import '../../Sprites/Characters/Character.dart';
-import '../../Sprites/Lasers/Laser.dart';
 
 import '../../../Models/Enums/Vertice.dart';
-import '../../../Models/Enums/Status.dart';
 
 import '../Connections/ContactConnect.dart';
 
@@ -128,30 +125,6 @@ mixin CollisionSystem on ContactConnect {
 
   void handleHeroCollision(Hero hero) {
     hero.velocity = Vector2(-100, -50);
-
-    if (hero.current == Status.roll) {
-      if (this is Character) {
-        Character handleCharacter = this as Character;
-
-        handleCharacter.hurting();
-      }
-    } else {
-      hero.hurting();
-    }
-  }
-
-  /**
-   * Handle the collision with the laser
-   */
-
-  void handleLaserCollision(Laser laser) {
-    if (this is Character) {
-      Character handleCharacter = this as Character;
-
-      handleCharacter.velocity = Vector2(-50, 0);
-
-      handleCharacter.hurting();
-    }
   }
 
   /**
@@ -215,8 +188,6 @@ mixin CollisionSystem on ContactConnect {
         handleEnemyCollision(other);
       } else if (other is Hero) {
         handleHeroCollision(other);
-      } else if (other is Laser) {
-        handleLaserCollision(other);
       }
     }
   }

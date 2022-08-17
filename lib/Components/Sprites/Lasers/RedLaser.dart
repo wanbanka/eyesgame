@@ -1,4 +1,4 @@
-import 'Laser.dart';
+import 'HeroLaser.dart';
 
 import 'dart:ui';
 
@@ -12,7 +12,7 @@ import '../../Collisions/Bodies/ContactBody.dart';
  * Basic hero's laser
  */
 
-class RedLaser extends Laser {
+class RedLaser extends HeroLaser {
   RedLaser({required startPosition})
       : super(
             color: Color(0xffff0000),

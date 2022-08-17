@@ -4,7 +4,11 @@ import 'package:flame/collisions.dart' show RectangleHitbox;
 
 import "Character.dart";
 
+import 'Hero.dart';
+
 import "../../Collisions/Bodies/ContactBody.dart";
+
+import '../../../Models/Enums/Status.dart';
 
 /**
  * Defines all features of an enemy
@@ -22,5 +26,15 @@ class Enemy extends Character {
   @override
   void shoot({bool shootRight = true}) {
     // TODO: implement shoot
+  }
+
+  @override
+  void handleHeroCollision(Hero hero) {
+    // TODO: implement handleHeroCollision
+    super.handleHeroCollision(hero);
+
+    if (hero.current != Status.roll) {
+      hero.hurting();
+    }
   }
 }
