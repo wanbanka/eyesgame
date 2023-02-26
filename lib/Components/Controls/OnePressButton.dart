@@ -31,7 +31,7 @@ abstract class OnePressButton extends SpriteButtonComponent {
   void goAction();
 
   @override
-  Future<void>? onLoad() {
+  Future<void>? onLoad() async {
     // TODO: implement onLoad
 
     this.onPressed = goAction;

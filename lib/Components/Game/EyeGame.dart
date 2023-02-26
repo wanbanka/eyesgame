@@ -90,8 +90,6 @@ class EyeGame extends Forge2DGame with HasTappables, HasCollisionDetection {
     await add(cameraToAdd..add(cameraToAdd.world));
 
     await _loadControls();
-
-    debugMode = true;
   }
 
   /**
